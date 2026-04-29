@@ -1,5 +1,5 @@
 {
-  "name": "hoyeon",
+  "name": "harness",
   "version": "1.6.0",
   "description": "Development workflow automation plugin: specify → open → execute pipeline with parallel research agents, hook-based guards, and PR state management",
   "author": {
