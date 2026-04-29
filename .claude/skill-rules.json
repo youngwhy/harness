@@ -1,0 +1,321 @@
+{
+  "browser-work": {
+    "keywords": [
+      "browser-work",
+      "browser work",
+      "do it on the site",
+      "do it on the web",
+      "on LinkedIn",
+      "with Chrome",
+      "browser task",
+      "automate this site",
+      "web automation",
+      "browser automation",
+      "explore website",
+      "site exploration",
+      "LinkedIn task"
+    ],
+    "hint": "Explore websites and automate tasks using Chrome.",
+    "isGeneral": false
+  },
+  "bugfix": {
+    "keywords": [
+      "bugfix",
+      "bug fix",
+      "fix bug",
+      "fix error",
+      "debug",
+      "root cause analysis",
+      "problem solving",
+      "debugger",
+      "error resolution",
+      "code error",
+      "error",
+      "fix this",
+      "diagnose"
+    ],
+    "hint": "Analyzes the root cause of an error and fixes the bug in one shot.",
+    "isGeneral": false
+  },
+  "check": {
+    "keywords": [
+      "check",
+      "verify changes",
+      "before push",
+      "validate rules",
+      "code review",
+      "code quality",
+      "rule checklist",
+      "checklist"
+    ],
+    "hint": "Validates changes before pushing and updates the project rules checklist.",
+    "isGeneral": false
+  },
+  "compound": {
+    "keywords": [
+      "compound",
+      "/compound",
+      "compound this",
+      "document learnings",
+      "save what we learned",
+      "after PR completion",
+      "after pull request completion",
+      "record what we learned",
+      "summarize learnings",
+      "synthesis",
+      "consolidate",
+      "code learnings",
+      "documentation"
+    ],
+    "hint": "Extracts knowledge from PR context and saves it to docs/learnings/.",
+    "isGeneral": false
+  },
+  "deep-research": {
+    "keywords": [
+      "deep-research",
+      "deep research",
+      "in-depth investigation",
+      "web research",
+      "detailed search",
+      "comprehensive research",
+      "comprehensive analysis",
+      "cited report",
+      "research topic",
+      "topic investigation",
+      "parallel research",
+      "parallel search",
+      "browser-explorer"
+    ],
+    "hint": "Analyzes topics in depth with multiple agents and generates a cited report.",
+    "isGeneral": false
+  },
+  "dev-scan": {
+    "keywords": [
+      "dev-scan",
+      "developer opinions",
+      "community reactions",
+      "developer reactions",
+      "community opinions",
+      "Reddit reactions",
+      "HN reactions",
+      "tech opinions",
+      "collect tech opinions",
+      "developer community",
+      "opinion aggregator",
+      "what do devs think",
+      "dev trends",
+      "tech evaluation"
+    ],
+    "hint": "Collects diverse opinions on tech topics from developer communities.",
+    "isGeneral": false
+  },
+  "discuss": {
+    "keywords": [
+      "discuss",
+      "brainstorm",
+      "share opinions",
+      "debate",
+      "discuss this",
+      "pros and cons analysis",
+      "pros and cons",
+      "explore ideas",
+      "discuss idea",
+      "exchange opinions",
+      "discussion",
+      "think it through together",
+      "think about it",
+      "decision discussion",
+      "interview me",
+      "clarify requirements",
+      "interview",
+      "not sure what to build",
+      "requirements unclear",
+      "refine idea",
+      "requirement clarification",
+      "spec clarification"
+    ],
+    "hint": "Socratic discussion partner. Use --scored for ambiguity tracking (replaces /deep-interview).",
+    "isGeneral": false
+  },
+  "google-search": {
+    "keywords": [
+      "google-search",
+      "search Google",
+      "Google search",
+      "find it on Google",
+      "find articles about",
+      "search the web for",
+      "web search",
+      "internet search",
+      "information search",
+      "Chrome search",
+      "chromux search",
+      "webpage search",
+      "article search"
+    ],
+    "hint": "Performs Google web searches using Chrome and provides web page content.",
+    "isGeneral": false
+  },
+  "mirror": {
+    "keywords": [
+      "mirror",
+      "mirror back",
+      "echo back",
+      "explain it again",
+      "did I get it right?",
+      "tell me what I want",
+      "confirm this",
+      "paraphrase this",
+      "explain what you understood",
+      "what did I ask?"
+    ],
+    "hint": "Confirms the user's question and explains the understood content.",
+    "isGeneral": false
+  },
+  "ralph": {
+    "keywords": [
+      "ralph",
+      "repetitive task",
+      "definition of done verification",
+      "DoD verification",
+      "autonomous task",
+      "independent verification",
+      "ralph Wigum technique",
+      "task completion",
+      "verification loop",
+      "prompt re-injection",
+      "stop hook",
+      "task automation",
+      "verification"
+    ],
+    "hint": "Autonomously performs and verifies repetitive tasks through definition-of-done verification.",
+    "isGeneral": false
+  },
+  "reference-seek": {
+    "keywords": [
+      "reference-seek",
+      "find references",
+      "something to reference",
+      "similar implementation",
+      "any open source?",
+      "how others do this",
+      "code examples",
+      "implementation examples",
+      "design patterns",
+      "best practices",
+      "technical resources",
+      "source code"
+    ],
+    "hint": "Finds references and provides code examples, design patterns, and open-source implementations.",
+    "isGeneral": false
+  },
+  "rulph": {
+    "keywords": [
+      "rulph",
+      "/rulph",
+      "rubric evaluate",
+      "rubric score",
+      "multi-model evaluate",
+      "score and improve",
+      "evaluate and iterate",
+      "grade this",
+      "rubric evaluation",
+      "scoring",
+      "multi-model evaluation",
+      "evaluate and improve",
+      "iterative improvement"
+    ],
+    "hint": "Evaluates output based on rubrics and iteratively improves it.",
+    "isGeneral": false
+  },
+  "scope": {
+    "keywords": [
+      "scope",
+      "change scope",
+      "blast radius",
+      "impact analysis",
+      "file changes",
+      "what to change",
+      "quick analysis",
+      "change analysis",
+      "scope analysis",
+      "verify changes",
+      "impact range"
+    ],
+    "hint": "Quickly analyzes change scope and impact to identify required files and approaches.",
+    "isGeneral": false
+  },
+  "skill-session-analyzer": {
+    "keywords": [
+      "skill-session-analyzer",
+      "analyze session",
+      "session analysis",
+      "evaluate skill execution",
+      "skill execution evaluation",
+      "check session logs",
+      "verify skill execution",
+      "skill verification",
+      "code session analysis",
+      "session diagnostics",
+      "log analysis"
+    ],
+    "hint": "Analyzes past Claude Code sessions to verify skill behavior.",
+    "isGeneral": false
+  },
+  "tech-decision": {
+    "keywords": [
+      "tech-decision",
+      "tech decision",
+      "technology choice",
+      "tech architecture",
+      "architecture decision",
+      "make a decision",
+      "technology strategy",
+      "tech evaluation",
+      "tech analysis",
+      "architecture review",
+      "technical choice",
+      "evaluate technology",
+      "analyze tech options"
+    ],
+    "hint": "Systematically guides through technology selection and architecture decision-making.",
+    "isGeneral": false
+  },
+  "tribunal": {
+    "keywords": [
+      "tribunal",
+      "/tribunal",
+      "review this",
+      "3-way review",
+      "risk-value-feasibility check",
+      "multi-perspective adversarial review",
+      "3-perspective review",
+      "risk review",
+      "code review",
+      "evaluation",
+      "multi-angle review",
+      "risk analysis"
+    ],
+    "hint": "Reviews risk, value, and feasibility from multiple perspectives to provide comprehensive feedback.",
+    "isGeneral": false
+  },
+  "ultrawork": {
+    "keywords": [
+      "ultrawork",
+      "auto pipeline",
+      "specify execute",
+      "end-to-end workflow",
+      "full pipeline",
+      "run all at once",
+      "auto workflow",
+      "full automation",
+      "pipeline execution",
+      "specify then execute",
+      "full task automation",
+      "one-stop execution",
+      "run ultrawork"
+    ],
+    "hint": "Automatically runs the specify → execute pipeline in a single command.",
+    "isGeneral": false
+  }
+}
