@@ -1,4 +1,4 @@
-# hoyeon
+# harness
 
 English | [한국어](README.ko.md) | [中文](README.zh.md) | [日本語](README.ja.md)
 
@@ -15,7 +15,7 @@ A Claude Code plugin that derives requirements from your intent, verifies every 
 
 Most AI coding fails at the **input**, not the output. The bottleneck isn't AI capability. It's human clarity. You say "add dark mode" and there are a hundred decisions hiding behind those three words.
 
-Most tools either force you to enumerate them upfront, or ignore them entirely. Hoyeon does neither — it **derives** them. Layer by layer. Gate by gate. From intent to verified code.
+Most tools either force you to enumerate them upfront, or ignore them entirely. Harness does neither — it **derives** them. Layer by layer. Gate by gate. From intent to verified code.
 
 ---
 
@@ -25,12 +25,12 @@ Most tools either force you to enumerate them upfront, or ignore them entirely. 
 
 Requirements aren't artifacts you produce before coding. They're **discoveries** — surfaced through structured interrogation of your intent. Every "add a feature" conceals unstated assumptions. Every "fix the bug" hides a root cause you haven't named yet.
 
-Hoyeon's job is to find what you haven't said.
+Harness's job is to find what you haven't said.
 
 ```
   You say:     "add dark mode toggle"
                     │
-  Hoyeon asks: "System preference or manual?"     ← assumption exposed
+  Harness asks: "System preference or manual?"     ← assumption exposed
                "Which components need variants?"   ← scope clarified
                "Persist where? How?"               ← decision forced
                     │
@@ -45,7 +45,7 @@ This is not just process. It's built on three beliefs about how AI coding should
 
 Most AI tools jump straight to tasks — "create file X, edit function Y." But tasks are derivatives. They change when requirements change. If you start from tasks, you're building on sand.
 
-Hoyeon starts from **goals** and derives downward through a layer chain:
+Harness starts from **goals** and derives downward through a layer chain:
 
 ```
 Goal → Decisions → Requirements → Sub-requirements → Tasks
@@ -53,13 +53,13 @@ Goal → Decisions → Requirements → Sub-requirements → Tasks
 
 Requirements are refined from multiple angles before a single line of code is written. Interviewers probe assumptions. Gap analyzers find what's missing. UX reviewers check user impact. Tradeoff analyzers weigh alternatives. Each perspective sharpens the requirements until they're precise enough to generate verifiable sub-requirements.
 
-The chain is directional: **requirements produce tasks, never the reverse.** If requirements change, sub-requirements and tasks are re-derived. This is why Hoyeon can recover from mid-execution blockers — the requirements are still valid, only the tasks need adjustment.
+The chain is directional: **requirements produce tasks, never the reverse.** If requirements change, sub-requirements and tasks are re-derived. This is why Harness can recover from mid-execution blockers — the requirements are still valid, only the tasks need adjustment.
 
 ### 2. Determinism by design
 
 > *LLMs are non-deterministic. The system around them doesn't have to be.*
 
-An LLM given the same prompt twice may produce different code. This is the fundamental challenge of AI-assisted development. Hoyeon's answer: **constrain the LLM with programmatic control** so that non-determinism doesn't propagate.
+An LLM given the same prompt twice may produce different code. This is the fundamental challenge of AI-assisted development. Harness's answer: **constrain the LLM with programmatic control** so that non-determinism doesn't propagate.
 
 Three mechanisms enforce this:
 
@@ -90,7 +90,7 @@ Human review is reserved for what machines genuinely can't judge — UX feel, bu
 
 ### 4. Knowledge compounds
 
-> *Most AI tools start from zero every session. Hoyeon remembers.*
+> *Most AI tools start from zero every session. Harness remembers.*
 
 Every execution generates structured learnings — not logs, not chat history, but **typed knowledge**: what went wrong, why, and the rule to prevent it next time.
 
@@ -116,7 +116,7 @@ Three mechanisms make this work:
 - **Cross-project search** — BM25 search across all projects: requirements, sub-requirements, constraints, and learnings. What you learned in project A informs what you ask in project B
 - **Compounding loop** — Each /specify session starts by searching past learnings. More projects → richer search results → more complete requirements → fewer surprises during execution → better learnings → the cycle continues
 
-The result: **the tenth project you run through Hoyeon is meaningfully better than the first** — not because the LLM improved, but because the knowledge base did.
+The result: **the tenth project you run through Harness is meaningfully better than the first** — not because the LLM improved, but because the knowledge base did.
 
 ---
 
@@ -129,7 +129,7 @@ These aren't aspirations. They're enforced by the architecture — the CLI rejec
 ```
 You:  /specify "add dark mode toggle to settings page"
 
-  Hoyeon interviews you (decision-based):
+  Harness interviews you (decision-based):
   ├─ "User opens the app at night — should it auto-detect OS dark mode or require a manual toggle?"
   ├─ "User switches to dark mode mid-session — should charts/images also invert?"
   └─ derives implications: CSS variables needed, localStorage for persistence, prefers-color-scheme media query
@@ -148,7 +148,7 @@ You:  /blueprint
 
 You:  /execute
 
-  Hoyeon orchestrates:
+  Harness orchestrates:
   ├─ Worker agents implement each task in parallel (--tdd: tests first)
   ├─ Code review: cross-cutting integration review
   └─ Final Verify: goal + constraints + sub-requirements — holistic check
@@ -421,7 +421,7 @@ See [docs/architecture.md](docs/architecture.md) for the full pipeline diagram.
 ```bash
 # Install the plugin
 /plugin marketplace add youngwhy/claude-marketplace
-/plugin install hoyeon@youngwhy
+/plugin install harness@youngwhy
 
 # Start — derive requirements, plan, and execute
 /specify "add dark mode toggle to settings page"

@@ -376,7 +376,7 @@ Always save the rubric and scores automatically. Include the full report in the 
 
 ```
 SESSION_ID="[session ID from UserPromptSubmit hook]"
-REPORT_DIR="$HOME/.hoyeon/$SESSION_ID/tmp/rulph"
+REPORT_DIR="$HOME/.harness/$SESSION_ID/tmp/rulph"
 Bash: mkdir -p "$REPORT_DIR"
 
 Write to $REPORT_DIR/$(date +%Y-%m-%d-%H%M%S)-report.md:

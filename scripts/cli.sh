@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# cli.sh — pure bash + jq replacement for the npm hoyeon-cli package.
+# harness-cli — the plugin's CLI, implemented in pure bash + jq (no npm dependency).
 #
-# Same surface as the original CLI; downstream skills/agents call us via
+# Downstream skills/agents/hooks call it by path via
 #   bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" <group> <sub> ...
 #
 # Groups: req | plan | session | learning | issue
@@ -525,11 +525,11 @@ cmd_plan() {
 }
 
 # ---------------------------------------------------------------------------
-# session group — state at $HOME/.hoyeon/<sid>/state.json
+# session group — state at $HOME/.harness/<sid>/state.json
 # ---------------------------------------------------------------------------
 
 session_state_path() {
-  printf '%s/.hoyeon/%s/state.json' "$HOME" "$1"
+  printf '%s/.harness/%s/state.json' "$HOME" "$1"
 }
 
 session_set() {

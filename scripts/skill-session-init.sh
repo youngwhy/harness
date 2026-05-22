@@ -5,11 +5,11 @@
 #   - UserPromptSubmit (user types "/execute", "/specify", etc.)
 #   - PreToolUse[Skill] (code calls Skill("execute"), Skill("specify"), etc.)
 #
-# Writes: ~/.hoyeon/{session_id}/state.json
+# Writes: ~/.harness/{session_id}/state.json
 # Read by: skill-session-stop.sh, skill-session-guard.sh, skill-session-cleanup.sh
 #
 # Session dir structure:
-#   ~/.hoyeon/{session_id}/
+#   ~/.harness/{session_id}/
 #   ├── state.json   # unified state
 #   ├── files/       # non-JSON artifacts (dod.md, flag files)
 #   └── tmp/         # skill temp files (dev-scan output, etc.)
@@ -65,12 +65,12 @@ fi
 [[ -z "$DETECTED_SKILL" ]] && exit 0
 
 # ── Spec path resolution is handled by each skill's Phase 0 ──
-# (execute reads arg → .hoyeon/specs → state.json; specify creates at .hoyeon/specs)
+# (execute reads arg → .harness/specs → state.json; specify creates at .harness/specs)
 # Hook does NOT write spec — skills register it via cli session set
 
 # ── Write session state ──
 
-SESSION_DIR="$HOME/.hoyeon/$SESSION_ID"
+SESSION_DIR="$HOME/.harness/$SESSION_ID"
 mkdir -p "$SESSION_DIR/files" "$SESSION_DIR/tmp"
 
 STATE_FILE="$SESSION_DIR/state.json"

@@ -66,7 +66,7 @@ scaffold produces requirements.md only (no tasks). Task breakdown is handled lat
 ### Session Init (before L0)
 
 ```bash
-SPEC_DIR=".hoyeon/specs/{name}"
+SPEC_DIR=".harness/specs/{name}"
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" req init $SPEC_DIR --type greenfield --goal "{goal}"
 ```
 
@@ -549,7 +549,7 @@ Each generated skill must reference actual tools/commands from L2 decisions:
 ### L4 Approval — Plan Summary
 
 ```
-requirements.md ready! .hoyeon/specs/{name}/requirements.md
+requirements.md ready! .harness/specs/{name}/requirements.md
 
 Goal
 ----------------------------------------
@@ -628,7 +628,7 @@ AskUserQuestion(
 
 ## Checklist Before Stopping
 
-- [ ] requirements.md at `.hoyeon/specs/{name}/requirements.md`
+- [ ] requirements.md at `.harness/specs/{name}/requirements.md`
 - [ ] Confirmed Goal is architecture-framed (not feature-framed)
 - [ ] Non-Goals includes "feature implementation" or similar
 - [ ] L2: Decisions cover all 5 architecture dimensions

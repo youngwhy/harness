@@ -1,7 +1,7 @@
 #!/bin/bash
 # rulph-init.sh - PreToolUse[Skill] hook
 #
-# Purpose: Merge rulph namespace into unified ~/.hoyeon/{session_id}/state.json
+# Purpose: Merge rulph namespace into unified ~/.harness/{session_id}/state.json
 # Activation: tool_name="Skill" && tool_input.skill contains "rulph"
 #
 # The SKILL.md itself writes the full state (score, threshold, round).
@@ -27,7 +27,7 @@ if [[ -z "$SESSION_ID" ]]; then
   SESSION_ID="unknown"
 fi
 
-SESSION_DIR="$HOME/.hoyeon/$SESSION_ID"
+SESSION_DIR="$HOME/.harness/$SESSION_ID"
 STATE_FILE="$SESSION_DIR/state.json"
 
 # Don't overwrite if rulph already active (resume case)

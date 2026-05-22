@@ -134,7 +134,7 @@ If the user picks none, proceed with base calibration. Otherwise, modifiers will
 ### Step 0.3: Spec Name & Output Setup
 
 - Determine **spec name** (kebab-case, e.g., `user-dashboard`)
-- Decide `spec_dir`: default `.hoyeon/specs/{spec-name}/`
+- Decide `spec_dir`: default `.harness/specs/{spec-name}/`
 - **Bootstrap via cli** — creates the directory AND writes a `requirements.md` stub with the correct frontmatter so /blueprint can read it later:
   ```bash
   bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" req init <spec_dir> --type <greenfield|feature|refactor|bugfix> --goal "<one-line goal>"
@@ -410,9 +410,9 @@ Run 3 agents **in parallel**:
    - **interaction-extractor** agent with: qa-log.md content + template
    - **tech-extractor** agent with: qa-log.md content + template
 3. Write outputs to:
-   - `.hoyeon/specs/{spec-name}/reqs-business.md`
-   - `.hoyeon/specs/{spec-name}/reqs-interaction.md`
-   - `.hoyeon/specs/{spec-name}/reqs-tech.md`
+   - `.harness/specs/{spec-name}/reqs-business.md`
+   - `.harness/specs/{spec-name}/reqs-interaction.md`
+   - `.harness/specs/{spec-name}/reqs-tech.md`
 
 ## Phase 3: Cross-Check
 
@@ -555,7 +555,7 @@ Only after user has explicitly approved the preview:
 
 ## Output Files
 
-All outputs go to `<spec_dir>/` (default `.hoyeon/specs/{spec-name}/`):
+All outputs go to `<spec_dir>/` (default `.harness/specs/{spec-name}/`):
 
 | File | Phase | Description | Consumed by |
 |------|-------|-------------|-------------|

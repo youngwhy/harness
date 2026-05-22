@@ -25,8 +25,8 @@ if ! echo "$PROMPT" | grep -qiE "^/ultrawork|^ultrawork"; then
 fi
 
 # Initialize state file
-STATE_FILE="$CWD/.hoyeon/state.local.json"
-mkdir -p "$CWD/.hoyeon/specs"
+STATE_FILE="$CWD/.harness/state.local.json"
+mkdir -p "$CWD/.harness/specs"
 
 if [[ ! -f "$STATE_FILE" ]]; then
   echo '{}' > "$STATE_FILE"

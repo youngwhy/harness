@@ -28,20 +28,20 @@ Extracts knowledge from PR context and saves structured documentation to `docs/l
    - **If no PR exists**: Prompt user to enter PR number directly or confirm proceeding without PR
 
 2. **Extract Plan path**
-   - Find Plan path pattern in PR body: `.hoyeon/specs/{name}/PLAN.md`
-   - Regex: `\.hoyeon/specs/[^/]+/PLAN\.md`
-   - **If no Plan path found**: Prompt user to enter spec name directly or select from `.hoyeon/specs/` directory listing
+   - Find Plan path pattern in PR body: `.harness/specs/{name}/PLAN.md`
+   - Regex: `\.harness/specs/[^/]+/PLAN\.md`
+   - **If no Plan path found**: Prompt user to enter spec name directly or select from `.harness/specs/` directory listing
 
 3. **Derive Context path**
    - Extract spec name from Plan path
-   - Context directory: `.hoyeon/specs/{name}/context/`
+   - Context directory: `.harness/specs/{name}/context/`
 
 4. **Parallel collection** (run following commands simultaneously, skip if files don't exist)
    ```bash
    # Context files (treat as empty if not found)
-   cat .hoyeon/specs/{name}/context/learnings.json 2>/dev/null || echo ""
-   cat .hoyeon/specs/{name}/context/decisions.md 2>/dev/null || echo ""
-   cat .hoyeon/specs/{name}/context/issues.json 2>/dev/null || echo ""
+   cat .harness/specs/{name}/context/learnings.json 2>/dev/null || echo ""
+   cat .harness/specs/{name}/context/decisions.md 2>/dev/null || echo ""
+   cat .harness/specs/{name}/context/issues.json 2>/dev/null || echo ""
 
    # PR comments and reviews (collect as JSON for stability)
    gh pr view {pr_number} --json comments,reviews

@@ -80,13 +80,13 @@ The specify skill will:
 3. L2: Decisions + constraints (user approves)
 4. L3: Requirements + sub-requirements with GWT (user approves)
 5. L4: Verification journeys (user approves)
-6. Write approved `spec.json` at `.hoyeon/specs/{name}/spec.json`
+6. Write approved `spec.json` at `.harness/specs/{name}/spec.json`
 
 ### Step 4: Let Hooks Handle the Rest
 
 After specify completes with an approved spec:
 - `ultrawork-stop-hook.sh` detects an approved `spec.json` (meta.approved_by populated)
-- Hook automatically injects `/execute .hoyeon/specs/{name}/spec.json`
+- Hook automatically injects `/execute .harness/specs/{name}/spec.json`
 - `/execute` prompts (via AskUserQuestion) for dispatch/work/verify mode selections,
   derives `plan.json`, and runs tasks to completion
 
@@ -101,7 +101,7 @@ This will halt the current phase and await further instructions.
 
 ## State Tracking
 
-The hook tracks progress in `.hoyeon/state.local.json`:
+The hook tracks progress in `.harness/state.local.json`:
 ```json
 {
   "session-id": {
@@ -135,8 +135,8 @@ User: "/ultrawork add dark mode support"
 3. Invoke: Skill("specify", args="dark-mode")
 
 [Specify L0→L1→L2(approve)→L3(approve)→L4(approve)]
-[spec.json written and approved at .hoyeon/specs/dark-mode/spec.json]
-[Hook detects approved spec → triggers "/execute .hoyeon/specs/dark-mode/spec.json"]
+[spec.json written and approved at .harness/specs/dark-mode/spec.json]
+[Hook detects approved spec → triggers "/execute .harness/specs/dark-mode/spec.json"]
 [/execute prompts for dispatch/work/verify, derives plan.json, runs tasks]
 [All tasks completed]
 [Pipeline ends]

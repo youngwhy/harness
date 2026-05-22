@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "youngwhy",
-  "description": "Personal Claude Code marketplace — fork of team-attention/hoyeon with the CLI rewritten in pure bash (no npm dependency).",
+  "description": "Personal Claude Code marketplace for youngwhy/harness — development workflow automation with the CLI in pure bash (no npm dependency).",
   "owner": {
     "name": "youngwhy"
   },

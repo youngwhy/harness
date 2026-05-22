@@ -16,7 +16,7 @@ if [ -z "$SESSION_ID" ]; then
     exit 0
 fi
 
-SESSION_DIR="$HOME/.hoyeon/$SESSION_ID"
+SESSION_DIR="$HOME/.harness/$SESSION_ID"
 STATE_FILE="$SESSION_DIR/state.json"
 VERIFY_FLAG="$SESSION_DIR/files/ralph-verify"
 DOD_FILE="$SESSION_DIR/files/ralph-dod.md"

@@ -6,10 +6,10 @@ Install the plugin in Claude Code:
 
 ```
 /plugin marketplace add youngwhy/claude-marketplace
-/plugin install hoyeon@youngwhy
+/plugin install harness@youngwhy
 ```
 
-This registers all skills, agents, and hooks defined by the plugin. No npm install is needed — the bundled `scripts/cli.sh` (pure bash + jq) replaces the previous `hoyeon-cli` npm package.
+This registers all skills, agents, and hooks defined by the plugin. No npm install is needed — the plugin's CLI, **harness-cli** (`scripts/cli.sh`, pure bash + jq), ships bundled.
 
 ## Development Setup
 
@@ -37,7 +37,7 @@ claude-marketplace/
     plugin.json       # Plugin metadata + version
     marketplace.json  # Marketplace listing + version
   scripts/
-    cli.sh        # Bundled bash CLI (replaces hoyeon-cli npm package)
+    cli.sh        # harness-cli — bundled bash CLI (pure bash + jq)
   docs/           # Documentation and learnings
 ```
 

@@ -2,7 +2,7 @@
 # rulph-stop.sh - Stop hook
 #
 # Purpose: Block Claude from stopping mid-loop in rulph skill
-# State is session-scoped (unified ~/.hoyeon/{session_id}/state.json, .rulph namespace).
+# State is session-scoped (unified ~/.harness/{session_id}/state.json, .rulph namespace).
 #
 # Decision logic:
 #   Allow stop when:
@@ -25,7 +25,7 @@ if [[ -z "$SESSION_ID" ]]; then
   SESSION_ID="unknown"
 fi
 
-SESSION_DIR="$HOME/.hoyeon/$SESSION_ID"
+SESSION_DIR="$HOME/.harness/$SESSION_ID"
 STATE_FILE="$SESSION_DIR/state.json"
 
 # No state file or no .rulph namespace = not in rulph, allow exit

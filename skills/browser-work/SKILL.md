@@ -30,7 +30,7 @@ If the orchestrator walks through one cycle first and builds a "map," the agent 
 
 ```bash
 SESSION_ID="[CLAUDE_SESSION_ID from UserPromptSubmit hook]"
-WORK_DIR="$HOME/.hoyeon/$SESSION_ID"
+WORK_DIR="$HOME/.harness/$SESSION_ID"
 mkdir -p "$WORK_DIR"
 echo "WORK_DIR=$WORK_DIR"
 ```
@@ -154,7 +154,7 @@ Launch the browser-explorer agent with the guide file content included in the pr
 
 ```
 Agent(
-  subagent_type: "hoyeon:browser-explorer",
+  subagent_type: "harness:browser-explorer",
   mode: "dontAsk",
   prompt: """
 [Task description from user]
@@ -195,4 +195,4 @@ After the agent completes:
 
 ## Cleanup
 
-Guide files persist in `~/.hoyeon/{sid}/` for reference. No auto-cleanup — user can review or reuse.
+Guide files persist in `~/.harness/{sid}/` for reference. No auto-cleanup — user can review or reuse.

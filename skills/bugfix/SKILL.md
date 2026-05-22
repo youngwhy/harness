@@ -56,10 +56,10 @@ Phase 3: EXECUTE ─────────────────────
 
 Phase 4: RESULT HANDLING (if HALT) ────────────────
   Retry (max 3) with stagnation detection → Phase 3
-  Circuit breaker → .hoyeon/debug/{slug}.md → suggest /specify
+  Circuit breaker → .harness/debug/{slug}.md → suggest /specify
 
 Phase 5: CLEANUP & REPORT ─────────────────────────
-  Save .hoyeon/debug/{slug}.md → final summary
+  Save .harness/debug/{slug}.md → final summary
 ```
 
 ## Execution Mode
@@ -88,7 +88,7 @@ Extract from user input:
 ```
 SESSION_ID = [from hook — $CLAUDE_SESSION_ID]
 slug = convert bug description to kebab-case (e.g. "null-pointer-in-auth")
-DEBUG_STATE = "$HOME/.hoyeon/$SESSION_ID/debug-state.md"
+DEBUG_STATE = "$HOME/.harness/$SESSION_ID/debug-state.md"
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" session set --sid $SESSION_ID --json '{"skill":"bugfix","debug":"'"$DEBUG_STATE"'"}'
 
 Write(DEBUG_STATE):
@@ -277,7 +277,7 @@ Convert diagnosis results into requirements.md format. requirements.md is the st
 ### Step 2.1: Initialize
 
 ```
-SPEC_DIR = "$HOME/.hoyeon/$SESSION_ID"
+SPEC_DIR = "$HOME/.harness/$SESSION_ID"
 
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" req init ${SPEC_DIR} --type bugfix --goal "Fix: {bug description}"
 ```
@@ -463,9 +463,9 @@ Max attempts exceeded. Present escalation options to user.
 **First, save attempt records:**
 
 ```
-Bash: mkdir -p .hoyeon/debug
+Bash: mkdir -p .harness/debug
 
-Write to .hoyeon/debug/{slug}.md:
+Write to .harness/debug/{slug}.md:
   # Bugfix Report: {description}
   Date: {timestamp}
   Status: ESCALATED
@@ -493,7 +493,7 @@ AskUserQuestion:
   - "Switch to /specify (full planning)"
     → "requirements.md and debug report are available:
        Spec Dir: {SPEC_DIR}
-       Report: .hoyeon/debug/{slug}.md
+       Report: .harness/debug/{slug}.md
        /specify can reference this context for deeper analysis."
   - "Try once more"
     → attempt += 1, go to Phase 3 (no circuit breaker reset)
@@ -509,9 +509,9 @@ After execute completes successfully.
 ### Step 5.1: Save Debug Report
 
 ```
-Bash: mkdir -p .hoyeon/debug
+Bash: mkdir -p .harness/debug
 
-Write to .hoyeon/debug/{slug}.md:
+Write to .harness/debug/{slug}.md:
   # Bugfix Report: {description}
   Date: {timestamp}
   Status: RESOLVED
@@ -541,7 +541,7 @@ print("""
 **Root Cause**: {file:line — 1-line description}
 **Attempts**: {count}
 **Spec Dir**: {SPEC_DIR}
-**Report**: .hoyeon/debug/{slug}.md
+**Report**: .harness/debug/{slug}.md
 """)
 ```
 
@@ -567,7 +567,7 @@ AskUserQuestion:
 ```
 /bugfix (diagnose + requirements.md + execute)
    ↓ circuit breaker (3 failures)
-   ↓ requirements.md + .hoyeon/debug/{slug}.md saved
+   ↓ requirements.md + .harness/debug/{slug}.md saved
 /specify (requirements.md enrichment, leveraging existing diagnosis context)
    ↓
 /execute (enriched requirements execution)

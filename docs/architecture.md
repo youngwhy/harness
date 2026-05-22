@@ -2,7 +2,7 @@
 
 ## Overview
 
-Hoyeon is a Claude Code plugin that implements a **specify-blueprint-execute** development pipeline. The core idea: separate requirements, planning, and implementation into distinct phases so each can be independently validated, parallelized, and guarded by hooks.
+Harness is a Claude Code plugin that implements a **specify-blueprint-execute** development pipeline. The core idea: separate requirements, planning, and implementation into distinct phases so each can be independently validated, parallelized, and guarded by hooks.
 
 1. **Specify** -- An interview-driven skill derives structured requirements, outputting `requirements.md`.
 2. **Blueprint** -- A contract-first planner reads `requirements.md` and produces `plan.json` (task graph with dependencies) and `contracts.md` (interface contracts between tasks).
@@ -173,7 +173,7 @@ Key conventions:
 | `rv-validator.sh` | Stop | Run re-validation pass on stop |
 | `rulph-stop.sh` | Stop | Handle rulph loop termination |
 | `ralph-stop.sh` | Stop | Ralph loop DoD verification and prompt re-injection |
-| `skill-session-cleanup.sh` | SessionEnd | Clean up session directory (`~/.hoyeon/{session_id}/`) |
+| `skill-session-cleanup.sh` | SessionEnd | Clean up session directory (`~/.harness/{session_id}/`) |
 
 ---
 

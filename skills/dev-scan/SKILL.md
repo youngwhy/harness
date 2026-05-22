@@ -180,7 +180,7 @@ Split into two phases: API sources in parallel (shell backgrounding), then all G
 ```bash
 SESSION_ID="[session ID from UserPromptSubmit hook]"
 RUN_ID="dev-scan-$(date +%s)-$RANDOM"
-D="$HOME/.hoyeon/$SESSION_ID/tmp/$RUN_ID"
+D="$HOME/.harness/$SESSION_ID/tmp/$RUN_ID"
 mkdir -p "$D"
 echo "$D" > /tmp/dev-scan-current-dir
 

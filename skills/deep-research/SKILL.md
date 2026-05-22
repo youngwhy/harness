@@ -47,7 +47,7 @@ Run all checks in a **single Bash call**:
 ```bash
 # Session dir init
 SESSION_ID="[CLAUDE_SESSION_ID from UserPromptSubmit hook]"
-RESEARCH_DIR="$HOME/.hoyeon/$SESSION_ID/research"
+RESEARCH_DIR="$HOME/.harness/$SESSION_ID/research"
 mkdir -p "$RESEARCH_DIR"
 echo "RESEARCH_DIR=$RESEARCH_DIR"
 
@@ -186,7 +186,7 @@ In the SAME message as all Agent calls, dispatch Gemini as a background Bash:
 
 ```
 Bash(run_in_background=true):
-  /absolute/path/to/script/gemini-research.sh "<full research query>" "$HOME/.hoyeon/SESSION_ID/research" 300
+  /absolute/path/to/script/gemini-research.sh "<full research query>" "$HOME/.harness/SESSION_ID/research" 300
 ```
 
 Note: Inline `SESSION_ID` and the script path literally. The script path is:
@@ -352,7 +352,7 @@ Structure:
 **Agent tool call:**
 ```
 Agent(
-  subagent_type: "hoyeon:browser-explorer",
+  subagent_type: "harness:browser-explorer",
   mode: "dontAsk",
   prompt: "[browser agent prompt as above, fully customized]"
 )

@@ -67,7 +67,7 @@ skills_text = '\n'.join(skills)
 agents_text = '\n'.join(agents)
 
 prompt = f'''<EXTREMELY_IMPORTANT>
-You have hoyeon plugin skills and agents. Before doing ANY work, check if a skill applies.
+You have harness plugin skills and agents. Before doing ANY work, check if a skill applies.
 
 ## Action Rule
 

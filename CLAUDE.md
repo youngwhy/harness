@@ -78,7 +78,7 @@ Hooks are registered in `.claude/settings.json` and automate pipeline transition
 | `rv-validator.sh` | Stop | Run re-validation pass on stop |
 | `rulph-stop.sh` | Stop | Handle rulph loop termination |
 | `ralph-stop.sh` | Stop | Ralph loop DoD verification + prompt re-injection |
-| `skill-session-cleanup.sh` | SessionEnd | Clean up session dir (`rm -rf ~/.hoyeon/{session_id}/`) |
+| `skill-session-cleanup.sh` | SessionEnd | Clean up session dir (`rm -rf ~/.harness/{session_id}/`) |
 
 ### Hook Development Notes
 
@@ -120,11 +120,10 @@ Hooks are registered in `.claude/settings.json` and automate pipeline transition
 
 ## Recent Changes (v1.6.0)
 
-### Fork: CLI Rewritten in Pure Bash
-- This repo is a fork of `team-attention/hoyeon` with the npm `@team-attention/hoyeon-cli` dependency removed
-- The CLI is now `scripts/cli.sh` — pure bash + jq, ships inside the plugin, no global install needed
-- All skills/agents/hooks invoke it via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" <group> <sub> ...`
-- Subcommand surface is identical to the previous npm CLI (req | plan | session | learning | issue)
+### harness-cli (Pure Bash)
+- **harness-cli** is the plugin's CLI, implemented as `scripts/cli.sh` — pure bash + jq, ships inside the plugin, no npm dependency, no global install needed
+- All skills/agents/hooks invoke it by path via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" <group> <sub> ...`
+- Groups: req | plan | session | learning | issue
 - The `cli-version-sync.sh` SessionStart hook is removed (no version to sync)
 
 ### Pipeline v2 Migration

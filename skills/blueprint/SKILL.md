@@ -96,7 +96,7 @@ All `plan.json` operations go through `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.s
 
 ### Step 0.1: Resolve spec_dir
 
-- If user passed a path, use it. Otherwise ask: "Which spec_dir? (e.g., `.hoyeon/specs/my-thing/`)"
+- If user passed a path, use it. Otherwise ask: "Which spec_dir? (e.g., `.harness/specs/my-thing/`)"
 - Error if `<spec_dir>/requirements.md` does not exist — tell user to run /specify first.
 
 ### Step 0.2: Read requirements.md

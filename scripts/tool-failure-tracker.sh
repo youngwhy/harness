@@ -13,7 +13,7 @@ if [[ -z "$SESSION_ID" ]]; then
 fi
 
 # State file for failure tracking
-STATE_DIR="$HOME/.hoyeon/$SESSION_ID"
+STATE_DIR="$HOME/.harness/$SESSION_ID"
 FAILURE_FILE="$STATE_DIR/failure-counts.json"
 
 # Ensure state directory exists

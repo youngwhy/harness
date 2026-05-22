@@ -93,7 +93,7 @@ After user confirms, initialize the loop state and write the DoD file.
 **Write DoD file** — create the checklist as a markdown file:
 
 ```
-Bash: SESSION_ID="[session ID from hook]" && mkdir -p "$HOME/.hoyeon/$SESSION_ID/files" && cat > "$HOME/.hoyeon/$SESSION_ID/files/ralph-dod.md" << 'DODEOF'
+Bash: SESSION_ID="[session ID from hook]" && mkdir -p "$HOME/.harness/$SESSION_ID/files" && cat > "$HOME/.harness/$SESSION_ID/files/ralph-dod.md" << 'DODEOF'
 # Definition of Done
 
 - [ ] [criterion 1]
@@ -111,7 +111,7 @@ Bash: SESSION_ID="[session ID from hook]" && PROMPT=$(cat << 'PROMPTEOF'
 PROMPTEOF
 ) && bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" session set --sid "$SESSION_ID" --json "$(jq -n \
   --arg prompt "$PROMPT" \
-  --arg dod_file "$HOME/.hoyeon/$SESSION_ID/files/ralph-dod.md" \
+  --arg dod_file "$HOME/.harness/$SESSION_ID/files/ralph-dod.md" \
   --arg created_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
   '{ralph: {prompt: $prompt, iteration: 0, max_iterations: 10, dod_file: $dod_file, created_at: $created_at}}')"
 ```

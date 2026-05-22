@@ -24,7 +24,7 @@ SESSION_ID=$(echo "$HOOK_INPUT" | jq -r '.session_id')
 TRANSCRIPT_PATH=$(echo "$HOOK_INPUT" | jq -r '.transcript_path // empty')
 
 # CWD-scoped: ultrawork state lives with the spec files, not the session dir.
-STATE_FILE="$CWD/.hoyeon/state.local.json"
+STATE_FILE="$CWD/.harness/state.local.json"
 
 # Exit if no state file
 if [[ ! -f "$STATE_FILE" ]]; then
@@ -59,8 +59,8 @@ if [[ $MAX_ITERATIONS -gt 0 ]] && [[ $ITERATION -ge $MAX_ITERATIONS ]]; then
   exit 0
 fi
 
-# Locate the most recently modified spec.json under .hoyeon/specs/
-SPECS_ROOT="$CWD/.hoyeon/specs"
+# Locate the most recently modified spec.json under .harness/specs/
+SPECS_ROOT="$CWD/.harness/specs"
 SPEC_JSON=""
 SPEC_DIR=""
 FEATURE_NAME=""

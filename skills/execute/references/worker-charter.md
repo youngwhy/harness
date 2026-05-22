@@ -40,8 +40,8 @@ source files itself.
 ```json
 {
   "task_id": "T7",
-  "plan_path": "/abs/path/.hoyeon/specs/execute/plan.json",
-  "contracts_path": "/abs/path/.hoyeon/specs/execute/contracts.md",
+  "plan_path": "/abs/path/.harness/specs/execute/plan.json",
+  "contracts_path": "/abs/path/.harness/specs/execute/contracts.md",
   "sub_req_ids": ["R-F6.1", "R-F6.2", "R-F6.3", "R-F6.4", "R-N15.1", "R-N17.1"],
   "round": 1,
   "prior_failure_context": null

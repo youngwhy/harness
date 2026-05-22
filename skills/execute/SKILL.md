@@ -150,7 +150,7 @@ ELIF input_mode == "requirements":                   # R-F1.2
 ELIF input_mode == "virtual":                        # R-F1.3
   # Session-context synthesis with user confirm.
   timestamp = Bash("date +%Y%m%d-%H%M%S").trim()
-  spec_dir  = ".hoyeon/specs/adhoc-{timestamp}"
+  spec_dir  = ".harness/specs/adhoc-{timestamp}"
   Bash("mkdir -p {spec_dir}")
 
   # Synthesize a minimal plan from recent user messages + cwd state.
@@ -288,7 +288,7 @@ ELSE:
 
 ```
 # (a) Session state
-STATE_FILE="$HOME/.hoyeon/$CLAUDE_SESSION_ID/state.json"
+STATE_FILE="$HOME/.harness/$CLAUDE_SESSION_ID/state.json"
 Bash: jq -n \
   --arg dispatch "{dispatch}" \
   --arg verify   "{verify}" \
@@ -347,7 +347,7 @@ spec prose. Enforced everywhere in this skill and all dispatch/verify references
 
 **MAY read** (structural, via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" plan get` or `Read` on plan.json only):
 - `plan.json` fields: `tasks`, `journeys`, `verify_plan`, `meta`, `contracts.artifact`, `context`
-- Session state in `$HOME/.hoyeon/$CLAUDE_SESSION_ID/state.json`
+- Session state in `$HOME/.harness/$CLAUDE_SESSION_ID/state.json`
 - Worker output JSON returned by dispatch (WorkerOutput payload)
 - `audit.md`, `learnings.json`, `issues.json` for round-to-round context
 

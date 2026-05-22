@@ -12,7 +12,7 @@ if [ -z "$session_id" ]; then
     session_id="unknown"
 fi
 
-SESSION_DIR="$HOME/.hoyeon/$session_id"
+SESSION_DIR="$HOME/.harness/$session_id"
 STATE_FILE="$SESSION_DIR/state.json"
 
 # Detect !rv, !rv2, !rv3, etc.
