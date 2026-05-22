@@ -8,8 +8,8 @@
   "plugins": [
     {
       "name": "harness",
-      "description": "Development workflow automation: specify → open → execute pipeline with parallel research agents, hook-based guards, and PR state management",
-      "version": "1.6.0",
+      "description": "Development workflow automation: specify → blueprint → execute pipeline with parallel research agents, hook-based guards, and PR state management",
+      "version": "1.7.1",
       "author": {
         "name": "youngwhy"
       },

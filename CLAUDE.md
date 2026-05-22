@@ -117,14 +117,47 @@ Hooks are registered in `.claude/settings.json` and automate pipeline transition
 
 - Plugin version is in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
 - **Bump both files** in a single commit on `develop` before merging to `main`
+- The CLI (`harness-cli` = `scripts/cli.sh`) ships inside the plugin — no separate package version to sync
+
+## Fork Notes
+
+This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url upstream`) at v1.7.1.
+
+- **CLI in pure bash** — the upstream npm CLI is replaced by **harness-cli** = `scripts/cli.sh` (pure bash + jq). All skills/agents/hooks/codex adapters invoke it by path via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" <group> <sub>`. No npm install, no `cli/` package, no `cli-version-sync.sh` hook.
+- **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
+- **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
+
+## Recent Changes (v1.7.1)
+
+### chromux skill/agent sync
+- Drop duplicated chromux command tables across 5 consumer files; delegate to the canonical chromux skill loaded via global agent context
+- `agents/browser-explorer.md`: replace 18-line command catalog with category summary; switch debug rule and anti-patterns from legacy `eval`/`console`/`network` to `run`/`watch`
+- `skills/browser-work/references/chromux-guide.md`: rewrite as a thin browser-work-specific overlay; document `--headless`/`--hidden` semantics + auto-launch default; add `snippets/_builtin/scroll-until.js` pattern
+- `skills/qa/references/browser-mode.md`: keep `qa-XXXX` / `.qa-reports` conventions only; convert `eval`/`console`/`network` examples to `run` + `watch`
+- `skills/qa/references/browser-verify.md`: 4 `eval` blocks → `run` + `js()`; `console` → `watch console`
+- `skills/qa/references/spec-drift-check.md`: same conversion
+- `skills/deep-research/SKILL.md`: `chromux wait` → `sleep`
+- Codex adapters inherit the fix automatically (already point to canonical files)
+- Legacy chromux aliases remain supported per upstream policy; we just stop teaching them as the primary surface
+
+## Recent Changes (v1.7.0)
+
+### Codex CLI Parity
+- New `.codex-plugin/plugin.json` — Codex runtime adapter package alongside the Claude Code plugin
+- `codex/agents/*.toml` adapters (9): `harness-{browser-explorer, clarity-auditor, code-explorer, code-reviewer, docs-researcher, external-researcher, gap-auditor, verifier, worker}` — dispatch Harness logical subagents via Codex
+- `codex/skills/harness-*/SKILL.md` bridges (10): blueprint, browser-work, clarify, deep-research, dev-scan, discuss, execute, google-search, reference-seek, specify
+- `skills/{blueprint, browser-work, deep-research, dev-scan, execute, google-search, reference-seek, specify}/SKILL.md` — added **Runtime Surface** sections documenting Claude Code vs Codex dispatch semantics (Bash-first state, JSON-payload files, no MCP/hooks in v1)
+- Installers: `scripts/install-codex-{agent,skill}-adapters.sh`
+- Smoke tests: `scripts/codex-{blueprint, execute, research}-smoke.sh`
+- Migration reference: `docs/codex-migration.md` + `fixtures/codex-migration/todo-toggle/`
+
+### New `clarify` Skill
+- Relentless ambiguity-resolution interview that records Q&A under `.harness/clarify/<topic>/`
+- Templates: `qa-log.md`, `clarity-summary.md`
+- New `clarity-auditor` agent (Claude + Codex adapter)
+- Hands off to specify/blueprint/docs when clear
 
 ## Recent Changes (v1.6.0)
-
-### harness-cli (Pure Bash)
-- **harness-cli** is the plugin's CLI, implemented as `scripts/cli.sh` — pure bash + jq, ships inside the plugin, no npm dependency, no global install needed
-- All skills/agents/hooks invoke it by path via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" <group> <sub> ...`
-- Groups: req | plan | session | learning | issue
-- The `cli-version-sync.sh` SessionStart hook is removed (no version to sync)
 
 ### Pipeline v2 Migration
 - **BREAKING**: Removed old specify (v1), execute (v1), quick-plan skills and bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" (v1)

@@ -415,7 +415,6 @@ You:  /execute
 
 ```bash
 # プラグインのインストール
-/plugin marketplace add youngwhy/claude-marketplace
 /plugin install harness@youngwhy
 
 # 開始 — 要件を導出し、計画し、実行

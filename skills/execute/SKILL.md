@@ -46,6 +46,50 @@ Delegate to workers, manage parallelization, verify the result.
 
 ---
 
+## Runtime Surface
+
+### Claude Code
+
+- Use the existing `Agent`, `Task*`, `Team*`, and `AskUserQuestion` surfaces
+  described below when they are available.
+- Claude hooks may enforce orchestration guards and stop transitions.
+- Logical subagent names remain the canonical Harness names, for example
+  `worker`, `verifier`, and `code-reviewer`.
+
+### Codex
+
+- Codex v1 is Bash-first and no-MCP. Use `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh"` for all plan state.
+- Do not edit `plan.json` directly; use `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" plan task` for every status
+  transition.
+- Use logical Harness subagent names in the charter, mapped to Codex adapters when
+  installed:
+  - `worker` -> `harness-worker`
+  - `verifier` -> `harness-verifier`
+  - `code-reviewer` -> `harness-code-reviewer`
+- In Codex, translate every logical `Agent(...)` dispatch in the references to
+  the native `spawn_agent` tool:
+  - `Agent(subagent_type="worker", ...)` -> `spawn_agent(agent_type="harness-worker", ...)`
+  - `Agent(subagent_type="verifier", ...)` -> `spawn_agent(agent_type="harness-verifier", ...)`
+  - `Agent(subagent_type="code-reviewer", ...)` -> `spawn_agent(agent_type="harness-code-reviewer", ...)`
+  Pass the worker charter as the agent message, and keep the charter's
+  path-and-ID-only contract unchanged.
+- Treat `TaskCreate`, `TaskUpdate`, `TaskOutput`, and `TeamCreate` examples in
+  the reference recipes as Claude Code protocol notes, not literal Codex calls.
+  Codex execute state is tracked through `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" plan task` plus returned
+  subagent messages.
+- If the current Codex session has not loaded the adapter names, fall back to
+  direct single-worker execution and keep the same charter/output contract.
+- Do not rely on hooks, `TeamCreate`, or automatic stop transitions in Codex v1.
+- Parallel Codex worker dispatch is allowed for disjoint `parallel_safe` tasks
+  when the `harness-worker` adapter is prompt-visible. Use `spawn_agent` for
+  dispatch, `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" plan task` for state, and returned subagent messages for
+  evidence.
+- `scripts/codex-execute-smoke.sh` validates only single-worker plan state
+  transitions. It does not prove parallel subagent behavior; verify parallel
+  changes with a bounded live `spawn_agent` smoke.
+
+---
+
 ## Phase 0: Initialize
 
 Phase 0 is **plan-first**. The orchestrator resolves an input to a valid `plan.json`, asks two questions (dispatch + verify depth), and prepares a worker charter template. **Phase 0 never reads `requirements.md` or `contracts.md` body** — only `plan.json` structural fields (INV-3).

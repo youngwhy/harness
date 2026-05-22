@@ -18,6 +18,31 @@ WebFetch, chromux browser-explorer, and the Gemini CLI as research tools.
 
 ultrathink before every major decision point.
 
+## Runtime Surface
+
+### Claude Code
+
+- Use `Agent(...)` with background dispatch, `WebSearch`, `WebFetch`, chromux,
+  and Gemini CLI as described below.
+- Use hook-provided session IDs for durable research directories.
+
+### Codex
+
+- Use Codex native subagents when their adapters are loaded:
+  `harness-external-researcher`, `harness-docs-researcher`, and
+  `harness-browser-explorer`.
+- If the Harness adapters are unavailable, use built-in Codex `researcher` for
+  external docs/web research and direct chromux Bash calls for browser
+  extraction.
+- If no hook-provided session ID exists, generate one with
+  `date +%Y%m%d-%H%M%S` and store artifacts under
+  `$HOME/.harness/codex-research-$RUN_ID/research/`.
+- Keep Gemini and chromux as Bash-first optional channels. Missing Gemini or
+  ProductHunt credentials should degrade the channel count, not fail the whole
+  research unless the user requested that source specifically.
+- Do not add Harness MCP for v1. Use available Codex web search/fetch tools
+  directly when needed.
+
 ## Invoke
 
 ```
@@ -312,7 +337,7 @@ Visit these URLs in order:
 
 For each URL:
 1. Open the URL: `/path/to/chromux open exp-XXXX <url>`
-2. Wait for dynamic content: `/path/to/chromux wait exp-XXXX 2000`
+2. Wait for dynamic content: `sleep 2` (or use `run` with `await sleep(2000)` if mid-script)
 3. Snapshot to see page structure: `/path/to/chromux snapshot exp-XXXX`
 4. Navigate to relevant sections (scroll, click "Load more" buttons if needed)
 5. Re-snapshot after each interaction to get fresh @ref numbers

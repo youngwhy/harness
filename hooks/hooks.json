@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/session-compact-hook.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/session-compact-hook.sh"
           }
         ]
       }
@@ -17,11 +17,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/skill-session-init.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/skill-session-init.sh"
           },
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/rulph-init.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/rulph-init.sh"
           }
         ]
       },
@@ -30,11 +30,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/skill-session-guard.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/skill-session-guard.sh"
           },
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/ralph-dod-guard.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ralph-dod-guard.sh"
           }
         ]
       }
@@ -45,7 +45,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/validate-output.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/validate-output.sh"
           }
         ]
       },
@@ -54,7 +54,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/tool-output-truncator.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/tool-output-truncator.sh"
           }
         ]
       }
@@ -65,7 +65,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/edit-error-recovery.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/edit-error-recovery.sh"
           }
         ]
       },
@@ -74,7 +74,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/large-file-recovery.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/large-file-recovery.sh"
           }
         ]
       },
@@ -83,7 +83,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/tool-failure-tracker.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/tool-failure-tracker.sh"
           }
         ]
       }
@@ -94,23 +94,23 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/ultrawork-stop-hook.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ultrawork-stop-hook.sh"
           },
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/skill-session-stop.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/skill-session-stop.sh"
           },
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/rv-validator.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/rv-validator.sh"
           },
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/rulph-stop.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/rulph-stop.sh"
           },
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/ralph-stop.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ralph-stop.sh"
           }
         ]
       }
@@ -121,7 +121,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/skill-session-cleanup.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/skill-session-cleanup.sh"
           }
         ]
       }
@@ -132,15 +132,15 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/ultrawork-init-hook.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ultrawork-init-hook.sh"
           },
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/skill-session-init.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/skill-session-init.sh"
           },
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/rv-detector.sh\""
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/rv-detector.sh"
           }
         ]
       }

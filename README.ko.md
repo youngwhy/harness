@@ -417,7 +417,6 @@ You:  /execute
 
 ```bash
 # 플러그인 설치
-/plugin marketplace add youngwhy/claude-marketplace
 /plugin install harness@youngwhy
 
 # 시작 — 요구사항을 도출하고, 계획하고, 실행

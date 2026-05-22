@@ -4,8 +4,7 @@
 
 Install the plugin in Claude Code:
 
-```
-/plugin marketplace add youngwhy/claude-marketplace
+```bash
 /plugin install harness@youngwhy
 ```
 
@@ -15,8 +14,9 @@ This registers all skills, agents, and hooks defined by the plugin. No npm insta
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/youngwhy/claude-marketplace.git
-   cd claude-marketplace
+   git clone https://github.com/youngwhy/harness.git
+   cd harness
+   git checkout develop
    ```
 
 2. Verify the bundled CLI runs (requires `jq`):
@@ -27,7 +27,7 @@ This registers all skills, agents, and hooks defined by the plugin. No npm insta
 ### Directory Structure
 
 ```
-claude-marketplace/
+harness/
   .claude/
     skills/       # Skill definitions (SKILL.md per skill)
     agents/       # Agent definitions (.md files)
@@ -39,6 +39,7 @@ claude-marketplace/
   scripts/
     cli.sh        # harness-cli — bundled bash CLI (pure bash + jq)
   docs/           # Documentation and learnings
+  .playground/    # Experiments (git-ignored)
 ```
 
 ## Plugin Structure
@@ -73,6 +74,8 @@ Two files must be bumped together in a single commit on `develop`:
 
 1. `.claude-plugin/plugin.json`
 2. `.claude-plugin/marketplace.json`
+
+The CLI (`harness-cli` = `scripts/cli.sh`) ships inside the plugin, so there is no separate package version to sync.
 
 ## Testing
 

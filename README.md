@@ -376,7 +376,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 
 ## Under the Hood
 
-**28 skills · 21 agents · 18 hooks**
+**29 skills · 22 agents · 18 hooks**
 
 ```
 .claude/
@@ -420,7 +420,6 @@ See [docs/architecture.md](docs/architecture.md) for the full pipeline diagram.
 
 ```bash
 # Install the plugin
-/plugin marketplace add youngwhy/claude-marketplace
 /plugin install harness@youngwhy
 
 # Start — derive requirements, plan, and execute

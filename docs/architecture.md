@@ -135,7 +135,7 @@ The plugin also ships standalone skills (council, bugfix, ralph, scope, etc.) th
 
 ## CLI
 
-The plugin ships `scripts/cli.sh` — pure bash + jq, invoked via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh"` — for structured data management. No external install required (only `jq` on the host).
+The plugin ships `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh"` (npm: `harness-cli`) for structured data management.
 
 | Command Group | Purpose |
 |---------------|---------|
