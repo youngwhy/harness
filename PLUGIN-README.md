@@ -25,7 +25,6 @@ Provides a full **specify → execute** pipeline with:
 | scaffold | `/scaffold` | Greenfield project architecture + harness scaffolding |
 | council | `/council` | Multi-perspective decision committee |
 | ralph | `/ralph` | Iterative DoD-based task loop |
-| rulph | `/rulph` | Rubric-based evaluation and self-improvement loop |
 | scope | `/scope` | Fast parallel change-scope analyzer |
 | check | `/check` | Pre-push verification against rule checklists |
 | discuss | `/discuss` | Free-form problem exploration |

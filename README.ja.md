@@ -346,7 +346,7 @@ You:  /execute
 | **理解** | 要件の導出、タスク計画 | `/specify` `/blueprint` `/discuss` `/deep-interview` |
 | **調査** | コードベースの分析、リファレンスの検索、コミュニティのスキャン | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
 | **判断** | トレードオフの評価、多角的レビュー | `/council` `/stepback` |
-| **構築** | プランの実行、バグ修正、反復 | `/execute` `/ralph` `/rulph` `/bugfix` `/ultrawork` `/scaffold` |
+| **構築** | プランの実行、バグ修正、反復 | `/execute` `/ralph` `/bugfix` `/ultrawork` `/scaffold` |
 | **振り返り** | 変更の検証、学びの抽出 | `/check` `/compound` `/scope` `/issue` |
 
 <details>
@@ -363,7 +363,7 @@ You:  /execute
 | `/council` | 意思決定・レビューの入口：提案審査（判定）または選択肢比較、外部 LLM + コミュニティスキャン付き |
 | `/scope` | 高速並列インパクト分析 — 5つ以上のエージェントが影響範囲をスキャン |
 | `/check` | プロジェクトルールチェックリストに対するプッシュ前検証 |
-| `/rulph` | ルーブリックベースのマルチモデル評価と自律的自己改善 |
+| | ルーブリックベースのマルチモデル評価と自律的自己改善 |
 
 </details>
 

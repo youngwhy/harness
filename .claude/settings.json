@@ -64,10 +64,6 @@
           {
             "type": "command",
             "command": ".claude/scripts/skill-session-init.sh"
-          },
-          {
-            "type": "command",
-            "command": ".claude/scripts/rulph-init.sh"
           }
         ]
       },

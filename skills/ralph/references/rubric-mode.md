@@ -1,30 +1,9 @@
----
-name: rulph
-description: |
-  Iterative rubric-based evaluation and self-improvement loop. Builds a scoring rubric interactively,
-  evaluates an artifact with multiple models in parallel (Codex, Gemini, Claude), then autonomously
-  improves the artifact one criterion at a time until a score threshold is met or circuit breaker fires.
-  "/rulph", "rubric evaluate", "rubric score", "multi-model evaluate",
-  "score and improve", "evaluate and iterate", "grade this",
-  "루브릭 루프", "채점 루프", "자율 개선", "개선 루프", "루브릭 평가"
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - Bash
-  - Write
-  - AskUserQuestion
-  - Agent
-validate_prompt: |
-  Must contain all 4 Phases (Rubric Building, Evaluation, Improvement Loop, Completion).
-  Must include 3-step rubric building interaction with per-criterion floor setting.
-  Must include Agent-based parallel multi-model scoring with AVAILABLE/SKIPPED/DEGRADED states.
-  Must include pass check with both threshold AND floor (AND-gate).
-  Must include circuit breaker logic.
-  Must include state file write for Stop hook integration.
----
+<!-- Loaded by /ralph when judgment mode = rubric. State namespace `.rulph`
+     is kept for compatibility with scripts/rulph-stop.sh (the rubric-mode
+     stop guard). Do not rename the namespace without updating that hook. -->
 
-# rulph
+
+# Rubric Mode (formerly /rulph)
 
 Iterative self-improvement skill driven by a user-defined rubric. Builds a scoring rubric interactively, evaluates an artifact with multiple models in parallel, then loops autonomously — improving one criterion at a time — until the score meets the threshold or the circuit breaker fires. No user interaction after Phase 1.
 

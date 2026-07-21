@@ -348,7 +348,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 | **Understand** | Derive requirements, plan tasks | `/specify` `/blueprint` `/discuss` `/deep-interview` |
 | **Research** | Analyze codebase, find references, scan communities | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
 | **Decide** | Evaluate tradeoffs, multi-perspective review | `/council` `/stepback` |
-| **Build** | Execute plans, fix bugs, iterate | `/execute` `/ralph` `/rulph` `/bugfix` `/ultrawork` `/scaffold` |
+| **Build** | Execute plans, fix bugs, iterate | `/execute` `/ralph` `/bugfix` `/ultrawork` `/scaffold` |
 | **Test** | QA test applications, verify changes | `/qa` `/check` `/scope` |
 | **Reflect** | Extract learnings, analyze sessions | `/compound` `/issue` `/skill-session-analyzer` |
 
@@ -367,7 +367,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 | `/council` | Decision & review entry point: proposal review (verdict) or option comparison, with external LLMs + community scan |
 | `/scope` | Fast parallel impact analysis — 5+ agents scan what could break |
 | `/check` | Pre-push verification against project rule checklists |
-| `/rulph` | Rubric-based multi-model evaluation with autonomous self-improvement |
+| | Rubric-based multi-model evaluation with autonomous self-improvement |
 
 </details>
 

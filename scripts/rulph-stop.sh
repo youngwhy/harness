@@ -1,8 +1,10 @@
 #!/bin/bash
 # rulph-stop.sh - Stop hook
 #
-# Purpose: Block Claude from stopping mid-loop in rulph skill
-# State is session-scoped (unified ~/.harness/{session_id}/state.json, .rulph namespace).
+# Purpose: Block Claude from stopping mid-loop in /ralph RUBRIC MODE
+# (formerly the standalone rulph skill; see skills/ralph/references/rubric-mode.md).
+# State is session-scoped (unified ~/.harness/{session_id}/state.json, .rulph namespace —
+# the namespace name is kept for compatibility; ralph rubric mode writes it directly).
 #
 # Decision logic:
 #   Allow stop when:
