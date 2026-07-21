@@ -345,7 +345,7 @@ You:  /execute
 |----------|------------------|--------|
 | **理解** | 要件の導出、タスク計画 | `/specify` `/blueprint` `/discuss` `/deep-interview` |
 | **調査** | コードベースの分析、リファレンスの検索、コミュニティのスキャン | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
-| **判断** | トレードオフの評価、多角的レビュー | `/council` `/tribunal` `/tech-decision` `/stepback` |
+| **判断** | トレードオフの評価、多角的レビュー | `/council` `/stepback` |
 | **構築** | プランの実行、バグ修正、反復 | `/execute` `/ralph` `/rulph` `/bugfix` `/ultrawork` `/scaffold` |
 | **振り返り** | 変更の検証、学びの抽出 | `/check` `/compound` `/scope` `/issue` |
 
@@ -360,8 +360,7 @@ You:  /execute
 | `/ultrawork` | フルパイプライン：specify → blueprint → execute を一つのコマンドで |
 | `/bugfix` | 根本原因の診断 → requirements.md → execute（適応的ルーティング） |
 | `/ralph` | DoD ベースの反復ループ — 独立検証されるまで続行 |
-| `/council` | 多角的な審議：tribunal + 外部 LLM + コミュニティスキャン |
-| `/tribunal` | 3エージェントの対抗的レビュー：Risk + Value + Feasibility → 統合された判定 |
+| `/council` | 意思決定・レビューの入口：提案審査（判定）または選択肢比較、外部 LLM + コミュニティスキャン付き |
 | `/scope` | 高速並列インパクト分析 — 5つ以上のエージェントが影響範囲をスキャン |
 | `/check` | プロジェクトルールチェックリストに対するプッシュ前検証 |
 | `/rulph` | ルーブリックベースのマルチモデル評価と自律的自己改善 |
@@ -382,7 +381,6 @@ You:  /execute
 │   ├── execute/       Plan-driven parallel orchestration
 │   ├── bugfix/        Root cause → requirements.md → execute pipeline
 │   ├── council/       Multi-perspective deliberation
-│   ├── tribunal/      3-agent adversarial review
 │   └── ...            19 more skills
 ├── agents/
 │   ├── interviewer    Socratic questioning

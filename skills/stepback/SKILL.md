@@ -146,7 +146,7 @@ Then stop. No follow-up questions. No handoff menu. No "would you like to...".
 | `/stepback` | One-shot perspective reset on current work | Mid-work, when you feel something might be off |
 | `/discuss` | Multi-round Socratic dialogue about an idea | Before starting, to explore a concept |
 | `/scope` | Analyzes blast radius of a specific change proposal | When you have a concrete change to assess |
-| `/tribunal` | Multi-agent adversarial review | For high-stakes architectural decisions |
+| `/council` | Multi-agent deliberation: proposal review or option comparison | For high-stakes decisions and reviews |
 
 ---
 

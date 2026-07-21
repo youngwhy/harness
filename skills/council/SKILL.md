@@ -1,13 +1,18 @@
 ---
 name: council
 description: |
-  This skill should be used when the user says "/council", "council", "deliberate",
+  The single entry point for decisions and reviews. Use when the user says
+  "/council", "council", "deliberate", "review this", "리뷰 해줘", "검토해줘",
   "multi-perspective decision", "트레이드오프 분석", "위원회 소집", "여러 관점으로 검토",
-  or wants deep multi-perspective deliberation with tradeoff mapping.
-  Combines tribunal (structured adversarial review), agent-council (external LLM opinions),
-  dev-scan (community sentiment), and step-back (meta-level review) into a unified
-  decision-making committee. Uses Agent Teams for real peer-to-peer debate with
-  iterative step-back moderation loop.
+  "A vs B", "which one to use", "뭐 쓸까", "기술 선택", "라이브러리 선택",
+  "architecture decision", "risk review", "위험성 검토", "3관점 리뷰",
+  or wants a plan/PR/diff reviewed before committing to it.
+  Routes by target type: proposal REVIEW (plan/PR/diff → adversarial panel →
+  APPROVE/REVISE/REJECT verdict) or option COMPARISON ("A vs B" → weighted-criteria
+  research + advocate panel → conclusion-first recommendation). Absorbs the former
+  tribunal (= Quick review mode) and tech-decision (= comparison path) skills.
+  Uses Agent Teams for real peer-to-peer debate with an iterative step-back
+  moderation loop; pulls dev-scan community sentiment as a data source.
 allowed-tools:
   - Read
   - Grep
@@ -94,17 +99,22 @@ Input ───┤        ↕ debate ↕                              ├──�
 
 ---
 
-## How Council Extends Tribunal
+## Target Types (routing — decided in Phase 1)
 
-| Tribunal | Council (extends) |
-|----------|-------------------|
-| Fixed 3 roles (Risk/Value/Feasibility) | **Dynamic 3 roles** designed per topic |
-| Internal Claude agents only | + **External LLM** (Codex) |
-| No community data | + **dev-scan** community sentiment |
-| Independent analysis, no interaction | **Multi-round debate** via SendMessage |
-| Single-round hearings | **Iterative loop**: debate → step-back judge → re-debate |
-| No meta-review feedback loop | Step-back can **send panelists back** for more debate |
-| Verdict Matrix → APPROVE/REVISE/REJECT | → **Tradeoff Map** with Decision Confidence Score |
+Council is the single entry point for decisions and reviews. The FIRST routing
+decision is what kind of target the user brought:
+
+| Target type | Signals | Panel shape | Primary output |
+|-------------|---------|-------------|----------------|
+| **REVIEW** (proposal 심사) | a plan.json / requirements.md / PR / diff / design doc — "is this safe to execute/merge?" | adversarial-leaning: at least one risk lens, one value lens, one feasibility lens (custom-fit to the artifact) | Tradeoff Map + **Verdict: APPROVE / REVISE / REJECT** |
+| **COMPARISON** (선택 비교) | "A vs B", "which should we use", a selection question with 2+ options — "which option wins?" | one advocate per option + at least one neutral lens (ops cost, migration, DX) | Conclusion-first comparison report + weighted-criteria scoring |
+
+If the input is ambiguous (a topic that is neither an artifact nor an explicit
+option set), ask via AskUserQuestion before assembling the committee.
+
+**Lineage**: REVIEW in Quick mode is the former `/tribunal` (its verdict matrix
+lives on in Phase 3). COMPARISON is the former `/tech-decision` (its weighted
+criteria and conclusion-first template live in `references/`).
 
 ---
 
@@ -132,6 +142,14 @@ Determine the deliberation target from arguments:
 | `--diff` | `Bash("git diff HEAD")` or `Bash("git diff main...HEAD")` |
 | No args | Ask user what to deliberate via `AskUserQuestion` |
 
+Then classify the **target type** (see "Target Types" above):
+- Artifact input (`file.md`, `--pr`, `--diff`, a pasted plan) → **REVIEW**
+- "A vs B" / selection phrasing with identifiable options → **COMPARISON**
+- Ambiguous → AskUserQuestion: "Are we judging a proposal (approve/reject) or choosing between options?"
+
+Record `target_type` in the committee config — it drives panel shape (1.2),
+the research stage (1.6), and the report format (Phase 3).
+
 ### 1.2 Dynamic Panelist Design
 
 Analyze the topic and design **2~4 panelists** with distinct perspectives.
@@ -151,6 +169,14 @@ Do NOT use fixed roles — design roles that fit the specific topic.
 | "Redis vs Memcached" | Performance Engineer, Ops Complexity Analyst, DX Advocate |
 | "Monorepo migration" | Build System Expert, Team Workflow Analyst, Migration Risk Assessor |
 | "New auth system" | Security Analyst, UX Impact Reviewer, Compliance Checker |
+
+**Shape by target type:**
+- **REVIEW** — adversarial-leaning: cover risk, value, and feasibility lenses at
+  minimum (custom-named for the artifact; e.g., for a migration plan: "Rollback
+  Risk Assessor", "Business Case Examiner", "Timeline Realist").
+- **COMPARISON** — one **advocate per option** (argues its best case) plus at
+  least one **neutral lens** (ops cost, migration burden, DX). Advocates keep
+  the debate honest; the neutral lens keeps it grounded.
 
 ### 1.3 Capability Check
 
@@ -198,6 +224,30 @@ Display the panelist table before asking:
 SESSION_ID="[session ID]"
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" session set --sid $SESSION_ID --json '{"council": {"phase": 1, "mode": "[selected]", "topic": "[topic summary]", "status": "active"}}'
 ```
+
+### 1.6 Comparison Research Stage (COMPARISON targets only)
+
+Skip for REVIEW targets — the artifact itself is the evidence base.
+For COMPARISON, panelists must debate over data, not priors. Before spawning
+the committee, build a research digest:
+
+**Step 1 — Establish weighted criteria.** Read `references/evaluation-criteria.md`
+and pick 4-6 criteria relevant to this choice (performance, learning curve,
+ecosystem, maintainability, cost, migration burden, ...). Propose weights via
+AskUserQuestion so the user can adjust priorities before research begins.
+
+**Step 2 — Parallel evidence gathering** (all in ONE message, `run_in_background: true`):
+
+| Source | Agent/Skill | What it contributes |
+|--------|-------------|---------------------|
+| Codebase | `code-explorer` agent | existing patterns, constraints, which option fits current code |
+| Official docs | `docs-researcher` agent | API maturity, feature coverage per option |
+| Community | dev-scan skill (Full mode only; skip in Standard/Quick) | real-world sentiment, postmortems, adoption signals |
+
+**Step 3 — Digest.** Condense findings into a per-option evidence table
+(criterion × option, with sources). This digest is injected into every
+panelist's spawn prompt in Phase 2.1 — advocates argue FROM the evidence,
+not from memory. Mark criteria where evidence is thin as `LOW-CONFIDENCE`.
 
 ---
 
@@ -656,6 +706,49 @@ What you need to do next, in priority order:
 
 > Interpretation: >80% = strong consensus · 50-80% = moderate · <50% = highly contested
 ```
+
+### 3.4b REVIEW-target verdict (ported from tribunal)
+
+For **REVIEW** targets the reader needs a go/no-go, not just a lean. After the
+Recommendation, derive three ratings from the panel's final positions —
+**Risk** (BLOCK / CAUTION / CLEAR), **Value** (STRONG / ADEQUATE / WEAK),
+**Feasibility** (GO / CONDITIONAL / NO-GO) — and apply the verdict matrix:
+
+| Risk | Value | Feasibility | Verdict |
+|------|-------|-------------|---------|
+| CLEAR | STRONG/ADEQUATE | GO | **APPROVE** |
+| CAUTION | STRONG | GO | **APPROVE** (with notes) |
+| CAUTION | ADEQUATE | GO | **REVISE** |
+| CAUTION | * | CONDITIONAL | **REVISE** |
+| BLOCK | * | * | **REVISE** (REJECT if critical findings > 2) |
+| * | WEAK | * | **REVISE** |
+| * | * | NO-GO | **REJECT** |
+| BLOCK | WEAK | * | **REJECT** |
+
+Use judgment for combinations not in the matrix. Render as:
+
+```markdown
+### Verdict: [APPROVE / REVISE / REJECT]
+
+| Dimension | Rating | Key finding |
+|-----------|--------|-------------|
+| Risk | [BLOCK/CAUTION/CLEAR] | [1 line] |
+| Value | [STRONG/ADEQUATE/WEAK] | [1 line] |
+| Feasibility | [GO/CONDITIONAL/NO-GO] | [1 line] |
+
+**Required actions before APPROVE** (only when REVISE): ...
+```
+
+In **Quick mode with a REVIEW target** — the former `/tribunal` — this verdict
+IS the primary output: single cycle, positions only, verdict matrix, done.
+
+### 3.4c COMPARISON-target report
+
+For **COMPARISON** targets, follow the conclusion-first template in
+`references/comparison-report.md`: Conclusion (executive summary naming the
+winner) → weighted-criteria scoring table (from the 1.6 digest, weights shown)
+→ per-option analysis → conditions under which the loser wins. The Decision
+Guide table above doubles as that last section.
 
 ### 3.5 Appendix (Collapsible Details)
 

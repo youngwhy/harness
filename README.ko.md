@@ -347,7 +347,7 @@ You:  /execute
 |----------|------------------|--------|
 | **이해** | 요구사항 도출, 태스크 계획 | `/specify` `/blueprint` `/discuss` `/deep-interview` |
 | **조사** | 코드베이스 분석, 레퍼런스 탐색, 커뮤니티 스캔 | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
-| **결정** | 트레이드오프 평가, 다중 관점 리뷰 | `/council` `/tribunal` `/tech-decision` `/stepback` |
+| **결정** | 트레이드오프 평가, 다중 관점 리뷰 | `/council` `/stepback` |
 | **구현** | 계획 실행, 버그 수정, 반복 | `/execute` `/ralph` `/rulph` `/bugfix` `/ultrawork` `/scaffold` |
 | **성찰** | 변경 사항 검증, 교훈 추출 | `/check` `/compound` `/scope` `/issue` |
 
@@ -362,8 +362,7 @@ You:  /execute
 | `/ultrawork` | 전체 파이프라인: specify → blueprint → execute를 하나의 명령으로 |
 | `/bugfix` | 근본 원인 진단 → requirements.md → execute (적응형 라우팅) |
 | `/ralph` | 완료 기준 기반 반복 루프 — 독립적으로 검증될 때까지 계속 |
-| `/council` | 다중 관점 심의: tribunal + 외부 LLM + 커뮤니티 스캔 |
-| `/tribunal` | 3-에이전트 대립 리뷰: Risk + Value + Feasibility → 종합 판정 |
+| `/council` | 결정·리뷰 진입점: 제안물 심사(판정) 또는 선택지 비교, 외부 LLM + 커뮤니티 스캔 포함 |
 | `/scope` | 빠른 병렬 영향 분석 — 5개 이상의 에이전트가 깨질 수 있는 것을 스캔 |
 | `/check` | 프로젝트 규칙 체크리스트에 대한 푸시 전 검증 |
 | `/rulph` | 루브릭 기반 다중 모델 평가 + 자율적 자기 개선 |
@@ -384,7 +383,6 @@ You:  /execute
 │   ├── execute/       계획 기반 병렬 오케스트레이션
 │   ├── bugfix/        근본 원인 → requirements.md → execute 파이프라인
 │   ├── council/       다중 관점 심의
-│   ├── tribunal/      3-에이전트 대립 리뷰
 │   └── ...            19개 추가 스킬
 ├── agents/
 │   ├── interviewer    소크라테스식 질문

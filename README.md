@@ -347,7 +347,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 |----------|------------------|--------|
 | **Understand** | Derive requirements, plan tasks | `/specify` `/blueprint` `/discuss` `/deep-interview` |
 | **Research** | Analyze codebase, find references, scan communities | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
-| **Decide** | Evaluate tradeoffs, multi-perspective review | `/council` `/tribunal` `/tech-decision` `/stepback` |
+| **Decide** | Evaluate tradeoffs, multi-perspective review | `/council` `/stepback` |
 | **Build** | Execute plans, fix bugs, iterate | `/execute` `/ralph` `/rulph` `/bugfix` `/ultrawork` `/scaffold` |
 | **Test** | QA test applications, verify changes | `/qa` `/check` `/scope` |
 | **Reflect** | Extract learnings, analyze sessions | `/compound` `/issue` `/skill-session-analyzer` |
@@ -364,8 +364,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 | `/ultrawork` | Full pipeline: specify → blueprint → execute in one command |
 | `/bugfix` | Root cause diagnosis → requirements.md → execute (adaptive routing) |
 | `/ralph` | Iterative loop with DoD — keeps going until independently verified |
-| `/council` | Multi-perspective deliberation: tribunal + external LLMs + community scan |
-| `/tribunal` | 3-agent adversarial review: Risk + Value + Feasibility → synthesized verdict |
+| `/council` | Decision & review entry point: proposal review (verdict) or option comparison, with external LLMs + community scan |
 | `/scope` | Fast parallel impact analysis — 5+ agents scan what could break |
 | `/check` | Pre-push verification against project rule checklists |
 | `/rulph` | Rubric-based multi-model evaluation with autonomous self-improvement |
@@ -386,7 +385,6 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 │   ├── execute/       Plan-driven parallel orchestration
 │   ├── bugfix/        Root cause → requirements.md → execute pipeline
 │   ├── council/       Multi-perspective deliberation
-│   ├── tribunal/      3-agent adversarial review
 │   ├── qa/            Systematic QA testing (browser + computer)
 │   └── ...            22 more skills
 ├── agents/
