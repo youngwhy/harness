@@ -28,11 +28,9 @@ Provides a full **specify → execute** pipeline with:
 | rulph | `/rulph` | Rubric-based evaluation and self-improvement loop |
 | scope | `/scope` | Fast parallel change-scope analyzer |
 | check | `/check` | Pre-push verification against rule checklists |
-| tribunal | `/tribunal` | Three-way adversarial review |
 | discuss | `/discuss` | Free-form problem exploration |
 | stepback | `/stepback` | One-shot perspective reset |
 | compound | `/compound` | Extract learnings from PRs |
-| tech-decision | `/tech-decision` | Deep technical decision analysis |
 | dev-scan | `/dev-scan` | Collect community developer opinions |
 | deep-research | `/deep-research` | Parallel web research |
 | google-search | `/google-search` | Google search via real Chrome browser |

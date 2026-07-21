@@ -127,6 +127,32 @@ This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url ups
 - **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
 - **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
 
+## Recent Changes (v1.10.0)
+
+### Council becomes the single decision/review entry point
+
+The review/decision cluster (council, tribunal, tech-decision, dev-scan,
+stepback) consolidates to two user-facing skills:
+
+- **`/council`** routes by target type detected in Phase 1:
+  - **REVIEW** (plan/PR/diff/proposal) → adversarial-leaning panel; Phase 3
+    gains the tribunal verdict matrix (Risk × Value × Feasibility →
+    APPROVE/REVISE/REJECT). Quick mode + REVIEW target = the former /tribunal.
+  - **COMPARISON** ("A vs B") → new 1.6 research stage (weighted criteria via
+    `references/evaluation-criteria.md` + parallel code-explorer /
+    docs-researcher / dev-scan evidence gathering) feeding an advocate-per-option
+    panel; conclusion-first report per `references/comparison-report.md`.
+    This absorbs the former /tech-decision (which had rotted — it referenced
+    the nonexistent agent-council skill and decision-synthesizer agent).
+- **`/stepback`** unchanged — mid-work self-check, distinct category.
+- **Removed**: `tribunal` and `tech-decision` skills; tribunal's three dedicated
+  agents (`codex-risk-analyst`, `value-assessor`, `feasibility-checker`) —
+  council designs topic-fit panels dynamically, so fixed panel agents are dead
+  weight in every session's context.
+- **`dev-scan` demoted** to a data source: description and skill-rules triggers
+  now point decision-seeking requests to /council, which calls it internally
+  (Full mode). Direct invocation still works for raw community-opinion asks.
+
 ## Recent Changes (v1.9.0)
 
 ### Clarify Escalation Gate in /specify

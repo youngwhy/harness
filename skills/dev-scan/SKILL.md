@@ -1,6 +1,6 @@
 ---
 name: dev-scan
-description: Collect diverse opinions on technical topics from developer communities. Use for "developer reactions", "community opinions" requests. Aggregates Reddit, HN, Dev.to, Lobsters, ProductHunt, etc.
+description: Community-sentiment data source, primarily invoked BY /council (comparison research stage) and other skills. Aggregates Reddit, HN, Dev.to, Lobsters, ProductHunt, etc. Direct use only when the user explicitly asks for raw community opinions ("dev-scan", "developer reactions", "커뮤니티 반응") — for decisions, route to /council instead.
 version: 3.1.0
 ---
 

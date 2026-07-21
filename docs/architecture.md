@@ -104,7 +104,6 @@ The plugin also ships standalone skills (council, bugfix, ralph, scope, etc.) th
 | `scope` | Fast parallel change-scope analyzer |
 | `discuss` | Socratic discussion (supports `--scored` for deep interview mode) |
 | `check` | Pre-push validation against project rule checklists |
-| `tribunal` | Three-way adversarial review (risk, value, feasibility) |
 | `issue` | Structured GitHub issue creation with codebase impact analysis |
 | `qa` | Systematic QA testing (browser/native/CLI/shell) |
 | `browser-work` | Recon-first browser automation with chromux |
