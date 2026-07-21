@@ -381,31 +381,71 @@ Only use free-text Q&A (no AskUserQuestion) when:
 - You cannot construct 2+ distinct options honestly
 - The question is exploratory to find option candidates for the next round
 
-#### Handling "I Don't Know" — Tentative Judgment + Open Decision
+#### Handling "I Don't Know" — Classify Before Reacting
 
-Users will sometimes not know the answer (especially on Tech axis, or when the PM doesn't know implementation details). Don't let the interview stall.
+Users will sometimes not know the answer (especially on Tech axis, or when the PM doesn't know implementation details). Don't let the interview stall — but "I don't know" is NOT one state. Classify it first; the three types get three different treatments:
 
-When the user's answer is "I don't know / not sure / up to you / whatever works" (either by Other free-text or by tone):
+| Type | Signal | What it really means | Treatment |
+|------|--------|---------------------|-----------|
+| **Delegation** | "up to you", "whatever works", "아무거나", indifferent tone | The user is delegating the choice | Tentative default, continue |
+| **Leaf deferral** | genuine "not sure", but the NEXT questions don't depend on this answer | An isolated unknown; the spec can carry it as a hole | Recommend + Open Decision, continue |
+| **Structural deferral** | the answer determines which subsequent questions even make sense, OR the user signals decision anxiety ("그게 고민이야", "that's exactly what I'm wrestling with") | A decision problem, not a spec question. The requirement tree's shape depends on it | **Clarify Escalation Gate** (below) — immediately, on the FIRST occurrence |
+
+**The classification test**: *Can I construct the next interview question without this answer?*
+- Yes, unaffected → leaf deferral.
+- No — the answer picks which subtree of the axis applies (who the user is, the core flow, local-first vs server-first, the data ownership model) → structural.
+- Tone breaks ties: indifference = delegation; anxiety = structural.
+
+**Delegation / leaf deferral treatment** (continue the interview):
 
 1. **Make a tentative judgment**: Pick the reasonable default based on the WHERE context, existing research findings, and what experienced engineers would typically choose.
 2. **Log it as an assumption**: Record in `qa-log.md` with `status: assumption` and include the reasoning in `> blockquote`.
-3. **Add to Open Decisions**: Append an entry to `## Open Items` in qa-log.md with:
-   - The undecided question
-   - Your tentative judgment
-   - Why this decision can be deferred (or why it might need revisiting)
+3. **Add to Open Decisions**: Append an entry to `## Open Items` in qa-log.md with the undecided question, your tentative judgment, and why it can be deferred.
 4. **Tell the user**: "I'll go with {X} for now, logged as an open decision. You can revisit it later."
+5. **Count it** (leaf deferrals only, not delegations): increment `axis_deferrals[current_axis]`. If it reaches **2**, the axis itself is showing a pattern of undecidedness — trigger the Clarify Escalation Gate as a backstop.
 
 Don't re-ask the same question. Move on. The Phase 4 Confirmation will let the user review and override any tentative judgment.
 
-**Example**:
+**Example (delegation)**:
 ```
 Q: What authentication method?
 User: "Dunno, whatever works"
 → Tentative: "Given brownfield-extension + sensitive-data, I'll assume existing SSO integration"
-→ Log as assumption with status: assumption
-→ Add to Open Items: "OD: auth method (tentative: SSO based on existing system)"
-→ Continue to next question
+→ Log as assumption, add to Open Items, continue to next question
 ```
+
+**Example (structural — do NOT default through this)**:
+```
+Q: Should edits sync across devices in real time, or is single-device fine?
+User: "Hmm... that's actually what I keep going back and forth on"
+→ Every INTERACTION question downstream (conflict UX, offline states) and half the
+  TECH axis (storage, transport) depends on this. Defaulting here would fabricate
+  the spec's skeleton. → Escalation Gate, first strike.
+```
+
+#### Clarify Escalation Gate
+
+Fires on the **first** structural deferral, or as a backstop when `axis_deferrals[axis] == 2`. Escalation is always an OFFER — never silently dive into another workflow:
+
+```
+AskUserQuestion(
+  question: "This looks like an undecided design/scope problem, not a spec question — the rest of the interview depends on it. How do you want to handle it?",
+  header: "Blocked decision",
+  options: [
+    { label: "Resolve it now via clarify (Recommended)", description: "Pause the interview, run a focused /clarify loop on just this decision (one question at a time, with recommendations), then resume here with the answer" },
+    { label: "Assume and continue", description: "I pick a tentative default, log it as an Open Decision, and the interview continues on that assumption — the spec's shape may need rework if the assumption is wrong" }
+  ]
+)
+```
+
+**On "Resolve via clarify"**:
+
+1. Write the current interview state to `qa-log.md` and note in its frontmatter: `paused_for: clarify`, plus the blocked question.
+2. Invoke the clarify skill (Skill tool, `harness:clarify`), scoped to ONLY the blocked decision cluster — not the whole project. Pass as args: the blocked question, the mode (BUSINESS/INTERACTION axis → `requirements`; TECH axis or architecture forks → `design`), and `related_spec: <spec_dir>`.
+3. When clarify returns SUFFICIENT, Read its `clarity-summary.md`, import each resolved decision into `qa-log.md` as `status: resolved` (cite the summary as source), remove the corresponding Open Items, and reset `axis_deferrals[axis]` to 0.
+4. Resume the interview at the exact question that triggered the gate.
+
+**On "Assume and continue"**: fall back to the leaf-deferral treatment above (it still counts toward `axis_deferrals`; a structural assumption is logged with an explicit `risk: structural-assumption` marker so Phase 4 surfaces it prominently).
 
 #### Recording Answers
 

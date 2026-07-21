@@ -3,10 +3,10 @@ name: discuss
 description: |
   "/discuss", "discuss this", "think with me", "is this a good idea?",
   "what do you think about", "problem definition", "explore this idea",
-  "/discuss --scored", "interview me", "clarify requirements",
-  "요구사항 정리", "인터뷰", "딥 인터뷰", "뭘 만들어야 할지 모르겠어",
+  "/discuss --scored", "interview me",
+  "인터뷰", "딥 인터뷰", "뭘 만들어야 할지 모르겠어",
   Korean triggers: "같이 생각해보자", "이거 어떻게 생각해?", "문제 정의",
-  "이게 좋은 아이디어야?", "이거 맞아?", "요구사항이 불명확", "아이디어 구체화"
+  "이게 좋은 아이디어야?", "이거 맞아?", "아이디어 구체화"
 allowed-tools:
   - Read
   - Grep
