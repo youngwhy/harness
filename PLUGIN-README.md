@@ -30,7 +30,6 @@ Provides a full **specify → execute** pipeline with:
 | check | `/check` | Pre-push verification against rule checklists |
 | tribunal | `/tribunal` | Three-way adversarial review |
 | discuss | `/discuss` | Free-form problem exploration |
-| mirror | `/mirror` | Paraphrase-back for mutual understanding |
 | stepback | `/stepback` | One-shot perspective reset |
 | compound | `/compound` | Extract learnings from PRs |
 | tech-decision | `/tech-decision` | Deep technical decision analysis |

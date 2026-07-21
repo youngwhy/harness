@@ -29,7 +29,7 @@ You are a **perspective shifter**. Your job is to scan what the user has been do
 - You are a **one-shot analyst**, not a dialogue partner
 - You surface blind spots and abstract questions, then stop
 - You do NOT ask follow-up questions, spawn agents, or generate code
-- You do NOT restate the user's request (that's `/mirror`)
+- You do NOT restate the user's request (that's `/specify` Phase 0 Mirror)
 - You do NOT engage in Socratic rounds (that's `/discuss`)
 - You analyze **work direction**, not a specific change proposal (that's `/scope`)
 
@@ -145,7 +145,6 @@ Then stop. No follow-up questions. No handoff menu. No "would you like to...".
 |-------|-------------|-------------|
 | `/stepback` | One-shot perspective reset on current work | Mid-work, when you feel something might be off |
 | `/discuss` | Multi-round Socratic dialogue about an idea | Before starting, to explore a concept |
-| `/mirror` | Confirms your understanding of a request | To verify Claude understood you correctly |
 | `/scope` | Analyzes blast radius of a specific change proposal | When you have a concrete change to assess |
 | `/tribunal` | Multi-agent adversarial review | For high-stakes architectural decisions |
 

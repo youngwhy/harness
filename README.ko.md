@@ -345,7 +345,7 @@ You:  /execute
 
 | 카테고리 | 하는 일 | 스킬 |
 |----------|------------------|--------|
-| **이해** | 요구사항 도출, 태스크 계획 | `/specify` `/blueprint` `/discuss` `/deep-interview` `/mirror` |
+| **이해** | 요구사항 도출, 태스크 계획 | `/specify` `/blueprint` `/discuss` `/deep-interview` |
 | **조사** | 코드베이스 분석, 레퍼런스 탐색, 커뮤니티 스캔 | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
 | **결정** | 트레이드오프 평가, 다중 관점 리뷰 | `/council` `/tribunal` `/tech-decision` `/stepback` |
 | **구현** | 계획 실행, 버그 수정, 반복 | `/execute` `/ralph` `/rulph` `/bugfix` `/ultrawork` `/scaffold` |

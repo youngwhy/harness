@@ -345,7 +345,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 
 | Category | What you're doing | Skills |
 |----------|------------------|--------|
-| **Understand** | Derive requirements, plan tasks | `/specify` `/blueprint` `/discuss` `/deep-interview` `/mirror` |
+| **Understand** | Derive requirements, plan tasks | `/specify` `/blueprint` `/discuss` `/deep-interview` |
 | **Research** | Analyze codebase, find references, scan communities | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
 | **Decide** | Evaluate tradeoffs, multi-perspective review | `/council` `/tribunal` `/tech-decision` `/stepback` |
 | **Build** | Execute plans, fix bugs, iterate | `/execute` `/ralph` `/rulph` `/bugfix` `/ultrawork` `/scaffold` |

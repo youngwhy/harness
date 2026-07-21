@@ -156,22 +156,6 @@
     "hint": "Performs Google web searches using Chrome and provides web page content.",
     "isGeneral": false
   },
-  "mirror": {
-    "keywords": [
-      "mirror",
-      "mirror back",
-      "echo back",
-      "explain it again",
-      "did I get it right?",
-      "tell me what I want",
-      "confirm this",
-      "paraphrase this",
-      "explain what you understood",
-      "what did I ask?"
-    ],
-    "hint": "Confirms the user's question and explains the understood content.",
-    "isGeneral": false
-  },
   "ralph": {
     "keywords": [
       "ralph",

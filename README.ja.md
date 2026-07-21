@@ -343,7 +343,7 @@ You:  /execute
 
 | カテゴリ | 目的 | スキル |
 |----------|------------------|--------|
-| **理解** | 要件の導出、タスク計画 | `/specify` `/blueprint` `/discuss` `/deep-interview` `/mirror` |
+| **理解** | 要件の導出、タスク計画 | `/specify` `/blueprint` `/discuss` `/deep-interview` |
 | **調査** | コードベースの分析、リファレンスの検索、コミュニティのスキャン | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
 | **判断** | トレードオフの評価、多角的レビュー | `/council` `/tribunal` `/tech-decision` `/stepback` |
 | **構築** | プランの実行、バグ修正、反復 | `/execute` `/ralph` `/rulph` `/bugfix` `/ultrawork` `/scaffold` |
