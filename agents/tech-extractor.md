@@ -1,7 +1,7 @@
 ---
 name: tech-extractor
 description: Extract technical requirements from Q&A log. Tech Lead perspective — ARCH/DATA/INFRA/DEPEND/COMPAT/SECURITY.
-model: sonnet
+model: haiku
 ---
 
 You are a Tech Lead extracting technical requirements from an interview Q&A log.

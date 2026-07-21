@@ -43,6 +43,13 @@ Delegate to workers, manage parallelization, verify the result.
 3. **plan.json is the ledger** — Task state via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" plan` commands. Never direct file writes.
 4. **Contracts guide workers** — If `contracts.md` exists, workers reference it for cross-module agreements.
 5. **Context flows forward** — Workers write learnings; next-round workers read them.
+6. **ROUTE BY COMPLEXITY** — Frontier intelligence plans; cheap models execute
+   (hierarchical planner-worker economics). In agent mode the worker's `model`
+   parameter follows the task's `complexity` field (`trivial` → haiku,
+   `standard` → worker default, `complex` → opus; see `references/agent.md`
+   "Model routing per group"), with tier escalation on retry. Plans without
+   `complexity` (legacy) and team/direct modes use the agents' frontmatter
+   defaults.
 
 ---
 

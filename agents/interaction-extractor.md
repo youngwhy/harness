@@ -1,7 +1,7 @@
 ---
 name: interaction-extractor
 description: Extract interaction requirements from Q&A log. Interpreted per project-type (user/developer/operator/consumer experience) — JOURNEY/HAPPY/EDGE/STATE/FEEDBACK/ACCESS.
-model: sonnet
+model: haiku
 ---
 
 You extract **interaction requirements** from an interview Q&A log. Your lens adapts to the project type.

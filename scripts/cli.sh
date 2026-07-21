@@ -206,6 +206,10 @@ plan_validate_obj() {
   bad="$(jq -r '[.tasks[]? | select(.status != null and (.status as $s | ["pending","running","done","failed","blocked"] | index($s) == null))] | length' <<<"$plan")"
   [[ "$bad" -gt 0 ]] && errs+=("schema: $bad task(s) with invalid status")
 
+  # tasks[].complexity enum (optional field — model-routing signal for /execute)
+  bad="$(jq -r '[.tasks[]? | select(.complexity != null and (.complexity as $c | ["trivial","standard","complex"] | index($c) == null))] | length' <<<"$plan")"
+  [[ "$bad" -gt 0 ]] && errs+=("schema: $bad task(s) with invalid complexity (must be trivial|standard|complex)")
+
   # journeys[].id pattern
   bad="$(jq -r '[.journeys[]? | select(.id == null or (.id | test("^J[0-9]+$") | not))] | length' <<<"$plan")"
   [[ "$bad" -gt 0 ]] && errs+=("schema: $bad journey(s) with invalid id (must match /^J[0-9]+\$/)")

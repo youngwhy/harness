@@ -100,6 +100,30 @@ function no_intra_group_dep(group, candidate):
 
 One group → one worker. Groups of size 1 are fine; they still get a worker.
 
+### Model routing per group  *(hierarchical planner-worker economics)*
+
+Frontier intelligence plans; cheap models execute. Each worker's model tier is
+derived from the `complexity` of the tasks in its group (emitted by
+taskgraph-planner; absent on legacy plans):
+
+```
+function route_model(group) → string | undefined:
+  # Retry escalation wins over the complexity mapping (see handle_failed).
+  overrides = [tier_override[t.id] for t in group.tasks if t.id in tier_override]
+  if overrides: return strongest(overrides)
+
+  # Otherwise route by the HARDEST task in the group.
+  levels = [t.complexity for t in group.tasks if t.complexity]
+  if levels is empty:        return undefined   # legacy plan — worker default
+  if "complex" in levels:    return "opus"      # subtle correctness → strong model
+  if "standard" in levels:   return undefined   # worker default (sonnet)
+  return "haiku"                                # all-trivial group → fast cheap model
+```
+
+`undefined` means: omit the `model` parameter so the worker agent's own
+frontmatter default applies. Never route a `complex` group to haiku, and never
+burn opus on an all-trivial group.
+
 ---
 
 ## Phase C — Single-Message Parallel Dispatch  *(fulfills R-F4.3, R-N16.1, R-N16.2)*
@@ -131,6 +155,7 @@ for g in groups:
     subagent_type   = "worker",
     description     = "Round {round_id} / {g.module}: " + ",".join(t.id for t in g.tasks),
     run_in_background = true,                              # R-F4.3
+    model           = route_model(g),                      # complexity-based tier (Phase B)
     prompt          = WORKER_CHARTER(g.tasks, round_id, plan_path, contracts_path,
                                      CONTEXT_DIR, spec_dir)
   )
@@ -348,6 +373,11 @@ handle_failed(task, result):
     prior_failure_context[task.id] = result.summary
     cli("plan task {plan_path} --status {task.id}=pending")   # re-arm
     per_task_retry_count[task.id] += 1
+    # Model-tier escalation: a retry never re-runs on a cheaper tier.
+    # haiku-routed failure retries at the worker default; a default-tier
+    # failure retries on opus. Track via an in-memory tier_override[task.id]
+    # that route_model() consults before the complexity mapping.
+    tier_override[task.id] = escalate(tier_of_last_dispatch(task.id))
   else:
     append_audit("PERSISTENT_FAIL: {task.id} after 2 retries — aborting run (R-F7.2)")
     abort_run()

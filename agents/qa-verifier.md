@@ -6,7 +6,7 @@ description: |
   determines the appropriate verification method for each (browser/CLI/desktop/shell),
   executes verification, and returns structured PASS/FAIL per sub-requirement.
   Does NOT fix code — report only. Used by verify-thorough Step 4.
-model: opus
+model: sonnet
 allowed-tools:
   - Bash
   - Read

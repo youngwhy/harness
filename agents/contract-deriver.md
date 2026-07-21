@@ -4,7 +4,6 @@ description: |
   Derive cross-module agreements (types, interfaces, invariants) from requirements.md.
   Writes a single `contracts.md` artifact (markdown, language-agnostic).
   Called by /blueprint Phase 1.
-model: sonnet
 ---
 
 # contract-deriver

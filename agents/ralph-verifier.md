@@ -5,6 +5,7 @@ description: |
   self-verification bias. Reads the DoD checklist and independently checks each item
   against actual code, test results, and file state. Returns structured PASS/FAIL
   per item. Read-only — does not modify any project files.
+model: sonnet
 ---
 
 # Ralph DoD Verifier
