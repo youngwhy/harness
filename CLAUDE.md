@@ -127,6 +127,30 @@ This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url ups
 - **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
 - **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
 
+## Recent Changes (v1.9.0)
+
+### Clarify Escalation Gate in /specify
+
+Users no longer need to judge when to use /clarify — /specify detects it.
+The Phase 1 "I Don't Know" handler now classifies every don't-know answer:
+
+- **Delegation** ("up to you") → tentative default + assumption, continue (as before)
+- **Leaf deferral** (isolated unknown, downstream questions unaffected) →
+  recommend + Open Decision, continue; 2 leaf deferrals in one axis triggers
+  the gate as a backstop
+- **Structural deferral** (the answer shapes the requirement tree, or the user
+  signals decision anxiety) → escalation gate fires on the FIRST occurrence
+
+The gate offers (never forces) a scoped /clarify run on just the blocked
+decision; on SUFFICIENT the summary is imported into qa-log.md as resolved and
+the interview resumes at the triggering question. `clarify` gains a "Scoped
+Invocation" contract (narrow SUFFICIENT bar, 2-6 questions, no follow-up
+command suggestion). `discuss` drops requirements-clarification trigger
+phrases — requirements ambiguity now routes specify → clarify automatically.
+
+Recommended entry points are now just two: `/discuss` (is this a good idea?)
+and `/specify` (everything else — it escalates to clarify by itself).
+
 ## Recent Changes (v1.8.1)
 
 ### Remove `mirror` skill

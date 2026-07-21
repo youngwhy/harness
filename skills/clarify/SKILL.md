@@ -7,6 +7,8 @@ description: |
   "Q&A로 정리", "질문답변 기록", "요구사항 명확화", "설계 명확화".
   Relentless ambiguity-resolution interview that records Q&A under
   .harness/clarify/<topic>/ and hands off to specify/blueprint/docs when clear.
+  Also invoked BY /specify's Clarify Escalation Gate when the interview hits a
+  structural undecided question — then it runs scoped to that single decision.
 allowed-tools:
   - Bash
   - Read
@@ -86,6 +88,24 @@ target_handoff: harness-specify | harness-blueprint | docs | none
 ```
 
 Default mode is `requirements`.
+
+## Scoped Invocation (from /specify's Escalation Gate)
+
+When invoked by the specify skill with a blocked question, a mode, and
+`related_spec: <spec_dir>` in the args, run in **scoped mode**:
+
+- **Scope is the single blocked decision cluster** — do not re-interview the
+  whole project. specify already owns the broad interview; you own this one
+  fork. Questions that drift outside the cluster are out of scope.
+- Mode is given by the caller — skip mode inference.
+- Use the blocked question as the topic slug seed; set `related_spec` in the
+  artifact frontmatter.
+- The auditor's SUFFICIENT bar is correspondingly narrow: the blocked decision
+  is resolved (chosen direction + why + rejected alternative), not "all
+  ambiguity everywhere is gone". Expect 2-6 questions, not 20.
+- **Handoff differs**: do NOT suggest a follow-up command. Write
+  `clarity-summary.md`, then return control — the paused specify interview
+  resumes in the same session and imports the summary itself.
 
 ## Core Loop
 
