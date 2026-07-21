@@ -64,7 +64,7 @@ The plugin also ships standalone skills (council, bugfix, ralph, scope, etc.) th
        |  rv-detector.sh
        v
   PreToolUse
-       |  [Skill]  skill-session-init.sh, rulph-init.sh
+       |  [Skill]  skill-session-init.sh
        |  [Edit|Write]  skill-session-guard.sh, ralph-dod-guard.sh
        v
   PostToolUse
@@ -100,7 +100,6 @@ The plugin also ships standalone skills (council, bugfix, ralph, scope, etc.) th
 | `scaffold` | Greenfield architecture -> `requirements.md` -> `/execute` |
 | `council` | Multi-perspective decision committee with Team Mode debate and step-back judge |
 | `ralph` | Iterative DoD loop with Stop hook re-injection |
-| `rulph` | Rubric-based evaluation loop with multi-model scoring |
 | `scope` | Fast parallel change-scope analyzer |
 | `discuss` | Socratic discussion (supports `--scored` for deep interview mode) |
 | `check` | Pre-push validation against project rule checklists |
@@ -158,7 +157,6 @@ Key conventions:
 | `ultrawork-init-hook.sh` | UserPromptSubmit | Initialize ultrawork pipeline state when `/ultrawork` is typed |
 | `skill-session-init.sh` | UserPromptSubmit + PreToolUse[Skill] | Initialize session state for specify/execute skills |
 | `rv-detector.sh` | UserPromptSubmit | Detect `!rv` keyword to trigger re-validation loop |
-| `rulph-init.sh` | PreToolUse[Skill] | Initialize rulph loop state on skill invocation |
 | `skill-session-guard.sh` | PreToolUse[Edit\|Write] | Plan guard (specify) / orchestrator guard (execute) |
 | `ralph-dod-guard.sh` | PreToolUse[Edit\|Write] | Enforce DoD before allowing writes in /ralph loop |
 | `validate-output.sh` | PostToolUse[Task\|Skill] | Validate agent/skill output against `validate_prompt` frontmatter |

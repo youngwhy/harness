@@ -348,7 +348,7 @@ You:  /execute
 | **이해** | 요구사항 도출, 태스크 계획 | `/specify` `/blueprint` `/discuss` `/deep-interview` |
 | **조사** | 코드베이스 분석, 레퍼런스 탐색, 커뮤니티 스캔 | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
 | **결정** | 트레이드오프 평가, 다중 관점 리뷰 | `/council` `/stepback` |
-| **구현** | 계획 실행, 버그 수정, 반복 | `/execute` `/ralph` `/rulph` `/bugfix` `/ultrawork` `/scaffold` |
+| **구현** | 계획 실행, 버그 수정, 반복 | `/execute` `/ralph` `/bugfix` `/ultrawork` `/scaffold` |
 | **성찰** | 변경 사항 검증, 교훈 추출 | `/check` `/compound` `/scope` `/issue` |
 
 <details>
@@ -365,7 +365,7 @@ You:  /execute
 | `/council` | 결정·리뷰 진입점: 제안물 심사(판정) 또는 선택지 비교, 외부 LLM + 커뮤니티 스캔 포함 |
 | `/scope` | 빠른 병렬 영향 분석 — 5개 이상의 에이전트가 깨질 수 있는 것을 스캔 |
 | `/check` | 프로젝트 규칙 체크리스트에 대한 푸시 전 검증 |
-| `/rulph` | 루브릭 기반 다중 모델 평가 + 자율적 자기 개선 |
+| | 루브릭 기반 다중 모델 평가 + 자율적 자기 개선 |
 
 </details>
 

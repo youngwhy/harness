@@ -161,9 +161,22 @@
       "prompt re-injection",
       "stop hook",
       "task automation",
-      "verification"
+      "verification",
+      "rulph",
+      "/rulph",
+      "rubric evaluate",
+      "rubric score",
+      "multi-model evaluate",
+      "score and improve",
+      "evaluate and iterate",
+      "grade this",
+      "rubric evaluation",
+      "scoring",
+      "multi-model evaluation",
+      "evaluate and improve",
+      "iterative improvement"
     ],
-    "hint": "Autonomously performs and verifies repetitive tasks through definition-of-done verification.",
+    "hint": "Until-done loop: DoD checklist (binary) or rubric scoring (quality) judgment modes.",
     "isGeneral": false
   },
   "reference-seek": {
@@ -182,25 +195,6 @@
       "source code"
     ],
     "hint": "Finds references and provides code examples, design patterns, and open-source implementations.",
-    "isGeneral": false
-  },
-  "rulph": {
-    "keywords": [
-      "rulph",
-      "/rulph",
-      "rubric evaluate",
-      "rubric score",
-      "multi-model evaluate",
-      "score and improve",
-      "evaluate and iterate",
-      "grade this",
-      "rubric evaluation",
-      "scoring",
-      "multi-model evaluation",
-      "evaluate and improve",
-      "iterative improvement"
-    ],
-    "hint": "Evaluates output based on rubrics and iteratively improves it.",
     "isGeneral": false
   },
   "scope": {

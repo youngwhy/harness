@@ -65,7 +65,6 @@ Hooks are registered in `.claude/settings.json` and automate pipeline transition
 | `ultrawork-init-hook.sh` | UserPromptSubmit | Initialize ultrawork pipeline state when `/ultrawork` is typed |
 | `skill-session-init.sh` | UserPromptSubmit + PreToolUse[Skill] | Initialize session state for specify/execute/blueprint skills |
 | `rv-detector.sh` | UserPromptSubmit | Detect `!rv` keyword to trigger re-validation loop |
-| `rulph-init.sh` | PreToolUse[Skill] | Initialize rulph loop state on skill invocation |
 | `skill-session-guard.sh` | PreToolUse[Edit\|Write] | Plan guard (specify) / orchestrator guard (execute) |
 | `ralph-dod-guard.sh` | PreToolUse[Edit\|Write] | Enforce DoD before allowing writes in /ralph loop |
 | `validate-output.sh` | PostToolUse[Task\|Skill] | Validate agent/skill output against `validate_prompt` frontmatter |
@@ -76,7 +75,7 @@ Hooks are registered in `.claude/settings.json` and automate pipeline transition
 | `ultrawork-stop-hook.sh` | Stop | Advance ultrawork pipeline on session stop |
 | `skill-session-stop.sh` | Stop | Block exit if execute has incomplete tasks (circuit breaker: 30 iter) |
 | `rv-validator.sh` | Stop | Run re-validation pass on stop |
-| `rulph-stop.sh` | Stop | Handle rulph loop termination |
+| `rulph-stop.sh` | Stop | Rubric-mode loop guard for /ralph (`.rulph` state namespace) |
 | `ralph-stop.sh` | Stop | Ralph loop DoD verification + prompt re-injection |
 | `skill-session-cleanup.sh` | SessionEnd | Clean up session dir (`rm -rf ~/.harness/{session_id}/`) |
 
@@ -126,6 +125,27 @@ This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url ups
 - **CLI in pure bash** — the upstream npm CLI is replaced by **harness-cli** = `scripts/cli.sh` (pure bash + jq). All skills/agents/hooks/codex adapters invoke it by path via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" <group> <sub>`. No npm install, no `cli/` package, no `cli-version-sync.sh` hook.
 - **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
 - **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
+
+## Recent Changes (v1.11.0)
+
+### ralph absorbs rulph — one "until done" loop, two judgment modes
+
+ralph and rulph shared the same machinery (Stop-hook loop + circuit breaker +
+independent evaluation) and differed only in how "done" is judged. Merged:
+
+- **`/ralph` Phase 0 added** — (0.1) plan-shape routing guard: requests that
+  decompose into a task list get pointed at /specify → /blueprint → /execute
+  instead of a blind retry loop; (0.2) judgment mode selection: binary
+  system-state targets → checklist (DoD, default), graded-quality artifacts →
+  rubric (proposed via AskUserQuestion; `--dod` / `--rubric` flags skip).
+- **Rubric mode** = former rulph, ported verbatim to
+  `skills/ralph/references/rubric-mode.md`. It keeps the `.rulph` state
+  namespace so `rulph-stop.sh` (now documented as ralph's rubric-mode stop
+  guard) continues to enforce the loop unchanged.
+- **Removed**: `rulph` skill and `rulph-init.sh` (redundant — the skill flow
+  writes the full `.rulph` state itself, including the safety counters the
+  init hook seeded). Hook registrations updated in hooks.json and
+  .claude/settings.json; skill-rules keywords merged into ralph.
 
 ## Recent Changes (v1.10.0)
 

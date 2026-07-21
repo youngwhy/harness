@@ -1,13 +1,17 @@
 ---
 name: ralph
 description: |
-  Iterative task completion loop with Definition of Done verification.
-  Combines the Ralph Wiggum technique (prompt re-injection via Stop hook) with
-  DoD-based independent verification. Claude proposes DoD criteria, user confirms,
-  then Claude works autonomously. Stop hook re-injects the original prompt and
-  blocks exit until all DoD items are independently verified.
+  Iterative "until it's done" loop with two judgment modes. Checklist mode
+  (default): user-confirmed Definition of Done, Stop hook blocks exit until an
+  independent verifier passes every item. Rubric mode (formerly /rulph): build
+  a scoring rubric, evaluate with multiple models in parallel, improve one
+  criterion at a time until the score threshold is met. Both use the Ralph
+  Wiggum technique (prompt re-injection via Stop hook) with circuit breakers.
+  NOT for plan-shaped build work — Phase 0 routes those to /specify.
   "/ralph", "ralph loop", "ralph 루프", "반복 작업", "DoD 루프",
-  "완료 검증 루프", "task loop", "keep going until done"
+  "완료 검증 루프", "task loop", "keep going until done", "될 때까지",
+  "rubric evaluate", "rubric score", "score and improve", "grade this",
+  "루브릭 평가", "채점 루프", "자율 개선", "개선 루프"
 allowed-tools:
   - Read
   - Grep
@@ -18,18 +22,25 @@ allowed-tools:
   - Agent
   - AskUserQuestion
 validate_prompt: |
-  Must contain Phase 1 (DoD Collection) and Phase 2 (Work Execution).
-  Must use AskUserQuestion for DoD confirmation.
-  Must write state via bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" session set with .ralph namespace.
-  Must write DoD file to session files directory.
-  Must include prompt storage for Stop hook re-injection.
+  Must contain Phase 0 (Routing Guard + Mode Selection), Phase 1 (DoD Collection), Phase 2 (Work Execution).
+  Checklist mode must use AskUserQuestion for DoD confirmation and write state
+  via bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" session set with .ralph namespace,
+  write DoD file to session files directory, and store the prompt for Stop hook re-injection.
+  Rubric mode must follow references/rubric-mode.md (state namespace .rulph).
 ---
 
 # ralph
 
-Iterative task completion loop driven by a user-confirmed Definition of Done. Combines the Ralph Wiggum technique (prompt re-injection on stop) with DoD-based independent verification.
+Iterative "until it's done" loop. Two judgment modes share the same machinery
+(Stop-hook loop + circuit breaker + independent evaluation); they differ in how
+"done" is judged:
 
-**How it works:**
+| Mode | "Done" means | Best for |
+|------|--------------|----------|
+| **Checklist** (default) | every DoD item passes independent verification (binary) | convergence work: make tests green, zero lint errors, migration passes |
+| **Rubric** (formerly /rulph) | weighted score meets threshold + per-criterion floors | quality iteration: writing, design docs, refactoring quality — things that get *better*, not *done* |
+
+**Checklist mode flow:**
 1. You propose DoD criteria based on the user's request
 2. User confirms/modifies via AskUserQuestion
 3. You work on the task
@@ -37,6 +48,51 @@ Iterative task completion loop driven by a user-confirmed Definition of Done. Co
    - If unchecked items remain → blocks exit, re-injects original prompt + remaining items
    - If all items checked → allows exit
 5. Loop continues until all DoD items verified or circuit breaker (max 10 iterations)
+
+**Rubric mode flow**: Read and follow `references/rubric-mode.md` — rubric
+building → parallel multi-model scoring → improve-one-criterion loop →
+completion report. Its Stop-hook guard uses the `.rulph` state namespace.
+
+---
+
+## Phase 0: Routing Guard + Mode Selection
+
+### 0.1 Plan-shape check (route away if this isn't loop work)
+
+ralph is for work whose "done" can only be written as a **condition**, not a
+task list. Before anything else, ask yourself: *can this request be decomposed
+into a concrete task sequence?*
+
+- "add tagging to the memo app until it works" → decomposes (model → API → UI)
+  → **plan-shaped**. Recommend the pipeline instead:
+
+```
+AskUserQuestion(
+  question: "This looks like plan-shaped build work — /specify → /blueprint → /execute would give it structured tasks, per-task verification, and round commits. ralph's blind retry loop is weaker for this. Proceed how?",
+  header: "Routing",
+  options: [
+    { label: "Use /specify pipeline (Recommended)", description: "Exit ralph; run /specify to plan and build this properly" },
+    { label: "ralph anyway", description: "Skip planning; hammer at it with a DoD loop — okay for small, well-understood targets" }
+  ]
+)
+```
+
+- "make `npm test` exit 0", "keep going until the benchmark passes" → cannot be
+  decomposed upfront → **loop-shaped**. Continue.
+
+### 0.2 Judgment mode selection
+
+Explicit flags win: `--dod` → checklist, `--rubric` → rubric. Otherwise infer:
+
+- Target is a **binary condition** on code/system state (tests, lint, build,
+  migration, uptime) → **checklist**. Don't ask; announce the mode.
+- Target is an **artifact whose quality is graded**, with "improve / better /
+  polish / 평가 / 개선" language (prose, docs, design, refactoring quality) →
+  propose **rubric** via AskUserQuestion (checklist as the alternative).
+
+On rubric mode: switch to `references/rubric-mode.md` now and follow it end to
+end (it owns its own state init, loop, and completion). The phases below are
+**checklist mode only**.
 
 ---
 
