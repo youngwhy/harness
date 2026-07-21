@@ -4,7 +4,6 @@ description: |
   Produce a layered task DAG (L0 Foundation → L1 Feature → L2 Integration → L3 Deploy)
   where every sub-requirement is fulfilled by ≥1 task. Marks parallelism explicitly.
   Called by /blueprint Phase 2.
-model: opus
 ---
 
 # taskgraph-planner
@@ -32,7 +31,8 @@ A single JSON block at the end of your response:
       "action": "write contracts.md + storage signature util",
       "fulfills": ["R-T2.1", "R-T7.1", "R-T7.2"],
       "depends_on": [],
-      "parallel_safe": false
+      "parallel_safe": false,
+      "complexity": "standard"
     }
   ],
   "ambiguities": [
@@ -49,6 +49,11 @@ A single JSON block at the end of your response:
 - `fulfills`: array of sub-req IDs (`R-X\d+(\.\d+)?`). **Every sub-req in requirements.md must appear in at least one task's `fulfills`.**
 - `depends_on`: array of earlier task IDs. Use `[]` for L0.
 - `parallel_safe`: `true` ONLY if this task can run concurrently with its layer-mates (see below).
+- `complexity`: one of `trivial | standard | complex`. Model-routing signal consumed by /execute (frontier planning, cheap execution — hierarchical planner-worker economics):
+  - `trivial` — mechanical work with a known-correct shape: boilerplate, config files, scaffolding, renames, simple test skeletons. A small fast model can do it.
+  - `standard` — typical feature code: a module, an endpoint, a component with tests. The default; use when unsure.
+  - `complex` — subtle correctness required: concurrency, core algorithms, cross-module integration, tricky state machines, security-sensitive logic.
+  Judge by the *hardest* part of the task, not the average. Do NOT inflate to `complex` defensively — that defeats the routing.
 
 **Out of scope — do NOT emit these fields.** The schema rejects them:
 - File paths, function names, interface names, line counts — all HOW. Let the worker decide.
@@ -122,5 +127,6 @@ If the caller passes `retry_gap: ["R-B3.2", "R-U5.1"]`:
 - [ ] Every `fulfills` item matches `^R-[A-Z]\d+(\.\d+)?$` and refers to a sub-req that exists in requirements.md
 - [ ] Set diff: every `R-X.Y` from requirements.md appears in at least one `fulfills[]`
 - [ ] `parallel_safe: true` tasks share only L0 contract deps within their layer
+- [ ] Every task has a `complexity` of `trivial | standard | complex`, judged by its hardest part
 
 If any checkbox fails, fix before returning.

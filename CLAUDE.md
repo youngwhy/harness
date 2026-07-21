@@ -127,6 +127,30 @@ This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url ups
 - **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
 - **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
 
+## Recent Changes (v1.8.0)
+
+### Hierarchical model economics (planner-worker tiering)
+
+Inspired by Cursor's agent-swarm model-economics findings (frontier planner +
+low-cost workers beat a single frontier swarm on both cost and pass rate):
+
+- **Planning tier → session model (frontier)**: `taskgraph-planner`, `verify-planner`,
+  `contract-deriver` drop their `model:` frontmatter and inherit the session model —
+  whatever frontier model runs the orchestrator also makes the design decisions.
+- **Mechanical verification tier → down**: `verifier`, `qa-verifier` opus → sonnet
+  (verifier is judgment-free by contract); `ralph-verifier` gains an explicit
+  `model: sonnet` (previously leaked the session model).
+- **Judgment gate → up**: `code-reviewer` sonnet → opus (SHIP/NEEDS_FIXES verdict is
+  the rework-loop gate — worth the intelligence).
+- **Mechanical helpers → haiku**: `git-master`, `business-extractor`, `tech-extractor`,
+  `interaction-extractor` sonnet → haiku.
+- **Complexity-based worker routing**: `taskgraph-planner` now emits
+  `complexity: trivial | standard | complex` per task (validated by
+  `cli.sh plan validate`); /execute agent mode routes each worker group's `model`
+  param by its hardest task (trivial → haiku, standard → worker default sonnet,
+  complex → opus) with tier escalation on retry. Legacy plans without `complexity`
+  and team/direct modes keep frontmatter defaults.
+
 ## Recent Changes (v1.7.1)
 
 ### chromux skill/agent sync

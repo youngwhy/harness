@@ -5,7 +5,7 @@ description: |
   Git commit specialist. Enforces atomic commits, detects project style.
   Use this agent for ALL git commits during /execute workflow.
   Triggers: "commit", "git commit"
-model: sonnet
+model: haiku
 allowed-tools:
   - Bash
   - Read

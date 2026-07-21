@@ -5,7 +5,7 @@ description: |
   Code reviewer that performs systematic cross-cutting review of complete diffs.
   Catches integration issues, hidden bugs, and design inconsistencies that
   per-task verification misses. Returns SHIP or NEEDS_FIXES verdict.
-model: sonnet
+model: opus
 disallowed-tools:
   - Write
   - Edit

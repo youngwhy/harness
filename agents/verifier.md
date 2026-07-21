@@ -2,7 +2,7 @@
 name: verifier
 color: blue
 description: Independent sub-requirement verifier. Executes verify_plan entries mechanically — no judgment, no bypass.
-model: opus
+model: sonnet
 allowed-tools:
   - Read
   - Grep

@@ -269,7 +269,8 @@ Expected output:
       "action": "write contracts.md + storage sig util",
       "fulfills": ["R-T2.1", "R-T7.1"],
       "depends_on": [],
-      "parallel_safe": false
+      "parallel_safe": false,
+      "complexity": "standard"
     },
     ...
   ],
@@ -292,6 +293,8 @@ cli does NOT verify coverage against requirements.md. **You** must ensure:
 - **No task references a non-existent sub-req ID** (orphan). Drop orphans before merging.
 
 - **Parallel safety**: for each L1 task pair with `parallel_safe: true`, double-check they touch different modules and share only L0 contract state. If uncertain → set `parallel_safe: false` (serial is safe default).
+
+- **Complexity sanity**: every task should carry `complexity: trivial | standard | complex` (model-routing signal for /execute). If missing, default it to `standard` before merging. If more than ~half the tasks are `complex`, the planner is inflating defensively — re-check against the definitions in the taskgraph-planner spec.
 
 ### Step 2.3: Preview task graph (informational)
 
