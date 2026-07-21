@@ -147,6 +147,31 @@
     "hint": "Performs Google web searches using Chrome and provides web page content.",
     "isGeneral": false
   },
+  "quality-loop": {
+    "keywords": [
+      "quality-loop",
+      "quality loop",
+      "/quality-loop",
+      "spare tokens",
+      "burn tokens",
+      "make tests faster",
+      "speed up tests",
+      "speed up the test suite",
+      "clean up tests",
+      "slow tests",
+      "slow lint",
+      "code duplication cleanup",
+      "토큰 남았어",
+      "품질 루프",
+      "코드 품질 개선",
+      "테스트 빠르게",
+      "테스트 정리",
+      "중복 코드 정리",
+      "린트 느려"
+    ],
+    "hint": "Invest spare token budget: N-pass sweep for subtle bugs/duplication, then make lint and tests faster. Self-improving pattern memory.",
+    "isGeneral": false
+  },
   "ralph": {
     "keywords": [
       "ralph",

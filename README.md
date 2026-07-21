@@ -341,7 +341,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 
 ## Commands
 
-28 skills — slash commands you invoke inside Claude Code.
+29 skills — slash commands you invoke inside Claude Code.
 
 | Category | What you're doing | Skills |
 |----------|------------------|--------|
@@ -350,7 +350,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 | **Decide** | Evaluate tradeoffs, multi-perspective review | `/council` `/stepback` |
 | **Build** | Execute plans, fix bugs, iterate | `/execute` `/ralph` `/bugfix` `/ultrawork` `/scaffold` |
 | **Test** | QA test applications, verify changes | `/qa` `/check` `/scope` |
-| **Reflect** | Extract learnings, analyze sessions | `/compound` `/issue` `/skill-session-analyzer` |
+| **Reflect** | Extract learnings, analyze sessions, invest spare tokens | `/compound` `/issue` `/skill-session-analyzer` `/quality-loop` |
 
 <details>
 <summary><strong>Key commands explained</strong></summary>
@@ -367,6 +367,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 | `/council` | Decision & review entry point: proposal review (verdict) or option comparison, with external LLMs + community scan |
 | `/scope` | Fast parallel impact analysis — 5+ agents scan what could break |
 | `/check` | Pre-push verification against project rule checklists |
+| `/quality-loop` | Spare-token quality sweep: subtle bugs, duplication, test health, then faster lint/tests — with self-improving pattern memory |
 | | Rubric-based multi-model evaluation with autonomous self-improvement |
 
 </details>
@@ -375,7 +376,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 
 ## Under the Hood
 
-**29 skills · 22 agents · 18 hooks**
+**30 skills · 22 agents · 18 hooks**
 
 ```
 .claude/
