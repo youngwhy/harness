@@ -99,7 +99,7 @@ Hooks are registered in `.claude/settings.json` and automate pipeline transition
 ### Pre-Release Checklist
 
 - [ ] All content must be written in English (SKILL.md, agent .md, CLAUDE.md, README.md, commit messages, comments)
-- [ ] When `README.md` is updated, sync all translations: `README.ko.md`, `README.zh.md`, `README.ja.md`
+- [ ] When `README.md` is updated, sync the Korean translation: `README.ko.md` (zh/ja translations were dropped in v1.12.0)
 
 ### Release Flow
 
@@ -125,6 +125,43 @@ This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url ups
 - **CLI in pure bash** — the upstream npm CLI is replaced by **harness-cli** = `scripts/cli.sh` (pure bash + jq). All skills/agents/hooks/codex adapters invoke it by path via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" <group> <sub>`. No npm install, no `cli/` package, no `cli-version-sync.sh` hook.
 - **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
 - **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
+
+## Recent Changes (v1.12.0)
+
+### New `quality-loop` skill — spare-token quality sweep
+
+Invests leftover weekly token budget into the two properties that let agents
+run long and autonomously: test coverage (how bold each attempt can be) and
+feedback speed (how fast the loop turns).
+
+- **Phase 0** loads `.harness/quality-loop/patterns.md` (per-project pattern
+  memory) and runs every recorded `detect:` command first, then measures a
+  test/lint/hook-time baseline.
+- **Phase 1** sweeps the codebase N times (default 3) with rotating lenses —
+  subtle bugs, duplication, test health — via parallel explore subagents;
+  findings are adversarially verified before fixing; two consecutive dry
+  passes exit early. Test deletion requires one of three cited proofs
+  (feature gone / covered elsewhere / cannot fail).
+- **Phase 2** runs `references/speed-checklist.md`: 7 feedback-loop failure
+  modes (stale tests, redundant coverage, broken change-scoping,
+  over-parallelism, CI-grade hooks, repeated bootstrapping, cold caches).
+  Every speed change must show a measured before/after improvement or be
+  reverted; coverage is never traded for speed.
+- **Phase 3** appends new patterns (with mechanical detect commands) to the
+  pattern memory so each run starts where the last ended, and reports a
+  before/after metrics table.
+
+Grounded in SWE-at-Google test sizes (hook tiering), Fowler's
+non-determinism article (parallel contention), mutation testing
+(cannot-fail detection), and test impact analysis (change scoping).
+
+### Docs: drop zh/ja READMEs, sync Korean
+
+`README.zh.md` and `README.ja.md` removed — only `README.ko.md` is
+maintained alongside `README.md`. Korean README synced to the current
+skill set (Test category row, /qa and /quality-loop entries, ralph
+two-mode description). Skill/agent counts in both READMEs corrected to
+the measured 24 skills · 26 agents · 18 hooks.
 
 ## Recent Changes (v1.11.0)
 

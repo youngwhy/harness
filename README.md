@@ -1,6 +1,6 @@
 # harness
 
-English | [한국어](README.ko.md) | [中文](README.zh.md) | [日本語](README.ja.md)
+English | [한국어](README.ko.md)
 
 **All you need is requirements.**
 A Claude Code plugin that derives requirements from your intent, verifies every derivation, and delivers traced code — without you writing a plan.
@@ -341,7 +341,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 
 ## Commands
 
-28 skills — slash commands you invoke inside Claude Code.
+24 skills — slash commands you invoke inside Claude Code.
 
 | Category | What you're doing | Skills |
 |----------|------------------|--------|
@@ -350,7 +350,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 | **Decide** | Evaluate tradeoffs, multi-perspective review | `/council` `/stepback` |
 | **Build** | Execute plans, fix bugs, iterate | `/execute` `/ralph` `/bugfix` `/ultrawork` `/scaffold` |
 | **Test** | QA test applications, verify changes | `/qa` `/check` `/scope` |
-| **Reflect** | Extract learnings, analyze sessions | `/compound` `/issue` `/skill-session-analyzer` |
+| **Reflect** | Extract learnings, analyze sessions, invest spare tokens | `/compound` `/issue` `/skill-session-analyzer` `/quality-loop` |
 
 <details>
 <summary><strong>Key commands explained</strong></summary>
@@ -363,11 +363,11 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 | `/qa` | Systematic QA testing — browser (chromux/CDP) or computer (MCP computer-use) mode |
 | `/ultrawork` | Full pipeline: specify → blueprint → execute in one command |
 | `/bugfix` | Root cause diagnosis → requirements.md → execute (adaptive routing) |
-| `/ralph` | Iterative loop with DoD — keeps going until independently verified |
+| `/ralph` | Iterative until-done loop — checklist mode (DoD, independently verified) or rubric mode (multi-model scoring + self-improvement) |
 | `/council` | Decision & review entry point: proposal review (verdict) or option comparison, with external LLMs + community scan |
 | `/scope` | Fast parallel impact analysis — 5+ agents scan what could break |
 | `/check` | Pre-push verification against project rule checklists |
-| | Rubric-based multi-model evaluation with autonomous self-improvement |
+| `/quality-loop` | Spare-token quality sweep: subtle bugs, duplication, test health, then faster lint/tests — with self-improving pattern memory |
 
 </details>
 
@@ -375,7 +375,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 
 ## Under the Hood
 
-**29 skills · 22 agents · 18 hooks**
+**24 skills · 26 agents · 18 hooks**
 
 ```
 .claude/
@@ -386,13 +386,13 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 │   ├── bugfix/        Root cause → requirements.md → execute pipeline
 │   ├── council/       Multi-perspective deliberation
 │   ├── qa/            Systematic QA testing (browser + computer)
-│   └── ...            22 more skills
+│   └── ...            18 more skills
 ├── agents/
 │   ├── interviewer    Socratic questioning
 │   ├── debugger       Root cause analysis
 │   ├── worker         Task implementation
 │   ├── code-reviewer  Cross-cutting review
-│   └── ...            17 more agents
+│   └── ...            22 more agents
 ├── scripts/           18 hook scripts
 │   ├── session        Lifecycle management
 │   ├── guards         Write protection, plan enforcement
