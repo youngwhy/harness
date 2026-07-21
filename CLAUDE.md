@@ -127,6 +127,16 @@ This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url ups
 - **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
 - **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
 
+## Recent Changes (v1.8.1)
+
+### Remove `mirror` skill
+
+The standalone `/mirror` skill is fully subsumed by `/specify` Phase 0.1
+(Mirror — prove understanding before asking) and the mirroring step in
+`/clarify`'s core loop. Removed `skills/mirror/`, its skill-rules entry, and
+doc/README references; `/stepback`'s comparison table now points to
+`/specify` Phase 0 Mirror.
+
 ## Recent Changes (v1.8.0)
 
 ### Hierarchical model economics (planner-worker tiering)

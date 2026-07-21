@@ -103,7 +103,6 @@ The plugin also ships standalone skills (council, bugfix, ralph, scope, etc.) th
 | `rulph` | Rubric-based evaluation loop with multi-model scoring |
 | `scope` | Fast parallel change-scope analyzer |
 | `discuss` | Socratic discussion (supports `--scored` for deep interview mode) |
-| `mirror` | Echo back understanding for mutual confirmation |
 | `check` | Pre-push validation against project rule checklists |
 | `tribunal` | Three-way adversarial review (risk, value, feasibility) |
 | `issue` | Structured GitHub issue creation with codebase impact analysis |
