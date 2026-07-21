@@ -1,6 +1,6 @@
 # harness
 
-[English](README.md) | 한국어 | [中文](README.zh.md) | [日本語](README.ja.md)
+[English](README.md) | 한국어
 
 **All you need is requirements.**
 의도에서 요구사항을 도출하고, 모든 도출 과정을 검증하며, 추적 가능한 코드를 만들어내는 Claude Code 플러그인 — 계획을 직접 작성할 필요가 없습니다.
@@ -349,7 +349,8 @@ You:  /execute
 | **조사** | 코드베이스 분석, 레퍼런스 탐색, 커뮤니티 스캔 | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
 | **결정** | 트레이드오프 평가, 다중 관점 리뷰 | `/council` `/stepback` |
 | **구현** | 계획 실행, 버그 수정, 반복 | `/execute` `/ralph` `/bugfix` `/ultrawork` `/scaffold` |
-| **성찰** | 변경 사항 검증, 교훈 추출 | `/check` `/compound` `/scope` `/issue` |
+| **테스트** | 애플리케이션 QA, 변경 사항 검증 | `/qa` `/check` `/scope` |
+| **성찰** | 교훈 추출, 세션 분석, 남는 토큰 투자 | `/compound` `/issue` `/skill-session-analyzer` `/quality-loop` |
 
 <details>
 <summary><strong>주요 명령어 설명</strong></summary>
@@ -359,13 +360,14 @@ You:  /execute
 | `/specify` | 인터뷰 기반 requirements.md 도출 (L0→L4), 게이트키퍼 포함 |
 | `/blueprint` | requirements.md에서 계약 우선 태스크 그래프 계획 → plan.json |
 | `/execute` | 계획 기반 오케스트레이터, 3축 설정 (dispatch: direct/agent/team, verify: light/standard/thorough) |
+| `/qa` | 체계적 QA 테스트 — 브라우저(chromux/CDP) 또는 컴퓨터(MCP computer-use) 모드 |
 | `/ultrawork` | 전체 파이프라인: specify → blueprint → execute를 하나의 명령으로 |
 | `/bugfix` | 근본 원인 진단 → requirements.md → execute (적응형 라우팅) |
-| `/ralph` | 완료 기준 기반 반복 루프 — 독립적으로 검증될 때까지 계속 |
+| `/ralph` | 완료까지 반복하는 루프 — 체크리스트 모드(DoD, 독립 검증) 또는 루브릭 모드(다중 모델 채점 + 자기 개선) |
 | `/council` | 결정·리뷰 진입점: 제안물 심사(판정) 또는 선택지 비교, 외부 LLM + 커뮤니티 스캔 포함 |
 | `/scope` | 빠른 병렬 영향 분석 — 5개 이상의 에이전트가 깨질 수 있는 것을 스캔 |
 | `/check` | 프로젝트 규칙 체크리스트에 대한 푸시 전 검증 |
-| | 루브릭 기반 다중 모델 평가 + 자율적 자기 개선 |
+| `/quality-loop` | 남는 토큰으로 품질 스윕: 미묘한 버그·중복·테스트 건강 점검 후 린트/테스트 가속 — 자기 개선 패턴 메모리 |
 
 </details>
 
@@ -373,7 +375,7 @@ You:  /execute
 
 ## 내부 구조
 
-**24개 스킬 · 21개 에이전트 · 18개 훅**
+**24개 스킬 · 26개 에이전트 · 18개 훅**
 
 ```
 .claude/
@@ -389,7 +391,7 @@ You:  /execute
 │   ├── debugger       근본 원인 분석
 │   ├── worker         태스크 구현
 │   ├── code-reviewer  교차 검토
-│   └── ...            17개 추가 에이전트
+│   └── ...            22개 추가 에이전트
 ├── scripts/           18개 훅 스크립트
 │   ├── session        라이프사이클 관리
 │   ├── guards         쓰기 보호, 계획 강제
