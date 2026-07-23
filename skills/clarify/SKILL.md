@@ -218,8 +218,19 @@ Auditor returns:
 - `CONTINUE` with material ambiguities and suggested next question, or
 - `SUFFICIENT` with remaining non-blocking assumptions.
 
+Every audit report includes a quantitative **ambiguity score** (per-branch
+table + overall mean; see the clarity-auditor agent). `SUFFICIENT` requires
+overall ≤ 0.2 with zero MISSING branches — the score makes the stop condition
+reproducible instead of a judgment call. Relay the latest overall score to the
+user whenever you report interview progress.
+
 Only stop as complete when the auditor says `SUFFICIENT` or the user explicitly
 stops. If the user stops early, set status to `paused`.
+
+When writing `clarity-summary.md`, record the final score in the header line
+(`> Ambiguity Score: {overall} — {N} resolved / {N} assumptions / {N} deferred`)
+so downstream workflows (`/specify`, `/blueprint`) can see how clean the
+handoff is.
 
 ## Handoff
 

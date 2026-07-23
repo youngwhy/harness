@@ -80,6 +80,30 @@ For each branch, classify:
 - `ASSUMPTION_OK`: assumption is explicit and safe to carry forward
 - `DEFERRED_OK`: deferred decision has a clear owner or trigger
 
+## Ambiguity Score (quantitative gate)
+
+Score every **required branch** for the mode (see Mode Checks) plus any extra
+branch the interview opened. Per-branch scores are fixed:
+
+| Classification | Score |
+|---|---|
+| `RESOLVED` | 0.0 |
+| `ASSUMPTION_OK` | 0.2 |
+| `DEFERRED_OK` | 0.2 |
+| `AMBIGUOUS` | 0.6 |
+| `MISSING` | 1.0 |
+
+**Overall score = arithmetic mean across all scored branches**, rounded to two
+decimals. Do not weight, do not exclude a branch to make the number look
+better — a required branch with no Q&A coverage is `MISSING`, score 1.0.
+
+The score is a gate, not a vibe: `SUFFICIENT` requires **overall ≤ 0.2 AND
+zero MISSING branches**. A single `AMBIGUOUS` core branch (0.6) among six
+resolved ones yields 0.10 — numerically passable — so also apply the material
+test: if that one ambiguity would force the next workflow to guess about
+scope, behavior, or architecture, return `CONTINUE` regardless of the number.
+The score can force a CONTINUE; it can never force a SUFFICIENT.
+
 ## Ambiguity Signals
 
 Flag aggressively when you see:
@@ -103,6 +127,13 @@ Flag aggressively when you see:
 - safe assumptions: {N}
 - safe deferred decisions: {N}
 
+### Ambiguity Score
+| Branch | Classification | Score |
+|---|---|---|
+| {branch} | {RESOLVED\|AMBIGUOUS\|MISSING\|ASSUMPTION_OK\|DEFERRED_OK} | {0.0-1.0} |
+
+**Overall: {0.00} (gate: ≤ 0.20, zero MISSING)**
+
 ### Material Ambiguities
 - {branch}: {why it still matters}
 
@@ -118,5 +149,7 @@ Why: {trade-off or rationale}
 ## Verdict Rules
 
 - `CONTINUE` if any material ambiguity remains.
-- `SUFFICIENT` only if the next workflow can proceed without guessing.
+- `CONTINUE` if overall ambiguity score > 0.2 or any required branch is `MISSING`.
+- `SUFFICIENT` only if the score gate passes AND the next workflow can proceed
+  without guessing. Both conditions are necessary; neither alone is enough.
 - If unsure, return `CONTINUE`.

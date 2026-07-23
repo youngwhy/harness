@@ -2,6 +2,7 @@
 > Date: {YYYY-MM-DD}
 > Mode: {requirements | design | domain | plan}
 > Source: `.harness/clarify/{topic-slug}/qa-log.md`
+> Ambiguity Score: {0.00} — {N} resolved / {N} assumptions / {N} deferred
 
 ## Clear Outcome
 
