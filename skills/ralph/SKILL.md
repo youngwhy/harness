@@ -49,11 +49,18 @@ Iterative "until it's done" loop. Two judgment modes share the same machinery
    - If all items checked → allows exit
 5. Loop continues until all DoD items verified or a circuit breaker fires:
    - **Iteration breaker**: max 10 iterations (configurable)
-   - **Stagnation breaker**: the unchecked-item count failing to drop across a
-     full fix+verify cycle (2 iterations) injects a mandatory approach-change
-     directive (diagnose Spinning / Oscillation / Diminishing Returns); 4
-     iterations with zero progress force-stops the loop early with a summary
-     of what was tried and what to change
+   - **Stagnation recovery (self-correcting)**: the unchecked-item count
+     failing to drop across a full fix+verify cycle (2 iterations) forces a
+     strategy revision — spawn a fresh-context `ralph-strategist` agent that
+     diagnoses the pattern (Spinning / Oscillation / Diminishing Returns),
+     picks an untried lens (re-diagnose / contrarian / simplifier / hacker),
+     and returns concrete steps + banned moves. The adopted strategy is
+     appended to the session's `ralph-strategy.md` ledger; the Stop hook
+     tracks the ledger's entry count, so grinding on without a new strategy
+     is mechanically detected and re-blocked
+   - **Stagnation breaker**: 4 iterations with zero progress despite strategy
+     revision force-stops the loop early with a post-mortem summary built
+     from the strategy ledger (which strategies were tried, with what outcome)
 
 **Rubric mode flow**: Read and follow `references/rubric-mode.md` — rubric
 building → parallel multi-model scoring → improve-one-criterion loop →

@@ -31,6 +31,17 @@ iteration=$((iteration + 1))
 # Update iteration count (atomic write)
 jq --argjson iter "$iteration" '.ralph.iteration = $iter' "$STATE_FILE" > "${STATE_FILE}.tmp.$$" && mv "${STATE_FILE}.tmp.$$" "$STATE_FILE"
 
+# Escalation flag (set by the agent when ralph-strategist returns
+# escalate_to_user=true) -> end the loop and hand the decision to the user
+ESCALATE_FLAG="$SESSION_DIR/files/ralph-escalate"
+if [ -f "$ESCALATE_FLAG" ]; then
+    jq 'del(.ralph)' "$STATE_FILE" > "${STATE_FILE}.tmp.$$" && mv "${STATE_FILE}.tmp.$$" "$STATE_FILE"
+    rm -f "$DOD_FILE" "$VERIFY_FLAG" "$ESCALATE_FLAG"
+    jq -n \
+      '{decision: "block", reason: "RALPH LOOP: Escalated to user by strategist verdict. The loop has ended. Present to the user: the escalation reason, the remaining unchecked DoD items, and the strategy ledger summary (ralph-strategy.md in the session files directory). Then await their decision — do not resume work on this task without new user input.", systemMessage: "Ralph loop ended via user escalation. State cleaned up; strategy ledger preserved."}'
+    exit 0
+fi
+
 # Safety: max iterations exceeded -> force cleanup and allow exit
 if [ "$iteration" -gt "$max_iterations" ]; then
     jq 'del(.ralph)' "$STATE_FILE" > "${STATE_FILE}.tmp.$$" && mv "${STATE_FILE}.tmp.$$" "$STATE_FILE"
@@ -90,20 +101,41 @@ if [ "$stagnant" -ge 4 ]; then
     jq -n \
       --argjson unchecked "$unchecked" \
       --argjson total "$total" \
-      '{decision: "block", reason: ("RALPH LOOP: Stagnation circuit breaker fired — " + ($unchecked|tostring) + " of " + ($total|tostring) + " DoD items unresolved and no progress across 4 consecutive iterations. The current approach is not converging. Force-stopping. Summarize for the user: which items keep failing, what was tried, and what different approach (or scope change) you recommend."), systemMessage: "Ralph loop terminated by stagnation circuit breaker (4 iterations without DoD progress). State cleaned up."}'
+      --arg strategy_file "$SESSION_DIR/files/ralph-strategy.md" \
+      '{decision: "block", reason: ("RALPH LOOP: Stagnation circuit breaker fired — " + ($unchecked|tostring) + " of " + ($total|tostring) + " DoD items unresolved and no progress across 4 consecutive iterations despite strategy revision. Force-stopping. Read the strategy ledger at " + $strategy_file + " (if present) and summarize for the user: which items keep failing, which strategies/lenses were attempted with what outcome, and what decision or scope change you recommend."), systemMessage: "Ralph loop terminated by stagnation circuit breaker (4 iterations without DoD progress). State cleaned up; strategy ledger preserved for the post-mortem."}'
     exit 0
 fi
 
-# One full cycle with zero progress -> demand an approach change this iteration
+# One full cycle with zero progress -> forced strategy revision (self-correcting)
+# A fresh-context ralph-strategist produces a NEW strategy through an untried
+# lens; the strategy ledger (ralph-strategy.md) makes "keep grinding without a
+# new strategy" mechanically detectable.
 stagnation_directive=""
 if [ "$stagnant" -ge 2 ]; then
-    stagnation_directive="
+    STRATEGY_FILE="$SESSION_DIR/files/ralph-strategy.md"
+    strat_count=$(grep -c '^## Strategy' "$STRATEGY_FILE" 2>/dev/null || true)
+    [ -z "$strat_count" ] && strat_count=0
+    last_strat=$(jq -r '.ralph.strategy_count // 0' "$STATE_FILE")
+    jq --argjson sc "$strat_count" '.ralph.strategy_count = $sc' \
+       "$STATE_FILE" > "${STATE_FILE}.tmp.$$" && mv "${STATE_FILE}.tmp.$$" "$STATE_FILE"
 
-🔄 STAGNATION DETECTED (${stagnant} iterations without DoD progress). Diagnose the pattern before acting:
-- SPINNING: retrying the same fix on the same file → your hypothesis about the cause is wrong. Re-read the failing item's actual error output from scratch.
-- OSCILLATION: flipping between two approaches → commit to one, state why, and see it through.
-- DIMINISHING RETURNS: shrinking tweaks with no verdict change → the fix is in the wrong layer. Widen the search (config, environment, test itself).
-You MUST take a visibly different approach this iteration — same-approach retry is forbidden. If an item's premise now looks wrong, say so to the user instead of grinding."
+    if [ "$strat_count" -gt "$last_strat" ]; then
+        # A new strategy was adopted since the last stagnation check — hold the line.
+        stagnation_directive="
+
+🔄 STAGNATION (${stagnant} iterations without DoD progress) — Strategy #${strat_count} is already on file at ${STRATEGY_FILE}. Follow ITS steps exactly this iteration. Its banned_moves are forbidden — do not drift back to the pre-revision approach. If this strategy also fails a full cycle, the next stagnation check will require a new one."
+    else
+        stagnation_directive="
+
+🔄 STAGNATION DETECTED (${stagnant} iterations without DoD progress). Your context is part of the problem — you keep regenerating the same failing approach. Before ANY further fix attempt:
+1. Spawn the strategist: Agent tool, subagent_type=\"ralph-strategist\", FOREGROUND (run_in_background=false). Pass: the original task, the DoD file path (${DOD_FILE}), the strategy ledger path (${STRATEGY_FILE}), and your best evidence of the failure.
+2. Append its result to ${STRATEGY_FILE} as:
+   ## Strategy $((strat_count + 1)) — <lens> (iteration ${iteration})
+   diagnosis / banned moves / steps from the JSON, then 'outcome: pending'
+3. Execute the new strategy's steps. banned_moves are FORBIDDEN this iteration.
+4. If the strategist returned escalate_to_user=true: record its escalation_reason in the ledger, run \`touch ${SESSION_DIR}/files/ralph-escalate\`, then stop — the loop will end and hand the decision to the user.
+Continuing to grind without a new ledger entry is a protocol violation — the loop checks."
+    fi
 fi
 
 # Unchecked items remain -> set verify flag + block with verifier agent instruction
