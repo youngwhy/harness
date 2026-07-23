@@ -124,6 +124,20 @@ If your task description contains `TDD Mode: ON`:
 
 3. **Test pass (TDD mode only)** — Run the full test suite and confirm all tests pass
 
+**Evidence-first rule (hard)**: a `PASS` is a claim about the world, and claims
+require evidence gathered AFTER your last change:
+
+- Every `PASS` in `sub_requirement_results` must carry a `detail` containing
+  either (a) the actual command you ran and the relevant output line, or (b) a
+  `file:line` citation of the code that satisfies the GWT. "Implemented as
+  requested" or "should work now" is not evidence — if you cannot cite it,
+  you have not verified it, and the status is not PASS.
+- `build_check: "PASS"` requires you actually re-ran the build/lint/typecheck
+  commands after your final edit. Output from before an edit is stale evidence.
+- Declaring completion without evidence wastes an entire verify round-trip:
+  the independent verifier will re-check with fresh commands and bounce the
+  task back.
+
 **Completion condition**: All sub-requirement GWT scenarios satisfied AND build/lint passes (AND tests pass in TDD mode). On success, mark the task done via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" plan task <plan-path> --status <task-id>=done --summary "<one-line summary>"`.
 
 ## Output Format
@@ -188,7 +202,7 @@ When work is complete, **always** report in the following JSON format:
 | `when` | ✅ | Action/trigger from sub-req GWT (verbatim) |
 | `then` | ✅ | Expected outcome from sub-req GWT (verbatim) |
 | `status` | ✅ | `PASS` / `FAIL` / `SKIP` |
-| `detail` | ❌ | Evidence or reason for FAIL/SKIP |
+| `detail` | ✅ for PASS | Evidence: command + output line, or `file:line` citation (evidence-first rule) |
 | `reason` | ❌ | Reason for FAIL/SKIP |
 
 **Completion condition**: All `sub_requirement_results` entries are `PASS` AND all `checks` are `PASS`

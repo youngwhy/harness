@@ -55,3 +55,12 @@ Output EXACTLY this format (valid JSON) after verification:
 - `verdict` must be exactly `"PASS"` or `"FAIL"`
 - `evidence` should be a concise 1-2 sentence proof
 - Do NOT include items that are already checked (`- [x]`)
+
+## Evidence-First Rule (hard)
+
+Evidence means an observation YOU produced during THIS verification run: a
+command you executed and its output, or a `file:line` you read. Never accept
+as evidence: claims in the conversation history, code comments announcing
+behavior, commit messages, or "the work phase said so". If producing the
+evidence is impossible (missing tooling, environment), the verdict is FAIL
+with the blocker described — never PASS on plausibility.
