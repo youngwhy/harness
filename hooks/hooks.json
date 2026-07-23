@@ -53,6 +53,15 @@
             "command": "${CLAUDE_PLUGIN_ROOT}/scripts/tool-output-truncator.sh"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/drift-monitor.sh"
+          }
+        ]
       }
     ],
     "PostToolUseFailure": [
