@@ -62,6 +62,31 @@ A single JSON block at the end of your response:
 
 The `action` string is the ONLY place where you describe the work, and it should describe intent, not implementation.
 
+### Executability standard (junior-executable)
+
+The consumer of each task is a **worker with zero session context** — it sees
+only your `action`, the GWT payloads of its `fulfills[]` sub-reqs, and
+contracts.md. Write every `action` so that worker can start immediately without
+guessing **what** to build. (Guessing *how* is its job; guessing *what* is a
+planning failure.)
+
+Concretely:
+
+- **Ban vague verbs as the head of an action**: "improve", "handle", "support",
+  "polish", "clean up", "implement core logic". Name the observable capability
+  instead: "reject unauthenticated requests at the API boundary", not "handle
+  auth".
+- **Ban placeholders**: "etc", "and so on", "as needed", "similar to T3". Each
+  action stands alone — a worker never reads another task's action.
+- **One coherent slice per task**: if you cannot phrase the action as a single
+  capability sentence without "and also", split the task.
+- **The GWT set must carry the spec**: before finalizing a task, re-read its
+  fulfills[] GWTs and ask "could a context-free worker misbuild this and still
+  satisfy these GWTs?" If yes, the sub-req is underspecified — surface it in
+  `ambiguities[]` rather than papering over it with a vaguer action.
+- **Uncertainty goes to `ambiguities[]`, never into the action**: an action
+  phrased hedgingly ("probably via the existing queue?") is a planning bug.
+
 ### `ambiguities[]` (soft)
 
 List calls you had to make where you weren't fully confident — e.g., "combine these two tasks or split?", "right layer for T5?". The main agent batches these for user confirmation. Each entry: `{ "concern": "...", "affects": ["T7", "T8"], "recommendation": "..." }`. Empty array if no doubt.
@@ -128,5 +153,6 @@ If the caller passes `retry_gap: ["R-B3.2", "R-U5.1"]`:
 - [ ] Set diff: every `R-X.Y` from requirements.md appears in at least one `fulfills[]`
 - [ ] `parallel_safe: true` tasks share only L0 contract deps within their layer
 - [ ] Every task has a `complexity` of `trivial | standard | complex`, judged by its hardest part
+- [ ] Every `action` passes the executability standard: no vague head verb, no placeholder, single coherent slice, hedges moved to `ambiguities[]`
 
 If any checkbox fails, fix before returning.
