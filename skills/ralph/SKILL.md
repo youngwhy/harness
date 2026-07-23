@@ -47,7 +47,13 @@ Iterative "until it's done" loop. Two judgment modes share the same machinery
 4. When you try to stop, the Stop hook checks the DoD checklist:
    - If unchecked items remain → blocks exit, re-injects original prompt + remaining items
    - If all items checked → allows exit
-5. Loop continues until all DoD items verified or circuit breaker (max 10 iterations)
+5. Loop continues until all DoD items verified or a circuit breaker fires:
+   - **Iteration breaker**: max 10 iterations (configurable)
+   - **Stagnation breaker**: the unchecked-item count failing to drop across a
+     full fix+verify cycle (2 iterations) injects a mandatory approach-change
+     directive (diagnose Spinning / Oscillation / Diminishing Returns); 4
+     iterations with zero progress force-stops the loop early with a summary
+     of what was tried and what to change
 
 **Rubric mode flow**: Read and follow `references/rubric-mode.md` — rubric
 building → parallel multi-model scoring → improve-one-criterion loop →
