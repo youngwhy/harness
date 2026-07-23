@@ -77,7 +77,8 @@ fi
 # --- Periodic drift check (execute / ralph sessions only) ---------------
 SKILL=$(jq -r '.skill // empty' "$STATE_FILE")
 IN_RALPH=$(jq -r 'if .ralph then "1" else "" end' "$STATE_FILE")
-if [[ "$SKILL" == "execute" || "$SKILL" == "ultrawork" || -n "$IN_RALPH" ]]; then
+SPEC_DIR_SET=$(jq -r '.spec_dir // empty' "$STATE_FILE")   # execute Phase 0.5 state
+if [[ "$SKILL" == "execute" || "$SKILL" == "ultrawork" || -n "$IN_RALPH" || -n "$SPEC_DIR_SET" ]]; then
   total_edits=$(wc -l < "$LOG" | tr -d ' ')
   if (( total_edits > 0 && total_edits % DRIFT_EVERY == 0 )); then
     if [[ -n "$IN_RALPH" ]]; then
