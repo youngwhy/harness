@@ -324,10 +324,19 @@ verify = AskUserQuestion(
 IF --work flag provided:
   work = flag_value
 ELSE:
+  # Recommendation: parallel workers mutating files belong in an isolated
+  # worktree — it keeps the user's live checkout clean and prevents
+  # cross-worker interference (superpowers-style isolation-by-default).
+  IF dispatch in ("Agent", "Team") AND parallel_count >= 2:
+    recommended_work = "Worktree"
+  ELSE:
+    recommended_work = "New Branch + Commit"
+
+  # Put recommended_work FIRST in the options list, labeled "(Recommended)".
   work = AskUserQuestion(
-    question: "Work mode?",
+    question: "Work mode? (dispatch={dispatch}, {parallel_count} parallel_safe → recommended: {recommended_work})",
     options: [
-      { label: "Worktree",           description: "Isolated worktree, commit per round" },
+      { label: "Worktree",           description: "Isolated worktree, commit per round — safest for parallel workers; your checkout stays untouched" },
       { label: "New Branch + Commit", description: "Create feat/ branch from current, commit per round" },
       { label: "Branch + Commit",     description: "Current branch as-is, commit per round" },
       { label: "No Commit",           description: "No git commits" }
