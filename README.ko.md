@@ -341,7 +341,7 @@ You:  /execute
 
 ## 명령어
 
-24개의 스킬 — Claude Code 안에서 호출하는 슬래시 명령어.
+25개의 스킬 — Claude Code 안에서 호출하는 슬래시 명령어.
 
 | 카테고리 | 하는 일 | 스킬 |
 |----------|------------------|--------|
@@ -349,7 +349,7 @@ You:  /execute
 | **조사** | 코드베이스 분석, 레퍼런스 탐색, 커뮤니티 스캔 | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
 | **결정** | 트레이드오프 평가, 다중 관점 리뷰 | `/council` `/stepback` |
 | **구현** | 계획 실행, 버그 수정, 반복 | `/execute` `/ralph` `/bugfix` `/ultrawork` `/scaffold` |
-| **테스트** | 애플리케이션 QA, 변경 사항 검증 | `/qa` `/check` `/scope` |
+| **테스트** | 애플리케이션 QA, 변경 사항 검증 | `/qa` `/check` `/scope` `/pressure-test` |
 | **성찰** | 교훈 추출, 세션 분석, 남는 토큰 투자 | `/compound` `/issue` `/skill-session-analyzer` `/quality-loop` |
 
 <details>
@@ -375,7 +375,7 @@ You:  /execute
 
 ## 내부 구조
 
-**24개 스킬 · 26개 에이전트 · 18개 훅**
+**25개 스킬 · 26개 에이전트 · 19개 훅**
 
 ```
 .claude/

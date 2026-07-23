@@ -341,7 +341,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 
 ## Commands
 
-24 skills — slash commands you invoke inside Claude Code.
+25 skills — slash commands you invoke inside Claude Code.
 
 | Category | What you're doing | Skills |
 |----------|------------------|--------|
@@ -349,7 +349,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 | **Research** | Analyze codebase, find references, scan communities | `/deep-research` `/dev-scan` `/reference-seek` `/google-search` `/browser-work` |
 | **Decide** | Evaluate tradeoffs, multi-perspective review | `/council` `/stepback` |
 | **Build** | Execute plans, fix bugs, iterate | `/execute` `/ralph` `/bugfix` `/ultrawork` `/scaffold` |
-| **Test** | QA test applications, verify changes | `/qa` `/check` `/scope` |
+| **Test** | QA test applications, verify changes | `/qa` `/check` `/scope` `/pressure-test` |
 | **Reflect** | Extract learnings, analyze sessions, invest spare tokens | `/compound` `/issue` `/skill-session-analyzer` `/quality-loop` |
 
 <details>
@@ -375,7 +375,7 @@ Twenty-one agents, each a different mode of thinking. You never interact with th
 
 ## Under the Hood
 
-**24 skills · 26 agents · 18 hooks**
+**25 skills · 26 agents · 19 hooks**
 
 ```
 .claude/
