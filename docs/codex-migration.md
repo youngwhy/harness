@@ -37,7 +37,7 @@ $harness:agent code-explorer map the authentication flow
 | Skills | Canonical `skills/*/SKILL.md` | Same canonical files through the plugin |
 | Roles | Registered logical agent type | Read `agents/<role>.md`, then pass it to the current native subagent tool |
 | Teams | `TeamCreate`, `Task*`, `SendMessage` | Parent-owned orchestration and native messaging when available |
-| Hooks | Claude hook lifecycle | Explicit bounded loops |
+| Hooks | Claude hook lifecycle | Suppressed by `claude-only-hook.sh`; use explicit bounded loops |
 | State | `scripts/cli.sh` | Same Bash CLI through the resolved plugin root |
 
 The current native subagent tool schema is authoritative. Harness does not
@@ -46,6 +46,10 @@ Codex runtime defaults unless the user explicitly chooses otherwise.
 
 If Codex exposes no native subagent tool, a skill performs the smallest safe
 direct pass and reports the fallback.
+
+Bundled Claude hooks are routed through `scripts/claude-only-hook.sh`. The
+wrapper exits silently when `CODEX_THREAD_ID` is present, preventing hook
+context injection and Claude-specific session state in Codex.
 
 ## Plugin Root
 

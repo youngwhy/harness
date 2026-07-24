@@ -17,6 +17,17 @@ manifest = json.loads((root / ".codex-plugin" / "plugin.json").read_text())
 if manifest.get("skills") != "./skills/":
     raise SystemExit("Codex manifest must expose canonical skills/")
 
+hooks = json.loads((root / "hooks" / "hooks.json").read_text())["hooks"]
+commands = [
+    hook["command"]
+    for event_entries in hooks.values()
+    for entry in event_entries
+    for hook in entry["hooks"]
+]
+expected_prefix = "${CLAUDE_PLUGIN_ROOT}/scripts/claude-only-hook.sh "
+if not commands or any(not command.startswith(expected_prefix) for command in commands):
+    raise SystemExit("every bundled hook must pass through claude-only-hook.sh")
+
 legacy_files = [
     *root.glob("codex/agents/*.toml"),
     *root.glob("codex/skills/*/SKILL.md"),
@@ -71,3 +82,29 @@ if "spawn_agent(agent_type=" in contract_text:
 
 print(f"codex plugin runtime smoke passed ({len(roles)} canonical roles)")
 PY
+
+WORKDIR="$(mktemp -d "${TMPDIR:-/tmp}/harness-codex-hook.XXXXXX")"
+trap 'rm -rf "$WORKDIR"' EXIT
+
+HOOK_INPUT='{"session_id":"codex-smoke","hook_event_name":"UserPromptSubmit","cwd":"/tmp","prompt":"hello","tool_input":{}}'
+CODEX_OUTPUT="$(
+  printf '%s' "$HOOK_INPUT" |
+    HOME="$WORKDIR" CODEX_THREAD_ID="codex-smoke" \
+      "$ROOT/scripts/claude-only-hook.sh" skill-session-init.sh 2>&1
+)"
+if [[ -n "$CODEX_OUTPUT" || -e "$WORKDIR/.harness" ]]; then
+  echo "Codex hook guard produced output or state" >&2
+  exit 1
+fi
+
+CLAUDE_OUTPUT="$(
+  printf '%s' "$HOOK_INPUT" |
+    env -u CODEX_THREAD_ID HOME="$WORKDIR" \
+      "$ROOT/scripts/claude-only-hook.sh" skill-session-init.sh 2>/dev/null
+)"
+if [[ "$CLAUDE_OUTPUT" != "CLAUDE_SESSION_ID=codex-smoke" ]]; then
+  echo "Claude hook path did not execute normally" >&2
+  exit 1
+fi
+
+echo "codex hook guard smoke passed"

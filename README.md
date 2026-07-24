@@ -449,6 +449,7 @@ The plugin includes all 27 specialized role prompts. Harness loads the needed
 role from `agents/*.md` and dispatches it through the current Codex subagent
 runtime, so no separate agent install is required. Subagents inherit the active
 Codex session defaults instead of pinning a model name.
+Bundled Claude Code hooks are automatically suppressed in Codex sessions.
 
 Run a specialist directly with
 `$harness:agent <role> <task>`, for example

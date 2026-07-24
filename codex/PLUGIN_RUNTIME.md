@@ -56,6 +56,13 @@ Parallel dispatch is allowed only for independent tasks with disjoint write
 boundaries. If no native subagent tool is available, perform the smallest safe
 direct pass and state the fallback.
 
+## Hook Isolation
+
+The shared package contains Claude Code hooks, but every hook command passes
+through `scripts/claude-only-hook.sh`. When `CODEX_THREAD_ID` is present, the
+wrapper exits without output or state changes. Codex skills must not depend on
+those hooks.
+
 ## State Invariant
 
 Never edit `plan.json` directly. Resolve the plugin root and mutate plan state

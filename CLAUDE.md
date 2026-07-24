@@ -126,6 +126,12 @@ This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url ups
 - **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
 - **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
 
+## Recent Changes (v1.14.4)
+
+- Routed every bundled hook through a Claude-only runtime guard.
+- Suppressed hook output and state changes whenever `CODEX_THREAD_ID` is present.
+- Added a dual-runtime smoke test that proves Codex no-op and Claude execution behavior.
+
 ## Recent Changes (v1.14.3)
 
 - Made all 27 specialized role prompts available through the Codex plugin alone.

@@ -448,6 +448,7 @@ codex plugin add harness@youngwhy
 `agents/*.md` 역할을 읽어 현재 Codex 서브에이전트 런타임으로 전달하므로
 별도 에이전트 설치는 필요 없다. 서브에이전트는 모델명을 고정하지 않고
 현재 Codex 세션 기본값을 상속한다.
+번들에 포함된 Claude Code 훅은 Codex 세션에서 자동으로 비활성화된다.
 
 전문 역할을 직접 실행하려면 `$harness:agent <role> <task>`를 사용한다.
 예: `$harness:agent code-explorer 인증 흐름을 분석해줘`

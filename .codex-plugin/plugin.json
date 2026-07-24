@@ -1,6 +1,6 @@
 {
   "name": "harness",
-  "version": "1.14.3",
+  "version": "1.14.4",
   "description": "Spec-first development workflow automation for Codex and Claude Code",
   "author": {
     "name": "youngwhy"
