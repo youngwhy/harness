@@ -36,12 +36,14 @@ When building a feature, find what you can **reuse** or **learn from**:
 
 ### Codex
 
-- Map internal codebase search to `harness-code-explorer` when installed.
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
+- Dispatch internal codebase search with the canonical
+  `agents/code-explorer.md` role prompt.
 - Use Bash-first `gh api` and `curl` for GitHub discovery and code excerpts.
 - Do not require context7 MCP for v1; use it only if already available in the
   current runtime. Otherwise, use official docs via the available Codex web
   search/fetch surface and label that fallback.
-- If no native subagent adapter is loaded, perform the internal search directly
+- If no native subagent tool is available, perform the internal search directly
   with `rg` and targeted file reads.
 
 ## Use Cases

@@ -44,12 +44,12 @@ traceable context for the next workflow.
 
 ### Codex
 
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
 - Use Codex-native structured input when available; otherwise ask one concise
   plain-text question at a time.
-- Use `harness-clarity-auditor` when native adapters are loaded.
-- Use `harness-code-explorer` when codebase exploration can answer the question.
-- If native adapters are unavailable, perform the smallest direct read-only
-  pass and record that fallback in `qa-log.md`.
+- Dispatch `clarity-auditor` and `code-explorer` with their canonical
+  `agents/<logical-role>.md` prompts. If no native subagent tool is available,
+  perform the smallest direct read-only pass and record it in `qa-log.md`.
 
 ## Artifacts
 
@@ -74,7 +74,7 @@ Infer the mode from the user's request. If uncertain, ask first.
 
 | Mode | Use For | Main Question Lens | Clear Enough When |
 |------|---------|--------------------|-------------------|
-| `requirements` | Product/feature intent before `/specify` | users, goal, non-goals, success, scope, flows, edge cases, constraints | `$harness-specify --context clarity-summary.md` can start without guessing |
+| `requirements` | Product/feature intent before `/specify` | users, goal, non-goals, success, scope, flows, edge cases, constraints | `$harness:specify --context clarity-summary.md` can start without guessing |
 | `design` | Architecture or implementation direction before planning | alternatives, boundaries, interfaces, data flow, trade-offs, risks, reversibility, verification | chosen direction, rejected alternatives, risks, and validation are explicit |
 | `domain` | Terms, concepts, and domain model | canonical terms, definitions, relationships, edge cases, conflicts with docs/code | key terms have stable definitions and unresolved terms are listed |
 | `plan` | Work sequencing before blueprint/execution | dependencies, acceptance criteria, blocking decisions, validation, rollback, ownership | no blocking execution decision remains |
@@ -84,7 +84,7 @@ Frontmatter fields:
 ```yaml
 mode: requirements | design | domain | plan
 status: active | complete | paused
-target_handoff: harness-specify | harness-blueprint | docs | none
+target_handoff: harness:specify | harness:blueprint | docs | none
 ```
 
 Default mode is `requirements`.
@@ -238,10 +238,10 @@ After `SUFFICIENT`, write `clarity-summary.md` and present one next action:
 
 | Mode | Default Handoff |
 |------|-----------------|
-| `requirements` | `$harness-specify --context .harness/clarify/<topic>/clarity-summary.md "<topic>"` |
-| `design` | `$harness-blueprint --context .harness/clarify/<topic>/clarity-summary.md` or ADR candidate |
+| `requirements` | `$harness:specify --context .harness/clarify/<topic>/clarity-summary.md "<topic>"` |
+| `design` | `$harness:blueprint --context .harness/clarify/<topic>/clarity-summary.md` or ADR candidate |
 | `domain` | docs/glossary update, if requested |
-| `plan` | `$harness-blueprint` or direct execution planning |
+| `plan` | `$harness:blueprint` or direct execution planning |
 
 Do not run the handoff workflow unless the user asks.
 

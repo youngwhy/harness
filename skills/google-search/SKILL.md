@@ -27,6 +27,7 @@ JavaScript-rendered content and no bot detection.
 
 ### Codex
 
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
 - Use Bash-first chromux operations. Do not add Harness MCP for v1.
 - Resolve the script relative to the Harness plugin root:
   `skills/google-search/vendor/web-search.mjs`.

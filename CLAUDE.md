@@ -122,20 +122,27 @@ Hooks are registered in `.claude/settings.json` and automate pipeline transition
 
 This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url upstream`) at v1.7.1.
 
-- **CLI in pure bash** — the upstream npm CLI is replaced by **harness-cli** = `scripts/cli.sh` (pure bash + jq). All skills/agents/hooks/codex adapters invoke it by path via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" <group> <sub>`. No npm install, no `cli/` package, no `cli-version-sync.sh` hook.
+- **CLI in pure bash** — the upstream npm CLI is replaced by **harness-cli** = `scripts/cli.sh` (pure bash + jq). All skills/agents/hooks invoke it by path via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" <group> <sub>`. No npm install, no `cli/` package, no `cli-version-sync.sh` hook.
 - **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
 - **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
+
+## Recent Changes (v1.14.3)
+
+- Made all 27 specialized role prompts available through the Codex plugin alone.
+- Replaced global TOML agent copies with plugin-native prompt dispatch through the live Codex subagent tool.
+- Added `$harness:agent <role> <task>` for direct specialist invocation.
+- Removed Codex agent/skill adapter installers and added a plugin-runtime smoke test.
 
 ## Recent Changes (v1.14.2)
 
 - Added the `youngwhy` Codex marketplace for `codex plugin add harness@youngwhy`.
-- Made plugin installation the primary Codex setup path; native agent adapters remain optional.
+- Made plugin installation the primary Codex setup path.
 
 ## Recent Changes (v1.14.1)
 
-- Completed Codex native-agent coverage for every spawnable canonical agent.
-- Removed Codex model and reasoning-effort pins so adapters inherit session defaults.
-- Resolved canonical agent prompt paths during Codex adapter installation.
+- Completed Codex role coverage for every spawnable canonical agent.
+- Removed Codex model and reasoning-effort pins so roles inherit session defaults.
+- Kept canonical agent prompts portable across repository working directories.
 - Added Codex installation guidance and synchronized plugin manifest versions.
 
 ## Recent Changes (v1.12.0)
@@ -290,24 +297,21 @@ low-cost workers beat a single frontier swarm on both cost and pass rate):
 - `skills/qa/references/browser-verify.md`: 4 `eval` blocks → `run` + `js()`; `console` → `watch console`
 - `skills/qa/references/spec-drift-check.md`: same conversion
 - `skills/deep-research/SKILL.md`: `chromux wait` → `sleep`
-- Codex adapters inherit the fix automatically (already point to canonical files)
+- Codex reads the fixed canonical skill files directly through the plugin
 - Legacy chromux aliases remain supported per upstream policy; we just stop teaching them as the primary surface
 
 ## Recent Changes (v1.7.0)
 
 ### Codex CLI Parity
-- New `.codex-plugin/plugin.json` — Codex runtime adapter package alongside the Claude Code plugin
-- `codex/agents/*.toml` adapters (9): `harness-{browser-explorer, clarity-auditor, code-explorer, code-reviewer, docs-researcher, external-researcher, gap-auditor, verifier, worker}` — dispatch Harness logical subagents via Codex
-- `codex/skills/harness-*/SKILL.md` bridges (10): blueprint, browser-work, clarify, deep-research, dev-scan, discuss, execute, google-search, reference-seek, specify
-- `skills/{blueprint, browser-work, deep-research, dev-scan, execute, google-search, reference-seek, specify}/SKILL.md` — added **Runtime Surface** sections documenting Claude Code vs Codex dispatch semantics (Bash-first state, JSON-payload files, no MCP/hooks in v1)
-- Installers: `scripts/install-codex-{agent,skill}-adapters.sh`
+- New `.codex-plugin/plugin.json` — Codex plugin package alongside the Claude Code plugin
+- Canonical skills document Claude Code and Codex runtime semantics
 - Smoke tests: `scripts/codex-{blueprint, execute, research}-smoke.sh`
 - Migration reference: `docs/codex-migration.md` + `fixtures/codex-migration/todo-toggle/`
 
 ### New `clarify` Skill
 - Relentless ambiguity-resolution interview that records Q&A under `.harness/clarify/<topic>/`
 - Templates: `qa-log.md`, `clarity-summary.md`
-- New `clarity-auditor` agent (Claude + Codex adapter)
+- New `clarity-auditor` canonical role
 - Hands off to specify/blueprint/docs when clear
 
 ## Recent Changes (v1.6.0)

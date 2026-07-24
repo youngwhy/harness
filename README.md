@@ -445,17 +445,14 @@ codex plugin add harness@youngwhy
 
 Start a new Codex thread, then invoke `$harness:specify`,
 `$harness:blueprint`, or `$harness:execute`.
-For the full set of specialized `harness-*` custom agents, optionally clone the
-repository and run:
+The plugin includes all 27 specialized role prompts. Harness loads the needed
+role from `agents/*.md` and dispatches it through the current Codex subagent
+runtime, so no separate agent install is required. Subagents inherit the active
+Codex session defaults instead of pinning a model name.
 
-```bash
-git clone https://github.com/youngwhy/harness.git
-cd harness
-bash scripts/install-codex-agent-adapters.sh
-```
-
-Custom agents inherit the active Codex session model and reasoning effort
-instead of pinning a model name.
+Run a specialist directly with
+`$harness:agent <role> <task>`, for example
+`$harness:agent code-explorer map the authentication flow`.
 
 ## CLI
 

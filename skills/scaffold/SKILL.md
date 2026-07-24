@@ -63,6 +63,18 @@ scaffold is specify's **architecture variant**. Same requirements.md format, dif
 
 scaffold produces requirements.md only (no tasks). Task breakdown is handled later by `/execute` (via `/blueprint` or inline planning), which writes a sibling `plan.json` next to requirements.md.
 
+## Runtime Surface
+
+### Codex
+
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
+- Treat `Task(...)` examples as logical dispatch through the current native
+  subagent tool.
+- Use canonical Harness role prompts when a named role applies; otherwise pass
+  the scaffold-specific role and output contract directly in the message.
+- Resolve all Harness CLI calls through the plugin root and do not rely on
+  Claude hooks for session state.
+
 ### Session Init (before L0)
 
 ```bash

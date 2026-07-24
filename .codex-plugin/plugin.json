@@ -1,6 +1,6 @@
 {
   "name": "harness",
-  "version": "1.14.2",
+  "version": "1.14.3",
   "description": "Spec-first development workflow automation for Codex and Claude Code",
   "author": {
     "name": "youngwhy"
@@ -19,7 +19,7 @@
   "interface": {
     "displayName": "harness",
     "shortDescription": "Spec-first workflow automation for requirements, blueprinting, execution, and verification.",
-    "longDescription": "Harness derives requirements from intent, turns them into a validated plan.json via harness-cli (scripts/cli.sh), and coordinates agent execution. The Codex plugin is Bash-first in v1 and supports optional native-agent adapters for specialized subagent roles.",
+    "longDescription": "Harness derives requirements from intent, turns them into a validated plan.json via harness-cli (scripts/cli.sh), and coordinates execution with 27 plugin-native role prompts through the current Codex subagent runtime.",
     "developerName": "youngwhy",
     "category": "Developer Tools",
     "capabilities": [

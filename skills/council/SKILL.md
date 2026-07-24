@@ -43,6 +43,19 @@ as an **Agent Team**, run iterative debates where panelists argue with each othe
 via SendMessage, with a step-back reviewer acting as **in-loop judge** who decides whether
 more debate is needed. Then synthesize findings into a **Tradeoff Map**.
 
+## Runtime Surface
+
+### Codex
+
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
+- Treat `Agent`, `TeamCreate`, `Task*`, and `SendMessage` examples as logical
+  protocol. The parent owns the council roster, debate rounds, and synthesis.
+- Spawn panelists with their generated perspective prompts. Use canonical
+  `agents/tradeoff-analyzer.md` or other matching Harness role prompts when the
+  role applies.
+- Use native agent messaging when available; otherwise relay each response
+  through the parent. Keep the debate bounded to three cycles.
+
 ## Architecture
 
 ```

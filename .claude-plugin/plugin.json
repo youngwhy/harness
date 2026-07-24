@@ -1,6 +1,6 @@
 {
   "name": "harness",
-  "version": "1.14.2",
+  "version": "1.14.3",
   "description": "Development workflow automation plugin: specify → open → execute pipeline with parallel research agents, hook-based guards, and PR state management",
   "author": {
     "name": "youngwhy"

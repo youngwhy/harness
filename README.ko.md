@@ -444,17 +444,13 @@ codex plugin add harness@youngwhy
 
 새 Codex 스레드를 시작한 뒤 `$harness:specify`, `$harness:blueprint`,
 `$harness:execute`를 호출한다.
-전문화된 `harness-*` 커스텀 에이전트 전체를 사용하려면 선택적으로
-저장소를 복제하고 다음을 실행한다:
+플러그인에는 27개 전문 역할 프롬프트가 모두 포함된다. Harness가 필요한
+`agents/*.md` 역할을 읽어 현재 Codex 서브에이전트 런타임으로 전달하므로
+별도 에이전트 설치는 필요 없다. 서브에이전트는 모델명을 고정하지 않고
+현재 Codex 세션 기본값을 상속한다.
 
-```bash
-git clone https://github.com/youngwhy/harness.git
-cd harness
-bash scripts/install-codex-agent-adapters.sh
-```
-
-커스텀 에이전트는 모델명을 고정하지 않고 현재 Codex 세션의 모델과
-reasoning effort를 상속한다.
+전문 역할을 직접 실행하려면 `$harness:agent <role> <task>`를 사용한다.
+예: `$harness:agent code-explorer 인증 흐름을 분석해줘`
 
 ## CLI
 

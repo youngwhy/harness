@@ -66,6 +66,17 @@ Iterative "until it's done" loop. Two judgment modes share the same machinery
 building → parallel multi-model scoring → improve-one-criterion loop →
 completion report. Its Stop-hook guard uses the `.rulph` state namespace.
 
+## Runtime Surface
+
+### Codex
+
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
+- Dispatch `ralph-verifier` and `ralph-strategist` with their canonical
+  `agents/<logical-role>.md` prompts.
+- Do not depend on a Claude Stop hook. Run the work, independent verification,
+  and strategy-revision cycle as an explicit bounded loop in the current turn.
+- Preserve the same iteration and stagnation circuit breakers.
+
 ---
 
 ## Phase 0: Routing Guard + Mode Selection

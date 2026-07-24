@@ -39,11 +39,11 @@ Transform `<spec_dir>/requirements.md` (from /specify) into an executable bluepr
 
 ### Codex
 
-- Use the same Harness logical subagent names in prompts, but dispatch through
-  Codex adapters when installed: `harness-code-explorer`, `harness-worker`,
-  `harness-verifier`, and `harness-code-reviewer`.
-- Use Bash-first state operations. Do not use MCP in v1.
-- Mutate `plan.json` only through `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" plan init|merge|validate`.
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
+- Dispatch `code-explorer`, `contract-deriver`, `taskgraph-planner`, and
+  `verify-planner` with their canonical `agents/<logical-role>.md` prompts.
+- Use Bash-first state operations and mutate `plan.json` only through the
+  resolved plugin root's `scripts/cli.sh plan init|merge|validate` commands.
 - Prefer temporary JSON payload files or fixture files over inline complex JSON.
 - Do not rely on hooks for session guards or stop transitions.
 

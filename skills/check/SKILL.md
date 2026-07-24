@@ -24,6 +24,16 @@ description: |
 - **Phase 1** (always): Validate changes — produce PASS/WARN results
 - **Phase 2** (conditional): Propose rule updates — only when unmatched patterns exist
 
+## Runtime Surface
+
+### Codex
+
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
+- Treat the `Agent` example below as logical dispatch through the current native
+  subagent tool.
+- Each rule subagent uses the rule body as its role prompt and has read-only
+  boundaries. If no subagent tool is available, verify rules sequentially.
+
 ---
 
 ## Phase 1: Change Validation

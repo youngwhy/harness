@@ -42,14 +42,15 @@ All intermediate files (qa-log.md, reqs-business.md, reqs-interaction.md, reqs-t
 
 ### Codex
 
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
 - Keep the same interview protocol and output format, but use Codex-native
   structured input when available; otherwise ask one concise plain-text question
   at a time.
-- Use Bash-first CLI setup through `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" req init`.
-- Use logical Harness subagent names in prompts, mapped to Codex adapters when
-  installed. If adapters are not loaded in the current session, perform the
-  smallest direct research pass needed to complete `requirements.md`.
-- Do not rely on hooks for session initialization or cleanup in Codex v1.
+- Use the resolved plugin root's `scripts/cli.sh req init` command for setup.
+- Dispatch logical roles with their canonical `agents/<logical-role>.md`
+  prompts. If no native subagent tool is available, perform the smallest direct
+  research pass needed to complete `requirements.md`.
+- Do not rely on hooks for session initialization or cleanup in Codex.
 
 ## Phase 0: WHERE Grounding
 

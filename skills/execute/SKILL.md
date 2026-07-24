@@ -65,35 +65,28 @@ Delegate to workers, manage parallelization, verify the result.
 
 ### Codex
 
-- Codex v1 is Bash-first and no-MCP. Use `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh"` for all plan state.
-- Do not edit `plan.json` directly; use `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" plan task` for every status
-  transition.
-- Use logical Harness subagent names in the charter, mapped to Codex adapters when
-  installed:
-  - `worker` -> `harness-worker`
-  - `verifier` -> `harness-verifier`
-  - `code-reviewer` -> `harness-code-reviewer`
-- In Codex, translate every logical `Agent(...)` dispatch in the references to
-  the native `spawn_agent` tool:
-  - `Agent(subagent_type="worker", ...)` -> `spawn_agent(agent_type="harness-worker", ...)`
-  - `Agent(subagent_type="verifier", ...)` -> `spawn_agent(agent_type="harness-verifier", ...)`
-  - `Agent(subagent_type="code-reviewer", ...)` -> `spawn_agent(agent_type="harness-code-reviewer", ...)`
-  Pass the worker charter as the agent message, and keep the charter's
-  path-and-ID-only contract unchanged.
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
+- Use the resolved plugin root's `scripts/cli.sh` for all plan state. Never edit
+  `plan.json` directly; use `plan task` for every status transition.
+- Dispatch logical roles with canonical prompts: `worker` uses
+  `agents/worker.md`, `verifier` uses `agents/verifier.md`, and
+  `code-reviewer` uses `agents/code-reviewer.md`.
+- Translate every logical `Agent(...)` dispatch in the references through the
+  current native subagent tool, using only its live schema. Pass the worker
+  charter in the message and keep its path-and-ID-only contract unchanged.
 - Treat `TaskCreate`, `TaskUpdate`, `TaskOutput`, and `TeamCreate` examples in
   the reference recipes as Claude Code protocol notes, not literal Codex calls.
-  Codex execute state is tracked through `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" plan task` plus returned
-  subagent messages.
-- If the current Codex session has not loaded the adapter names, fall back to
-  direct single-worker execution and keep the same charter/output contract.
-- Do not rely on hooks, `TeamCreate`, or automatic stop transitions in Codex v1.
+  Codex execute state is tracked through the Harness CLI plus returned subagent
+  messages.
+- If no native subagent tool is available, fall back to direct single-worker
+  execution and keep the same charter/output contract.
+- Do not rely on hooks, `TeamCreate`, or automatic stop transitions in Codex.
 - Parallel Codex worker dispatch is allowed for disjoint `parallel_safe` tasks
-  when the `harness-worker` adapter is prompt-visible. Use `spawn_agent` for
-  dispatch, `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" plan task` for state, and returned subagent messages for
-  evidence.
+  through the current native subagent tool. Use the Harness CLI for state and
+  returned subagent messages for evidence.
 - `scripts/codex-execute-smoke.sh` validates only single-worker plan state
   transitions. It does not prove parallel subagent behavior; verify parallel
-  changes with a bounded live `spawn_agent` smoke.
+  changes with a bounded live native-subagent smoke.
 
 ---
 

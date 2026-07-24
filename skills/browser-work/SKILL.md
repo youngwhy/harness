@@ -26,14 +26,14 @@ creates a pitfall-prevention guide, then delegates execution to the browser-expl
 
 ### Codex
 
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
 - Use Bash-first chromux operations. Do not add Harness MCP for v1.
 - If no hook-provided session ID exists, generate one with
   `date +%Y%m%d-%H%M%S` and store guides under
   `$HOME/.harness/codex-browser-$RUN_ID/`.
-- Map the logical browser agent to the Codex adapter
-  `harness-browser-explorer` when installed.
-- If the current Codex session has not loaded that adapter, complete the
-  smallest safe browser pass directly with chromux and report the fallback.
+- Dispatch the logical `browser-explorer` role with
+  `agents/browser-explorer.md`. If no native subagent tool is available,
+  complete the smallest safe browser pass directly and report the fallback.
 - Use the Browser Use plugin only when the user explicitly asks for Codex
   in-app browser behavior; this skill's canonical browser runtime is chromux.
 

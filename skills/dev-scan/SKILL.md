@@ -27,6 +27,7 @@ Quickly understand **diverse perspectives** on technical topics:
 
 ### Codex
 
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
 - Use Bash-first vendor scripts. Do not add Harness MCP for v1.
 - If no hook-provided session ID exists, generate one with
   `date +%Y%m%d-%H%M%S` and store run artifacts under
@@ -34,9 +35,8 @@ Quickly understand **diverse perspectives** on technical topics:
 - Prefer `node skills/dev-scan/vendor/chromux-search/web-search.mjs` and the
   bundled Python API scripts before using generic web search fallback.
 - Treat ProductHunt as optional when `PRODUCT_HUNT_TOKEN` is missing.
-- If dispatching internal research helpers, use Codex adapters when installed:
-  `harness-external-researcher`, `harness-docs-researcher`, or
-  `harness-browser-explorer`.
+- Dispatch research helpers with the canonical `external-researcher`,
+  `docs-researcher`, or `browser-explorer` role prompts.
 
 ## Data Sources
 

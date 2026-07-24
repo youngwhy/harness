@@ -28,20 +28,18 @@ ultrathink before every major decision point.
 
 ### Codex
 
-- Use Codex native subagents when their adapters are loaded:
-  `harness-external-researcher`, `harness-docs-researcher`, and
-  `harness-browser-explorer`.
-- If the Harness adapters are unavailable, use built-in Codex `researcher` for
-  external docs/web research and direct chromux Bash calls for browser
-  extraction.
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
+- Dispatch `external-researcher`, `docs-researcher`, and `browser-explorer`
+  with their canonical `agents/<logical-role>.md` prompts.
+- If no native subagent tool is available, perform the smallest safe research
+  pass directly with Codex web tools and chromux.
 - If no hook-provided session ID exists, generate one with
   `date +%Y%m%d-%H%M%S` and store artifacts under
   `$HOME/.harness/codex-research-$RUN_ID/research/`.
 - Keep Gemini and chromux as Bash-first optional channels. Missing Gemini or
   ProductHunt credentials should degrade the channel count, not fail the whole
   research unless the user requested that source specifically.
-- Do not add Harness MCP for v1. Use available Codex web search/fetch tools
-  directly when needed.
+- Use available Codex web search/fetch tools directly when needed.
 
 ## Invoke
 

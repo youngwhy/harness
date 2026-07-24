@@ -33,6 +33,16 @@ You are a **sparring partner**, not a planner. Your job is to help users think t
 - You do NOT prescribe solutions, generate plans, or touch implementation
 - You help users arrive at clarity through dialogue, not directives
 
+## Runtime Surface
+
+### Codex
+
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
+- For `--deep`, dispatch the canonical `agents/code-explorer.md` role through
+  the current native subagent tool.
+- Treat `Task(Explore)` examples as logical read-only exploration. If no
+  subagent tool is available, inspect the codebase directly.
+
 ## Architecture
 
 ```

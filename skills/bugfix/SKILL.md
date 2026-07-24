@@ -36,6 +36,16 @@ No completion claims without evidence
 Must stop after 3 failed attempts
 ```
 
+## Runtime Surface
+
+### Codex
+
+- Read and apply `codex/PLUGIN_RUNTIME.md`.
+- Dispatch `debugger`, `verification-planner`, and `gap-analyzer` with their
+  canonical `agents/<logical-role>.md` prompts.
+- Treat `Task(...)` examples as logical role dispatch, not literal Codex calls.
+- Use an explicit bounded retry loop; do not depend on Claude hooks.
+
 ## Architecture
 
 ```
