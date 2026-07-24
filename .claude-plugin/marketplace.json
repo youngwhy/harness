@@ -9,7 +9,7 @@
     {
       "name": "harness",
       "description": "Development workflow automation: specify → blueprint → execute pipeline with parallel research agents, hook-based guards, and PR state management",
-      "version": "1.14.1",
+      "version": "1.14.2",
       "author": {
         "name": "youngwhy"
       },

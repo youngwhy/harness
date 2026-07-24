@@ -1,0 +1,21 @@
+{
+  "name": "youngwhy",
+  "interface": {
+    "displayName": "youngwhy"
+  },
+  "plugins": [
+    {
+      "name": "harness",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/youngwhy/harness.git",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

@@ -439,15 +439,23 @@ Type `/` in Claude Code to see all available skills.
 ### Codex
 
 ```bash
+codex plugin marketplace add youngwhy/harness
+codex plugin add harness@youngwhy
+```
+
+Start a new Codex thread, then invoke `$harness:specify`,
+`$harness:blueprint`, or `$harness:execute`.
+For the full set of specialized `harness-*` custom agents, optionally clone the
+repository and run:
+
+```bash
 git clone https://github.com/youngwhy/harness.git
 cd harness
 bash scripts/install-codex-agent-adapters.sh
-bash scripts/install-codex-skill-adapters.sh
 ```
 
-Restart Codex, then invoke `$harness-specify`, `$harness-blueprint`, or
-`$harness-execute`. Codex agent adapters inherit the active session model and
-reasoning effort instead of pinning a model name.
+Custom agents inherit the active Codex session model and reasoning effort
+instead of pinning a model name.
 
 ## CLI
 

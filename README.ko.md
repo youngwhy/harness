@@ -438,15 +438,23 @@ Claude Code에서 `/`를 입력하면 사용 가능한 모든 스킬을 볼 수 
 ### Codex
 
 ```bash
+codex plugin marketplace add youngwhy/harness
+codex plugin add harness@youngwhy
+```
+
+새 Codex 스레드를 시작한 뒤 `$harness:specify`, `$harness:blueprint`,
+`$harness:execute`를 호출한다.
+전문화된 `harness-*` 커스텀 에이전트 전체를 사용하려면 선택적으로
+저장소를 복제하고 다음을 실행한다:
+
+```bash
 git clone https://github.com/youngwhy/harness.git
 cd harness
 bash scripts/install-codex-agent-adapters.sh
-bash scripts/install-codex-skill-adapters.sh
 ```
 
-Codex를 재시작한 뒤 `$harness-specify`, `$harness-blueprint`,
-`$harness-execute`를 호출한다. Codex 에이전트 어댑터는 모델명을 고정하지
-않고 현재 세션의 모델과 reasoning effort를 상속한다.
+커스텀 에이전트는 모델명을 고정하지 않고 현재 Codex 세션의 모델과
+reasoning effort를 상속한다.
 
 ## CLI
 

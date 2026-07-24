@@ -126,6 +126,11 @@ This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url ups
 - **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
 - **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
 
+## Recent Changes (v1.14.2)
+
+- Added the `youngwhy` Codex marketplace for `codex plugin add harness@youngwhy`.
+- Made plugin installation the primary Codex setup path; native agent adapters remain optional.
+
 ## Recent Changes (v1.14.1)
 
 - Completed Codex native-agent coverage for every spawnable canonical agent.

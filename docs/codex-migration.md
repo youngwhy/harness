@@ -12,6 +12,8 @@ thin runtime adapter only.
 In scope for the first migration slice:
 
 - Add a Codex plugin manifest that exposes the shared canonical skills.
+- Add a repository marketplace so Codex CLI installs with
+  `codex plugin add harness@youngwhy`.
 - Keep `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh"` as the only writer for `plan.json` state.
 - Add Codex native-agent adapters for the Harness logical subagents.
 - Add a fixture and smoke script that prove the Bash-first CLI path works.
@@ -90,6 +92,7 @@ values; the TOML adapter is the runtime boundary.
 ### Phase 1: Plugin shell
 
 - Add `.codex-plugin/plugin.json`.
+- Add `.agents/plugins/marketplace.json` with a Git-backed root-plugin entry.
 - Expose the required `skills: "./skills/"` plugin path so Codex loads the
   canonical skills through the plugin namespace.
 - Keep `codex/skills/harness-*` as prefixed compatibility wrappers for direct
@@ -100,7 +103,9 @@ values; the TOML adapter is the runtime boundary.
 Validation:
 
 - JSON parses.
-- Manifest points at existing `codex/skills/`.
+- Manifest points at existing `skills/`.
+- `codex plugin marketplace add youngwhy/harness` discovers `harness`.
+- `codex plugin add harness@youngwhy` installs the plugin.
 
 ### Phase 2: Agent adapters
 
