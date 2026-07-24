@@ -6,7 +6,7 @@ description: >
   sites), plus a Gemini CLI deep research source, then synthesizes everything into a cited report.
   Uses WebSearch, WebFetch, chromux browser-explorer, and Gemini CLI. Invoke with /deep-research
   <topic>.
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Deep Research Skill v3 + Gemini + Browser-Explorer

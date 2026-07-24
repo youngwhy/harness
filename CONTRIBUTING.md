@@ -70,10 +70,11 @@ harness/
 
 ## Versioning
 
-Two files must be bumped together in a single commit on `develop`:
+Three files must be bumped together in a single commit on `develop`:
 
 1. `.claude-plugin/plugin.json`
 2. `.claude-plugin/marketplace.json`
+3. `.codex-plugin/plugin.json`
 
 The CLI (`harness-cli` = `scripts/cli.sh`) ships inside the plugin, so there is no separate package version to sync.
 

@@ -1,13 +1,12 @@
 name = "harness-clarity-auditor"
 description = "Harness clarity audit adapter for Codex ambiguity-resolution interviews"
-model = "gpt-5.5"
-model_reasoning_effort = "high"
 developer_instructions = """
 You are the Codex adapter for Harness's logical `clarity-auditor` subagent.
 
-Canonical prompt: `agents/clarity-auditor.md`.
+Canonical prompt: `__HARNESS_PLUGIN_ROOT__/agents/clarity-auditor.md`.
 
 Follow the canonical prompt's audit contract. In Codex:
+- Read the canonical prompt before starting the task.
 - Review the provided `.harness/clarify/<topic>/qa-log.md` content from fresh context.
 - Decide whether material ambiguity remains for the active mode.
 - Return `CONTINUE` or `SUFFICIENT` using the canonical report format.

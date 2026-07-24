@@ -1,6 +1,6 @@
 {
   "name": "harness",
-  "version": "1.6.1",
+  "version": "1.14.1",
   "description": "Spec-first development workflow automation for Codex and Claude Code",
   "author": {
     "name": "youngwhy"
@@ -15,12 +15,23 @@
     "agents",
     "workflow"
   ],
-  "skills": "./codex/skills/",
+  "skills": "./skills/",
   "interface": {
     "displayName": "harness",
     "shortDescription": "Spec-first workflow automation for requirements, blueprinting, execution, and verification.",
     "longDescription": "Harness derives requirements from intent, turns them into a validated plan.json via harness-cli (scripts/cli.sh), and coordinates agent execution. The Codex adapter is Bash-first in v1: it exposes skills and native-agent adapters while leaving hooks and MCP out of the initial migration slice.",
     "developerName": "youngwhy",
-    "category": "Developer Tools"
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Shell",
+      "Web"
+    ],
+    "defaultPrompt": [
+      "Derive precise requirements for this change.",
+      "Turn these requirements into a validated plan.",
+      "Execute this Harness plan and verify every task."
+    ]
   }
 }

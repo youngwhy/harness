@@ -105,7 +105,7 @@ Hooks are registered in `.claude/settings.json` and automate pipeline transition
 
 ```
 1. All features merged to develop
-2. Version bump commit on develop (plugin.json + marketplace.json)
+2. Version bump commit on develop (Claude manifest + marketplace + Codex manifest)
 3. Update CLAUDE.md (Recent Changes) and README.md (if new skills/agents added)
 4. git checkout main && git merge develop --no-ff -m "Release X.Y.Z"
 5. git tag vX.Y.Z && git push origin main --tags && git push origin develop
@@ -114,8 +114,8 @@ Hooks are registered in `.claude/settings.json` and automate pipeline transition
 
 ## Versioning
 
-- Plugin version is in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
-- **Bump both files** in a single commit on `develop` before merging to `main`
+- Plugin version is in `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and `.codex-plugin/plugin.json`
+- **Bump all three files** in a single commit on `develop` before merging to `main`
 - The CLI (`harness-cli` = `scripts/cli.sh`) ships inside the plugin — no separate package version to sync
 
 ## Fork Notes
@@ -125,6 +125,13 @@ This repo is `youngwhy/harness`, synced to its upstream (`git remote get-url ups
 - **CLI in pure bash** — the upstream npm CLI is replaced by **harness-cli** = `scripts/cli.sh` (pure bash + jq). All skills/agents/hooks/codex adapters invoke it by path via `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh" <group> <sub>`. No npm install, no `cli/` package, no `cli-version-sync.sh` hook.
 - **Rebranded** — the upstream brand and org names are replaced by `harness` / `youngwhy`. Install via `/plugin install harness@youngwhy`.
 - **Upstream sync** — to pull newer upstream code: add the upstream remote, overlay `upstream/main`, preserve `scripts/cli.sh`, drop npm artifacts (`cli/`, `cli-version-sync.sh`, `pre-commit-cli-build.sh`, npm CI workflows), then re-run the brand scrub (upstream name → `harness`) and the npm-CLI → bash-cli rewrite.
+
+## Recent Changes (v1.14.1)
+
+- Completed Codex native-agent coverage for every spawnable canonical agent.
+- Removed Codex model and reasoning-effort pins so adapters inherit session defaults.
+- Resolved canonical agent prompt paths during Codex adapter installation.
+- Added Codex installation guidance and synchronized plugin manifest versions.
 
 ## Recent Changes (v1.12.0)
 

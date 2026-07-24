@@ -3,7 +3,7 @@
 English | [한국어](README.ko.md)
 
 **All you need is requirements.**
-A Claude Code plugin that derives requirements from your intent, verifies every derivation, and delivers traced code — without you writing a plan.
+A Codex and Claude Code plugin that derives requirements from your intent, verifies every derivation, and delivers traced code — without you writing a plan.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -416,6 +416,8 @@ See [docs/architecture.md](docs/architecture.md) for the full pipeline diagram.
 
 ## Quick Start
 
+### Claude Code
+
 ```bash
 # Install the plugin
 /plugin install harness@youngwhy
@@ -433,6 +435,19 @@ See [docs/architecture.md](docs/architecture.md) for the full pipeline diagram.
 ```
 
 Type `/` in Claude Code to see all available skills.
+
+### Codex
+
+```bash
+git clone https://github.com/youngwhy/harness.git
+cd harness
+bash scripts/install-codex-agent-adapters.sh
+bash scripts/install-codex-skill-adapters.sh
+```
+
+Restart Codex, then invoke `$harness-specify`, `$harness-blueprint`, or
+`$harness-execute`. Codex agent adapters inherit the active session model and
+reasoning effort instead of pinning a model name.
 
 ## CLI
 

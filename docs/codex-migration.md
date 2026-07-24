@@ -11,7 +11,7 @@ thin runtime adapter only.
 
 In scope for the first migration slice:
 
-- Add a Codex plugin manifest that exposes prefixed Codex skill wrappers.
+- Add a Codex plugin manifest that exposes the shared canonical skills.
 - Keep `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh"` as the only writer for `plan.json` state.
 - Add Codex native-agent adapters for the Harness logical subagents.
 - Add a fixture and smoke script that prove the Bash-first CLI path works.
@@ -32,7 +32,7 @@ Harness has four layers:
 | Layer | Shared? | Claude Code surface | Codex surface |
 | --- | --- | --- | --- |
 | CLI | Yes | `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh"` via Bash | `bash "${CLAUDE_PLUGIN_ROOT}/scripts/cli.sh"` via Bash |
-| Skills | Yes, canonical markdown | `/skill-name` plugin commands | `$harness-*` skill wrappers |
+| Skills | Yes, canonical markdown | `/skill-name` plugin commands | plugin-loaded canonical skills or `$harness-*` compatibility wrappers |
 | Agents | Yes, canonical markdown | `Agent(subagent_type=...)` | native agent adapter TOML |
 | Hooks | No, later | Claude hooks | excluded from v1 |
 
@@ -70,15 +70,30 @@ may be prefixed to avoid collisions with built-in roles.
 | `external-researcher` | `Agent(subagent_type="external-researcher")` | `harness-external-researcher` |
 
 The canonical prompt remains in `agents/*.md`. Codex TOML files are adapters
-that point back to those prompts and define Codex model/posture metadata.
+that point back to those prompts. Executable canonical agents have matching
+`harness-*` adapters; `_karpathy.md` remains a shared prompt fragment rather
+than a spawnable agent.
+
+## Model Portability
+
+Codex adapters do not pin `model` or `model_reasoning_effort`. Codex resolves
+those values from an explicit spawn override, the user's `[agents]` defaults,
+or the parent session. This avoids coupling Harness releases to one model name
+or to model availability for a specific account.
+
+Claude-only `model: haiku|sonnet|opus` frontmatter stays in canonical
+`agents/*.md` files for Claude Code. Codex does not translate or reuse those
+values; the TOML adapter is the runtime boundary.
 
 ## Migration Phases
 
 ### Phase 1: Plugin shell
 
 - Add `.codex-plugin/plugin.json`.
-- Expose `skills: "./codex/skills/"` so Codex sees prefixed wrappers instead
-  of collision-prone generic names such as `execute`.
+- Expose the required `skills: "./skills/"` plugin path so Codex loads the
+  canonical skills through the plugin namespace.
+- Keep `codex/skills/harness-*` as prefixed compatibility wrappers for direct
+  installation into `${CODEX_HOME:-~/.codex}/skills/`.
 - Do not declare `mcpServers` yet.
 - Keep `.claude-plugin/plugin.json` unchanged.
 
@@ -90,14 +105,17 @@ Validation:
 ### Phase 2: Agent adapters
 
 - Add Codex adapter TOMLs under `codex/agents/`.
-- Start with `harness-code-explorer`, `harness-worker`, `harness-verifier`, and
-  `harness-code-reviewer`.
+- Provide one `harness-*` adapter for every spawnable canonical agent.
+- Keep `_karpathy.md` as a shared prompt fragment without an adapter.
 - Preserve the canonical markdown prompts under `agents/`.
+- Let adapters inherit the active Codex model and reasoning effort.
 
 Validation:
 
+- `scripts/codex-adapters-smoke.sh` exits 0.
 - TOML files are syntactically parseable.
 - Each adapter references an existing canonical prompt path.
+- No adapter pins `model` or `model_reasoning_effort`.
 
 ### Phase 3: Bash-first CLI smoke
 
@@ -142,6 +160,8 @@ Validation:
 
 - Install `codex/agents/*.toml` into `${CODEX_HOME:-~/.codex}/agents/` only
   through `scripts/install-codex-agent-adapters.sh`.
+- Resolve `__HARNESS_PLUGIN_ROOT__` in installed adapters so canonical prompts
+  remain readable when Codex runs in another repository.
 - Restart Codex before assuming the new adapter names are available in the
   current session.
 
@@ -189,14 +209,16 @@ Validation:
 When resuming this migration:
 
 1. Run `git status --short`.
-2. Run `scripts/codex-blueprint-smoke.sh`.
-3. Run `scripts/codex-execute-smoke.sh`.
-4. Run `scripts/codex-research-smoke.sh`.
-5. Confirm `.codex-plugin/plugin.json` still exposes `skills`.
-6. Confirm `codex/agents/*.toml` still point to existing `agents/*.md` files.
-7. Run `scripts/install-codex-agent-adapters.sh`.
-8. Run `scripts/install-codex-skill-adapters.sh`.
-9. Continue with true native-adapter dispatch after restarting Codex.
+2. Run `scripts/codex-adapters-smoke.sh`.
+3. Run `scripts/codex-blueprint-smoke.sh`.
+4. Run `scripts/codex-execute-smoke.sh`.
+5. Run `scripts/codex-research-smoke.sh`.
+6. Confirm `.codex-plugin/plugin.json` still exposes `skills`.
+7. Confirm every spawnable `agents/*.md` has a `codex/agents/harness-*.toml`.
+8. Run `scripts/install-codex-agent-adapters.sh`.
+9. Run `scripts/install-codex-skill-adapters.sh`.
+10. Confirm installed adapters contain no unresolved `__HARNESS_PLUGIN_ROOT__`.
+11. Continue with true native-adapter dispatch after restarting Codex.
 
 ## MCP Reconsideration Gate
 

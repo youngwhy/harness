@@ -3,7 +3,7 @@
 [English](README.md) | 한국어
 
 **All you need is requirements.**
-의도에서 요구사항을 도출하고, 모든 도출 과정을 검증하며, 추적 가능한 코드를 만들어내는 Claude Code 플러그인 — 계획을 직접 작성할 필요가 없습니다.
+의도에서 요구사항을 도출하고, 모든 도출 과정을 검증하며, 추적 가능한 코드를 만들어내는 Codex 및 Claude Code 플러그인 — 계획을 직접 작성할 필요가 없습니다.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -415,6 +415,8 @@ You:  /execute
 
 ## 빠른 시작
 
+### Claude Code
+
 ```bash
 # 플러그인 설치
 /plugin install harness@youngwhy
@@ -432,6 +434,19 @@ You:  /execute
 ```
 
 Claude Code에서 `/`를 입력하면 사용 가능한 모든 스킬을 볼 수 있다.
+
+### Codex
+
+```bash
+git clone https://github.com/youngwhy/harness.git
+cd harness
+bash scripts/install-codex-agent-adapters.sh
+bash scripts/install-codex-skill-adapters.sh
+```
+
+Codex를 재시작한 뒤 `$harness-specify`, `$harness-blueprint`,
+`$harness-execute`를 호출한다. Codex 에이전트 어댑터는 모델명을 고정하지
+않고 현재 세션의 모델과 reasoning effort를 상속한다.
 
 ## CLI
 
